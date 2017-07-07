@@ -23,7 +23,7 @@ const authCheck = jwt({
     algorithms: ['RS256']
 });
 
-app.get('/api/deals/public', (req, res)=>{
+app.get('/api/deals/public', (req, res) => {
     let deals = [
         {
             id: 12231,
