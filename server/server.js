@@ -16,10 +16,10 @@ const authCheck = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: "https://{YOUR-AUTH0-DOMAIN}.auth0.com/.well-known/jwks.json"
+        jwksUri: "https://fiban.eu.auth0.com/.well-known/jwks.json"
     }),
-    audience: '{YOUR-AUTH0-API-IDENTIFIER}',
-    issuer: "https://{YOUR-AUTH0-DOMAIN}.auth0.com/",
+    audience: 'daily-deals-api',
+    issuer: "https://fiban.eu.auth0.com/",
     algorithms: ['RS256']
 });
 
