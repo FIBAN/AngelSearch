@@ -1,0 +1,28 @@
+<h3 class="text-center">Angels</h3>
+
+<div class="col-sm-4" *ngFor="let angel of angels">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{angel.first_name}} {{angel.last_name}}</h3>
+    </div>
+    <div class="panel-body">
+      <table>
+        <tbody>
+          <tr>
+            <td>Email:</td><td>{{angel.email}}</td>
+          </tr>
+          <tr>
+            <td>Gender:</td><td>{{angel.gender}}</td>
+          </tr>
+          <tr>
+            <td>City:</td><td>{{angel.city}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel-footer">
+      <a class="btn btn-info" href="mailto:{{angel.email}}">Email</a>
+    </div>
+  </div>
+</div>
+

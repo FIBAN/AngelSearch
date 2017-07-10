@@ -4,12 +4,17 @@ import { AuthGuard } from './auth-guard.service';
 import { PublicDealsComponent } from './public-deals.component';
 import { PrivateDealsComponent } from './private-deals.component';
 import { CallbackComponent } from './callback.component';
+import { AngelsComponent } from './angels.component';
 
 const appRoutes: Routes = [
   {
     path: '',
     redirectTo: '/deals',
     pathMatch: 'full'
+  },
+  {
+    path: 'angels',
+    component: AngelsComponent
   },
   {
     path: 'deals',
@@ -28,4 +33,4 @@ const appRoutes: Routes = [
 
 export const routing = RouterModule.forRoot(appRoutes);
 
-export const routedComponents = [PublicDealsComponent, PrivateDealsComponent, CallbackComponent];
+export const routedComponents = [PublicDealsComponent, PrivateDealsComponent, CallbackComponent, AngelsComponent];

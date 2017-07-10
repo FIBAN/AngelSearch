@@ -6,6 +6,7 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -117,6 +118,13 @@ app.get('/api/deals/private', authCheck, (req,res)=>{
         },
     ];
 res.json(deals);
+})
+
+app.get('/api/angels', (req, res) => {
+    fs.readFile('mock_angels.json', 'utf8', function (err, data) {
+        if (err) throw err;
+        res.json(JSON.parse(data));
+    });
 })
 
 app.listen(3001);
