@@ -11,6 +11,7 @@ import { AngelService } from './angel.service';
 })
 export class AngelsComponent implements OnInit {
   angels: Angel[];
+  searchString: string;
 
   constructor(
     private angelService: AngelService,
