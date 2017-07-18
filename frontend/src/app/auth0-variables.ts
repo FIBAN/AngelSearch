@@ -11,5 +11,5 @@ export const AUTH_CONFIG: AuthConfig = {
   CLIENT_DOMAIN: 'fiban.eu.auth0.com',
   AUDIENCE: 'daily-deals-api',
   REDIRECT: 'http://localhost:4200/callback',
-  SCOPE: 'openid'
+  SCOPE: 'openid profile full_access'
 };

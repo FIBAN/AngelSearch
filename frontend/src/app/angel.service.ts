@@ -14,7 +14,7 @@ export class AngelService {
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
   getAngels() {
-    return this.http
+    return this.authHttp
       .get(this.angelsUrl)
       .toPromise()
       .then(response=>response.json() as Angel[])

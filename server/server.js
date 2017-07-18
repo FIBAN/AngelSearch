@@ -70,7 +70,7 @@ app.get('/api/deals/public', (req, res) => {
         },
     ];
 res.json(deals);
-})
+});
 
 app.get('/api/deals/private', authCheck, (req,res)=>{
     let deals = [
@@ -118,14 +118,18 @@ app.get('/api/deals/private', authCheck, (req,res)=>{
         },
     ];
 res.json(deals);
-})
+});
 
-app.get('/api/angels', (req, res) => {
+app.get('/api/angels', authCheck, (req, res) => {
     fs.readFile('mock_angels.json', 'utf8', function (err, data) {
         if (err) throw err;
         res.json(JSON.parse(data));
     });
-})
+});
+
+app.get('/api/test', authCheck, (req, res) => {
+    res.json(req.user);
+});
 
 app.listen(3001);
 console.log('Listening on localhost:3001');

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import {DataTableModule} from "angular2-datatable";
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AppComponent } from './app.component';
 import { routing, routedComponents } from './app.routing';
@@ -21,7 +21,7 @@ import { AuthGuard } from './auth-guard.service';
     routing,
     HttpModule,
     AuthModule,
-    DataTableModule
+    NgxDatatableModule
   ],
   declarations: [
     AppComponent,

@@ -13,6 +13,16 @@ export class AngelsComponent implements OnInit {
   angels: Angel[];
   searchString: string;
 
+  columns = [
+    { name: 'First Name',
+      prop: 'first_name' },
+    { name: 'Last Name',
+      prop: 'last_name' },
+    { name: 'Gender' },
+    { name: 'Email' },
+    { name: 'City' }
+  ];
+
   constructor(
     private angelService: AngelService,
     private authService: AuthService) {
