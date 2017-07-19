@@ -7,9 +7,9 @@ interface AuthConfig {
 }
 
 export const AUTH_CONFIG: AuthConfig = {
-  CLIENT_ID: 'FkmXH36Dmm78f62O9JwuI1A0nSMpOiZF',
+  CLIENT_ID: 'S7UnGqOFi58Ce2vKTl58KUESIfGl2GA1',
   CLIENT_DOMAIN: 'fiban.eu.auth0.com',
-  AUDIENCE: 'daily-deals-api',
+  AUDIENCE: 'https://angel-search/',
   REDIRECT: 'http://localhost:4200/callback',
-  SCOPE: 'openid profile full_access'
+  SCOPE: 'openid profile'
 };

@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { routing, routedComponents } from './app.routing';
 import { AuthModule } from './auth.module';
 
-import { DealService } from './deal.service';
 import { AngelService } from './angel.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
@@ -28,7 +27,6 @@ import { AuthGuard } from './auth-guard.service';
     routedComponents
   ],
   providers: [
-    DealService,
     AngelService,
     AuthService,
     AuthGuard

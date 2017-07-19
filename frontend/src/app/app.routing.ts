@@ -1,29 +1,18 @@
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { AuthGuard } from './auth-guard.service';
 
-import { PublicDealsComponent } from './public-deals.component';
-import { PrivateDealsComponent } from './private-deals.component';
 import { CallbackComponent } from './callback.component';
 import { AngelsComponent } from './angels.component';
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/deals',
+    redirectTo: '/angels',
     pathMatch: 'full'
   },
   {
     path: 'angels',
     component: AngelsComponent
-  },
-  {
-    path: 'deals',
-    component: PublicDealsComponent
-  },
-  {
-    path: 'special',
-    component: PrivateDealsComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'callback',
@@ -33,4 +22,4 @@ const appRoutes: Routes = [
 
 export const routing = RouterModule.forRoot(appRoutes);
 
-export const routedComponents = [PublicDealsComponent, PrivateDealsComponent, CallbackComponent, AngelsComponent];
+export const routedComponents = [CallbackComponent, AngelsComponent];

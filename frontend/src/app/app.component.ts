@@ -8,14 +8,11 @@ import { AuthService } from './auth.service';
     <div class="container">
       <nav class="navbar navbar-default">
         <div class="navbar-header">
-          <a class="navbar-brand" routerLink="/dashboard"></a>
+          <a class="navbar-brand" routerLink="/"></a>
         </div>
         <ul class="nav navbar-nav">
           <li>
-            <a routerLink="/deals" routerLinkActive="active">Deals</a>
-          </li>
-          <li>
-            <a routerLink="/special" *ngIf="authService.authenticated" routerLinkActive="active">Private Deals</a>
+            <a routerLink="/angels" routerLinkActive="active">Angels</a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -35,7 +32,7 @@ import { AuthService } from './auth.service';
   styles : ['.navbar-right { margin-right: 0px !important}']
 })
 export class AppComponent {
-  title = 'Daily Deals';
+  title = 'Angel Search';
 
   // We'll need to include a reference to our authService in the constructor to gain access to the API's in the view
   constructor(private authService: AuthService) {

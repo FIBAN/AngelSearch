@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+
+.ngx-datatable {
+  margin: 1em;
+}
+
+.ngx-datatable .datatable-header-inner {
+  background-color: aliceblue;
+}
+
+.ngx-datatable .datatable-header .datatable-header-cell {
+  padding-left: 0.5em;
+  border: solid 1px black;
+
+}
+
+.ngx-datatable .datatable-body-row {
+  background-color: azure;
+}
+
+.ngx-datatable .datatable-body-row .datatable-body-cell {
+  user-select: initial!important;
+  padding-left: 0.5em;
+  border: solid 1px gray;
+}

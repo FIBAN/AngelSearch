@@ -14,13 +14,12 @@ export class AngelsComponent implements OnInit {
   searchString: string;
 
   columns = [
-    { name: 'First Name',
-      prop: 'first_name' },
-    { name: 'Last Name',
-      prop: 'last_name' },
-    { name: 'Gender' },
+    { name: 'Id', width: 250 },
+    { name: 'Name' },
+    { name: 'Age', width: 100 },
     { name: 'Email' },
-    { name: 'City' }
+    { name: 'City' },
+    { name: 'Auth0 Id', prop: 'auth0_id', width: 250 }
   ];
 
   constructor(
