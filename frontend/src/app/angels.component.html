@@ -6,7 +6,7 @@
 </div>
 
 <ngx-datatable
-  [rows]="angels"
+  [rows]="angels | searchFilter:searchString"
   [columns]="columns"
   [limit]="20">
 </ngx-datatable>

@@ -13,6 +13,8 @@ import { AngelService } from './angel.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 
+import { SearchFilterPipe } from './search.pipe';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { AuthGuard } from './auth-guard.service';
   ],
   declarations: [
     AppComponent,
-    routedComponents
+    routedComponents,
+    SearchFilterPipe
   ],
   providers: [
     AngelService,

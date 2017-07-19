@@ -1,8 +1,8 @@
 export class Angel {
-  id: number;
-  first_name: string;
-  last_name: string;
+  id: string;
+  name: string;
+  age: number;
   email: string;
-  gender: string;
   city: string;
+  auth0_id: string;
 }
