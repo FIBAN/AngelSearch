@@ -21,6 +21,15 @@ export class AngelService {
       .catch(this.handleError);
   }
 
+
+  getAngel(angelId: string) {
+    return this.http
+      .get(this.angelsUrl + '/' + angelId)
+      .toPromise()
+      .then(response=>response.json() as Angel)
+      .catch(this.handleError);
+  }
+
   // Implement a method to handle errors if any
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

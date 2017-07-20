@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 
 import { SearchFilterPipe } from './search.pipe';
+import {KeysPipe} from "./keys.pipe";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { SearchFilterPipe } from './search.pipe';
   declarations: [
     AppComponent,
     routedComponents,
-    SearchFilterPipe
+    SearchFilterPipe,
+    KeysPipe
   ],
   providers: [
     AngelService,

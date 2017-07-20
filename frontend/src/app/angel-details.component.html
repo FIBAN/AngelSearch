@@ -1,0 +1,8 @@
+<h3 class="text-center">{{angel && angel.name}}</h3>
+
+<section>
+  <ul>
+    <li *ngFor="let key of angel | keys"><span>{{key}}:</span> {{angel[key]}}</li>
+  </ul>
+</section>
+
