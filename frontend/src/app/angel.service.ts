@@ -10,6 +10,7 @@ import { Angel } from './angel';
 export class AngelService {
   // Define the routes we are going to interact with
   private angelsUrl = 'http://localhost:3001/api/angels';
+  private angelDetailsUrl(angelId: string) { return this.angelsUrl + '/' + angelId; }
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
@@ -24,9 +25,17 @@ export class AngelService {
 
   getAngel(angelId: string) {
     return this.http
-      .get(this.angelsUrl + '/' + angelId)
+      .get(this.angelDetailsUrl(angelId))
       .toPromise()
       .then(response=>response.json() as Angel)
+      .catch(this.handleError);
+  }
+
+  updateAngel(angel: Angel) {
+    return this.http
+      .put(this.angelDetailsUrl(angel.id), angel)
+      .toPromise()
+      .then(response=>response.json())
       .catch(this.handleError);
   }
 

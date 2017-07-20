@@ -28,4 +28,8 @@ export class AngelDetailsComponent implements OnInit {
         .subscribe((angel: Angel) => this.angel = angel);
   }
 
+  saveChanges(): void {
+    this.angelService.updateAngel(this.angel).then(() => location.reload())
+  }
+
 }
