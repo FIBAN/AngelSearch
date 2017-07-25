@@ -1,0 +1,16 @@
+<h3 class="text-center">My Profile</h3>
+
+<section>
+  <ul>
+    <li *ngFor="let key of angel | keys"><span>{{key}}:</span> {{angel[key]}}</li>
+  </ul>
+</section>
+<section *ngIf="angel">
+  <h4>change email</h4>
+  <form (submit)="saveChanges()">
+    <input [(ngModel)]="angel.email" name="email">
+    <input type="submit">
+  </form>
+
+</section>
+

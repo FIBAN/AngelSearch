@@ -9,8 +9,10 @@ import { Angel } from './angel';
 @Injectable()
 export class AngelService {
   // Define the routes we are going to interact with
-  private angelsUrl = 'http://localhost:3001/api/angels';
+  private API_URL = 'http://localhost:3001/api';
+  private angelsUrl = this.API_URL + '/angels';
   private angelDetailsUrl(angelId: string) { return this.angelsUrl + '/' + angelId; }
+  private meUrl = this.API_URL + '/me';
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
@@ -26,6 +28,14 @@ export class AngelService {
   getAngel(angelId: string) {
     return this.http
       .get(this.angelDetailsUrl(angelId))
+      .toPromise()
+      .then(response=>response.json() as Angel)
+      .catch(this.handleError);
+  }
+
+  getMyAngel() {
+    return this.authHttp
+      .get(this.meUrl)
       .toPromise()
       .then(response=>response.json() as Angel)
       .catch(this.handleError);

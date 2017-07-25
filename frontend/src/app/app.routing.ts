@@ -3,7 +3,8 @@ import { AuthGuard } from './auth-guard.service';
 
 import { CallbackComponent } from './callback.component';
 import { AngelsComponent } from './angels.component';
-import {AngelDetailsComponent} from "./angel-details.component";
+import { AngelDetailsComponent } from "./angel-details.component";
+import { ProfileComponent } from "./profile.component"
 
 const appRoutes: Routes = [
   {
@@ -20,6 +21,11 @@ const appRoutes: Routes = [
     component: AngelDetailsComponent
   },
   {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'callback',
     component: CallbackComponent,
   }
@@ -27,4 +33,4 @@ const appRoutes: Routes = [
 
 export const routing = RouterModule.forRoot(appRoutes);
 
-export const routedComponents = [CallbackComponent, AngelsComponent, AngelDetailsComponent];
+export const routedComponents = [CallbackComponent, AngelsComponent, AngelDetailsComponent, ProfileComponent];

@@ -20,6 +20,9 @@ import { AuthService } from './auth.service';
             <a *ngIf="!authService.authenticated" (click)="authService.login()">Log In</a>
           </li>
           <li>
+            <a *ngIf="authService.authenticated" routerLink="/profile" routerLinkActive="active">My Profile</a>
+          </li>
+          <li>
             <a (click)=authService.logout() *ngIf="authService.authenticated">Log Out</a>
           </li>
         </ul>
