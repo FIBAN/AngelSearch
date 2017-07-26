@@ -11,8 +11,10 @@
   "author": "Auth0",
   "license": "MIT",
   "dependencies": {
+    "auth0": "^2.7.0",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
+    "dotenv": "^4.0.0",
     "express": "^4.14.0",
     "express-jwt": "^3.4.0",
     "jwks-rsa": "^1.2.0",

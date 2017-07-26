@@ -11,6 +11,7 @@ import { AngelService } from './angel.service';
 })
 export class AngelsComponent implements OnInit {
   @ViewChild('idLinkTmpl') idLinkTmpl: TemplateRef<any>;
+  @ViewChild('cityCountryTmpl') cityCountryTmpl: TemplateRef<any>;
   angels: Angel[];
   searchString: string;
 
@@ -25,11 +26,13 @@ export class AngelsComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       { name: 'Id', width: 250, draggable: false,
-        cellTemplate: this.idLinkTmpl},
-      { name: 'Name', draggable: false },
-      { name: 'Age', width: 100, draggable: false },
+        cellTemplate: this.idLinkTmpl },
+      { name: 'First Name', prop: 'first_name', width: 100,  draggable: false },
+      { name: 'Last Name', prop: 'last_name', width: 100, draggable: false },
       { name: 'Email', draggable: false },
-      { name: 'City', draggable: false },
+      { name: 'Phone', width: 100, draggable: false },
+      { name: 'Location', prop: 'city', draggable: false,
+        cellTemplate: this.cityCountryTmpl },
       { name: 'Auth0 Id', prop: 'auth0_id', width: 250, draggable: false }
     ];
 

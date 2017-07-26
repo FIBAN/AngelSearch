@@ -10,8 +10,10 @@ export class SearchFilterPipe implements PipeTransform {
     } else {
       const query = searchString.toLowerCase();
       return data.filter((angel) =>
-        angel.name.toLowerCase().indexOf(query) !== -1 ||
+        angel.first_name.toLowerCase().indexOf(query) !== -1 ||
+        angel.last_name.toLowerCase().indexOf(query) !== -1 ||
         angel.email.toLowerCase().indexOf(query) !== -1 ||
+        angel.country.toLowerCase().indexOf(query) !== -1 ||
         angel.city.toLowerCase().indexOf(query) !== -1
       );
     }

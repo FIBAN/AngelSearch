@@ -14,3 +14,7 @@
 <ng-template #idLinkTmpl let-row="row" let-value="value">
   <a [routerLink]="['/angels', value]" routerLinkActive="true">{{value}}</a>
 </ng-template>
+
+<ng-template #cityCountryTmpl let-row="row" let-value="value">
+  {{row.city}}, {{row.country}}
+</ng-template>

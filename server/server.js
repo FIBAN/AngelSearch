@@ -11,6 +11,11 @@ const uuidv4 = require('uuid/v4');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database.sqlite3');
 
+const Angels = require('./angels');
+const angels = new Angels(db);
+
+const admin = require('./admin');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -31,44 +36,39 @@ const authCheck = jwt({
 
 app.get('/api/angels', (req, res) => {
 
-    db.all('SELECT * FROM angels', (err, rows) => {
+    angels.list((err, rows) => {
         if(err) {
             console.error(err);
             res.json({status: 500, message: err}).status(500);
         } else {
             res.json(rows);
         }
-    })
+    });
 
 });
 
 app.post('/api/angels', (req, res) => {
 
-    db.run('INSERT INTO angels (id, name, email, age, city) VALUES (?, ?, ?, ?, ?)',
-        randomUUID(),
-        req.body.name,
-        req.body.email,
-        req.body.age,
-        req.body.city,
-        (err) => {
-            if(err) {
-                console.error(err);
-                res.json({status: 500, message: err}).status(500);
-            } else {
-                res.json({status: 201, message: 'Created'});
-            }
+    angels.create(req.body, (err) => {
+        if(err) {
+            console.error(err);
+            res.json({status: 500, message: err}).status(500);
+        } else {
+            res.json({status: 201, message: 'Created'});
         }
-    );
+    });
 
 });
 
 app.get('/api/angels/:angelId', (req, res) => {
 
-    db.get('SELECT * FROM angels WHERE id = ?', req.params.angelId,
+    angels.forAngelId(req.params.angelId,
         (err, row) => {
             if(err) {
                 console.error(err);
                 res.json({status: 500, message: err}).status(500);
+            } else if (!row) {
+                res.json({status: 404, message: 'Angel not found'}).status(404);
             } else {
                 res.json(row);
             }
@@ -81,13 +81,14 @@ app.get('/api/angels/:angelId', (req, res) => {
 
 app.put('/api/angels/:angelId', (req, res) => {
 
-    db.run('UPDATE angels SET name = ?, email = ?, age = ?, city = ? WHERE id = ?',
-        req.body.name,
-        req.body.email,
-        req.body.age,
-        req.body.city,
-        req.params.angelId,
-        (err) => {
+    let angel = {};
+    for (let key in req.body) {
+        if(req.body.hasOwnProperty(key)){
+            angel[key] = req.body[key];
+        }
+    }
+    angel.id = req.params.angelId;
+    angels.update(angel, (err) => {
             if(err) {
                 console.error(err);
                 res.json({status: 500, message: err}).status(500);
@@ -101,8 +102,7 @@ app.put('/api/angels/:angelId', (req, res) => {
 
 app.delete('/api/angels/:angelId', (req, res) => {
 
-    db.run('DELETE FROM angels WHERE id = ?', req.params.angelId,
-        (err) => {
+    angels.delete( req.params.angelId, (err) => {
             if(err) {
                 console.error(err);
                 res.json({status: 500, message: err}).status(500);
@@ -116,8 +116,7 @@ app.delete('/api/angels/:angelId', (req, res) => {
 
 app.get('/api/me', authCheck, (req, res) => {
 
-    db.get('SELECT * FROM angels WHERE auth0_id = ?', req.user.sub,
-        (err, row) => {
+    angels.forAuthId( req.user.sub, (err, row) => {
             if(err) {
                 console.error(err);
                 res.json({status: 500, message: err}).status(500);
@@ -131,6 +130,11 @@ app.get('/api/me', authCheck, (req, res) => {
 
 app.get('/api/test', authCheck, (req, res) => {
     res.json(req.user);
+});
+
+app.get('/api/admin/users', (req, res) => {
+    admin.getUsers().then((users) => res.json({users: users}))
+        .catch((error) => res.json({status: 500, error: error}).status(500));
 });
 
 app.get('/api/dbtest', (req, res) => {
@@ -154,7 +158,17 @@ app.get('/api/dbtest', (req, res) => {
 
 const initDatabase = function () {
 
-    db.run("CREATE TABLE angels (id TEXT, name TEXT, email TEXT, age INTEGER, city TEXT, auth0_id TEXT)", (err) => console.log(err));
+    db.run("CREATE TABLE angels (" +
+        "id TEXT," +
+        "auth0_id TEXT," +
+        "first_name TEXT," +
+        "last_name TEXT," +
+        "email TEXT," +
+        "phone TEXT," +
+        "city TEXT," +
+        "country TEXT," +
+        "bio TEXT" +
+        ");", (err) => console.log(err));
 
 };
 
