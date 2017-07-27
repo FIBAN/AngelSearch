@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import { AuthService } from './auth.service';
 
 import { Angel } from './angel';
@@ -7,11 +7,13 @@ import { AngelService } from './angel.service';
 @Component({
   selector: 'angels',
   templateUrl: 'angels.component.html',
-  styleUrls: ['angels.component.css']
+  styleUrls: ['angels.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AngelsComponent implements OnInit {
   @ViewChild('idLinkTmpl') idLinkTmpl: TemplateRef<any>;
   @ViewChild('cityCountryTmpl') cityCountryTmpl: TemplateRef<any>;
+  @ViewChild('nameTmpl') nameTmpl: TemplateRef<any>;
   angels: Angel[];
   searchString: string;
 
@@ -25,15 +27,11 @@ export class AngelsComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { name: 'Id', width: 250, draggable: false,
-        cellTemplate: this.idLinkTmpl },
-      { name: 'First Name', prop: 'first_name', width: 100,  draggable: false },
-      { name: 'Last Name', prop: 'last_name', width: 100, draggable: false },
-      { name: 'Email', draggable: false },
-      { name: 'Phone', width: 100, draggable: false },
-      { name: 'Location', prop: 'city', draggable: false,
-        cellTemplate: this.cityCountryTmpl },
-      { name: 'Auth0 Id', prop: 'auth0_id', width: 250, draggable: false }
+      { name: 'Name', prop: 'last_name', cellTemplate: this.nameTmpl, resizeable: false, flexGrow: 2 },
+      { name: 'Email', resizeable: false, flexGrow: 2 },
+      { name: 'Phone', resizeable: false, flexGrow: 1 },
+      { name: 'Location', prop: 'city', cellTemplate: this.cityCountryTmpl, resizeable: false, flexGrow: 2 },
+      { name: 'Bio', resizeable: false, flexGrow: 2 }
     ];
 
     this.angelService.getAngels()

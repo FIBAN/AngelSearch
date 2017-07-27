@@ -1,8 +1,26 @@
-<h3 class="text-center">{{angel && angel.name}}</h3>
+<h3 *ngIf="angel" class="text-center">{{angel.first_name}} {{angel.last_name}}</h3>
 
-<section>
-  <ul>
-    <li *ngFor="let key of angel | keys"><span>{{key}}:</span> {{angel[key]}}</li>
-  </ul>
-</section>
+<div *ngIf="angel" class="col-lg-8 col-sm-12">
+  <div class="panel panel-default ">
+    <div class="panel-heading">Details</div>
+    <table class="table">
+      <tbody>
+      <tr *ngFor="let key of angel | keys">
+        <td><span class="propLabel">{{key}}</span></td>
+        <td>{{angel[key]}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="angel" class="col-lg-4 col-sm-6">
+  <div class="panel panel-default ">
+    <div class="panel-heading">Actions</div>
+    <div class="panel-body">
+      <a href="mailto:{{angel.email}}" class="btn btn-success"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
+      <a href="tel:{{angel.phone}}" class="btn btn-info"><i class="fa fa-phone" aria-hidden="true"></i> Call</a>
+    </div>
+  </div>
+</div>
 

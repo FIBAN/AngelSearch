@@ -1,20 +1,32 @@
-<h3 class="text-center">Angels</h3>
+<h3 class="text-center">Business Angels</h3>
 
-<div class="jumbotron">
-  <label>search:</label>
-  <input name="search" [(ngModel)]="searchString"/>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <label>search:</label>
+    <input name="search" [(ngModel)]="searchString"/>
+  </div>
 </div>
 
 <ngx-datatable
+  id="angelTable"
+  class="bootstrap"
+  [columnMode]="'flex'"
   [rows]="angels | searchFilter:searchString"
   [columns]="columns"
-  [limit]="20">
+  [reorderable]="false"
+  [limit]="20"
+>
+  <ng-template #idLinkTmpl let-row="row" let-value="value">
+    <a [routerLink]="['/angels', value]" routerLinkActive="true">{{value}}</a>
+  </ng-template>
+
+  <ng-template #cityCountryTmpl let-row="row" let-value="value">
+    {{row.city}}, {{row.country}}
+  </ng-template>
+
+  <ng-template #nameTmpl let-row="row" let-value="value">
+    <a [routerLink]="['/angels', row.id]" routerLinkActive="true">{{row.last_name}} {{row.first_name}}</a>
+  </ng-template>
 </ngx-datatable>
 
-<ng-template #idLinkTmpl let-row="row" let-value="value">
-  <a [routerLink]="['/angels', value]" routerLinkActive="true">{{value}}</a>
-</ng-template>
 
-<ng-template #cityCountryTmpl let-row="row" let-value="value">
-  {{row.city}}, {{row.country}}
-</ng-template>

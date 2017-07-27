@@ -1,7 +1,8 @@
-li span {
+span.propLabel {
   font-weight: bold;
 }
 
-li {
-  list-style: none;
+table td:first-child {
+  width: 120px;
+  text-align: right;
 }
