@@ -1,16 +1,17 @@
 <h3 class="text-center">My Profile</h3>
 
-<section>
-  <ul>
-    <li *ngFor="let key of angel | keys"><span>{{key}}:</span> {{angel[key]}}</li>
-  </ul>
-</section>
-<section *ngIf="angel">
-  <h4>change email</h4>
-  <form (submit)="saveChanges()">
-    <input [(ngModel)]="angel.email" name="email">
-    <input type="submit">
-  </form>
+<angel-info *ngIf="angel" [angel]="angel"></angel-info>
 
-</section>
+<div *ngIf="angel" class="panel panel-default ">
+  <div class="panel-heading">Actions</div>
+  <div class="panel-body">
+  <form (submit)="changeEmail()" class="form-inline">
+    <div class="form-group">
+      <label for="email">Change Email</label>
+      <input [(ngModel)]="newEmail" type="email" class="form-control" id="email" name="email" placeholder="Email">
+    </div>
+    <input class="btn btn-success" type="submit">
+  </form>
+  </div>
+</div>
 

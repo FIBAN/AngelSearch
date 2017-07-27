@@ -1,17 +1,7 @@
 <h3 *ngIf="angel" class="text-center">{{angel.first_name}} {{angel.last_name}}</h3>
 
 <div *ngIf="angel" class="col-lg-8 col-sm-12">
-  <div class="panel panel-default ">
-    <div class="panel-heading">Details</div>
-    <table class="table">
-      <tbody>
-      <tr *ngFor="let key of angel | keys">
-        <td><span class="propLabel">{{key}}</span></td>
-        <td>{{angel[key]}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <angel-info [angel]="angel"></angel-info>
 </div>
 
 <div *ngIf="angel" class="col-lg-4 col-sm-6">

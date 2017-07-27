@@ -14,6 +14,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class ProfileComponent implements OnInit {
   angel: Angel;
+  newEmail: string;
 
   constructor(
     private angelService: AngelService,
@@ -25,7 +26,8 @@ export class ProfileComponent implements OnInit {
     this.angelService.getMyAngel().then(angel => this.angel = angel);
   }
 
-  saveChanges(): void {
+  changeEmail(): void {
+    this.angel.email = this.newEmail;
     this.angelService.updateAngel(this.angel).then(() => location.reload())
   }
 
