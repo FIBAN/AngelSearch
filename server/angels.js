@@ -35,7 +35,7 @@ module.exports = class Angels {
     }
 
     update(angel, cb) {
-        this.db.run('UPDATE angels SET first_name = ?, last_name = ?, email = ?, phone = ?, city = ?, country = ?, bio = ? WHERE id = ?',
+        this.db.run('UPDATE angels SET first_name = ?, last_name = ?, email = ?, phone = ?, city = ?, country = ?, bio = ?, auth0_id = ? WHERE id = ?',
             angel.first_name,
             angel.last_name,
             angel.email,
@@ -43,6 +43,7 @@ module.exports = class Angels {
             angel.city,
             angel.country,
             angel.bio,
+            angel.auth0_id,
             angel.id,
             cb
         );

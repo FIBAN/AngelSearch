@@ -133,7 +133,7 @@ app.get('/api/test', authCheck, (req, res) => {
 });
 
 app.get('/api/admin/users', (req, res) => {
-    admin.getUsers().then((users) => res.json({users: users}))
+    admin.getUsers().then((users) => res.json(users))
         .catch((error) => res.json({status: 500, error: error}).status(500));
 });
 

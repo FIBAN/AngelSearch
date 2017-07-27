@@ -19,6 +19,10 @@
   background-color: azure;
 }
 
+.datatable-body-row.active .datatable-row-group {
+  background-color: deepskyblue;
+}
+
 .ngx-datatable .datatable-body-row .datatable-body-cell {
   user-select: initial!important;
   padding-left: 0.5em;

@@ -15,6 +15,7 @@ import { AuthGuard } from './auth-guard.service';
 
 import { SearchFilterPipe } from './search.pipe';
 import {KeysPipe} from "./keys.pipe";
+import {AdminService} from "./admin.service";
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import {KeysPipe} from "./keys.pipe";
   providers: [
     AngelService,
     AuthService,
+    AdminService,
     AuthGuard
   ],
   bootstrap: [AppComponent]
