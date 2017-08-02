@@ -1,0 +1,13 @@
+
+span.propLabel {
+  font-weight: bold;
+}
+
+table td:first-child {
+  width: 120px;text-align: right;
+}
+
+.edit-button {
+  margin-left: 0.5em;
+}
+

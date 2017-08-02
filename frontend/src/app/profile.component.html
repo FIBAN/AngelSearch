@@ -1,17 +1,22 @@
 <h3 class="text-center">My Profile</h3>
 
-<angel-info *ngIf="angel" [angel]="angel"></angel-info>
-
 <div *ngIf="angel" class="panel panel-default ">
-  <div class="panel-heading">Actions</div>
-  <div class="panel-body">
-  <form (submit)="changeEmail()" class="form-inline">
-    <div class="form-group">
-      <label for="email">Change Email</label>
-      <input [(ngModel)]="newEmail" type="email" class="form-control" id="email" name="email" placeholder="Email">
-    </div>
-    <input class="btn btn-success" type="submit">
-  </form>
-  </div>
+  <div class="panel-heading">Details</div>
+  <table class="table">
+    <tbody>
+    <tr *ngFor="let key of angel | keys">
+      <td><span class="propLabel">{{key}}</span></td>
+      <td *ngIf="activeEdit !== key">
+        {{angel[key]}}
+        <a href="#" class="edit-button" (click)="startEdit(key); false;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+      </td>
+      <td *ngIf="activeEdit === key">
+        <input [(ngModel)]="edits[key]" name="{{'a' + key}}">
+        <a href="#" class="btn btn-success" (click)="saveEdit(key); false">Save</a>
+        <a href="#" class="btn btn-danger" (click)="stopEdit(); false">Cancel</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
