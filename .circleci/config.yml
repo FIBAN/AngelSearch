@@ -60,4 +60,17 @@ jobs:
           paths:
             - ~/angel-search/frontend/dist
 
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - checkout_code
+      - frontend_dependencies:
+          requires:
+            - checkout_code
+      - frontend_build:
+          requires:
+            - checkout_code
+            - frontend_dependencies
+
 
