@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'daily-deals',
+  selector: 'angel-search',
   templateUrl: 'app.component.html',
   styleUrls : ['app.component.css']
 })

@@ -34,6 +34,25 @@ const authCheck = jwt({
     algorithms: ['RS256']
 });
 
+const canModify = function (user, angelId, cb) {
+   angels.forAngelId(angelId, (err, angel) => {
+       if(err || !angel) {
+           cb(false);
+       } else {
+           cb(angel.auth0_id === user)
+       }
+   });
+};
+
+const modifyCheck = function (req, res, next) {
+    const angelId = req.params.angelId;
+    const userId = req.user.sub;
+    canModify(userId, angelId, (success) => {
+        if(success) next();
+        else res.json({status: 403, message: 'Forbidden'}).status(403)
+    })
+};
+
 app.get('/api/angels', (req, res) => {
 
     angels.list((err, rows) => {
@@ -79,7 +98,7 @@ app.get('/api/angels/:angelId', (req, res) => {
 
 
 
-app.put('/api/angels/:angelId', (req, res) => {
+app.put('/api/angels/:angelId', authCheck, modifyCheck, (req, res) => {
 
     let angel = {};
     for (let key in req.body) {
@@ -100,7 +119,7 @@ app.put('/api/angels/:angelId', (req, res) => {
 
 });
 
-app.delete('/api/angels/:angelId', (req, res) => {
+app.delete('/api/angels/:angelId', authCheck, modifyCheck, (req, res) => {
 
     angels.delete( req.params.angelId, (err) => {
             if(err) {

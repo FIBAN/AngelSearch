@@ -6,20 +6,23 @@ import { AngelsComponent } from './angels.component';
 import { AngelDetailsComponent } from "./angel-details.component";
 import { ProfileComponent } from "./profile.component"
 import {AdminComponent} from "./admin.component";
+import {LandingComponent} from "./landing.component";
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/angels',
+    component: LandingComponent,
     pathMatch: 'full'
   },
   {
     path: 'angels',
-    component: AngelsComponent
+    component: AngelsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'angels/:angelId',
-    component: AngelDetailsComponent
+    component: AngelDetailsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
@@ -29,6 +32,7 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'callback',
@@ -43,5 +47,6 @@ export const routedComponents = [
   AngelsComponent,
   AngelDetailsComponent,
   ProfileComponent,
-  AdminComponent
+  AdminComponent,
+  LandingComponent
 ];
