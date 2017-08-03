@@ -11,6 +11,6 @@ export class AppComponent {
   title = 'Angel Search';
 
   // We'll need to include a reference to our authService in the constructor to gain access to the API's in the view
-  constructor(private authService: AuthService) {
+  constructor(public authService: AuthService) {
   }
 }
