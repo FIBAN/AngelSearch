@@ -1,10 +1,63 @@
 version: 2
 jobs:
-  build:
+  checkout_code:
+    working_directory: ~/angel-search
     docker:
       - image: circleci/node:7.10
     steps:
       - checkout
-      - run: echo "Hello, CircleCI!"
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - save_cache:
+          key: v1-repo-{{ checksum ".circle-sha" }}
+          paths:
+            - ~/angel-search
+
+  frontend_dependencies:
+    working_directory: ~/angel-search
+    docker:
+      - image: circleci/node:7.10
+    steps:
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - v1-repo-{{ checksum ".circle-sha" }}
+      - restore_cache:
+          keys:
+            - v1-fe-npm-{{ checksum "frontend/package.json" }}
+      - run:
+          name: install dependencies
+          working_directory: frontend
+          command: npm install
+      - save_cache:
+          key: v1-fe-npm-{{ checksum "frontend/package.json" }}
+          paths:
+            - ~/angel-search/frontend/node_modules
+
+  frontend_build:
+    working_directory: ~/angel-search
+    docker:
+      - image: circleci/node:7.10
+    steps:
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - v1-repo-{{ checksum ".circle-sha" }}
+      - restore_cache:
+          keys:
+            - v1-fe-npm-{{ checksum "frontend/package.json" }}
+      - run:
+          name: build frontend
+          working_directory: frontend
+          command: ng build --prod
+      - save_cache:
+          key: v1-fe-assets-{{ checksum ".circle-sha" }}
+          paths:
+            - ~/angel-search/frontend/dist
 
 
