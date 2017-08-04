@@ -121,7 +121,7 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              git subtree push --force --prefix=server heroku master
+              git push heroku `git subtree split --prefix server master`:master --force
               sleep 5 # sleep for 5 seconds to wait for dynos
               heroku restart
             fi
