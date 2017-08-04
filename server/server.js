@@ -193,5 +193,8 @@ const initDatabase = function () {
 
 initDatabase();
 
-app.listen(3001);
-console.log('Listening on localhost:3001');
+const listener = app.listen(process.env.PORT || 3001);
+const address = listener.address();
+const host = address.host;
+const port = address.port;
+console.log('Listening on ' + host + ':' + port);
