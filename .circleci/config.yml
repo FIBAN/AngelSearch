@@ -99,6 +99,12 @@ jobs:
       - restore_cache:
           keys:
             - v1-be-npm-{{ checksum "server/package.json" }}
+      - restore_cache:
+          keys:
+            - v1-fe-assets-{{ checksum ".circle-sha" }}
+      - run:
+          name: Copy assets
+          command: cp -r frontend/dist/ server/dist
       - run:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh

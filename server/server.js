@@ -7,6 +7,7 @@ const jwks = require('jwks-rsa');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const path = require('path');
 const uuidv4 = require('uuid/v4');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database.sqlite3');
@@ -174,6 +175,8 @@ app.get('/api/dbtest', (req, res) => {
 
     res.json({msg: "Done"});
 });
+
+app.use(express.static(path.join(__dirname, 'dist')));
 
 const initDatabase = function () {
 
