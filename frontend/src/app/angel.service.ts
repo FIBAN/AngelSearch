@@ -42,7 +42,7 @@ export class AngelService {
   }
 
   updateAngel(angel: Angel) {
-    return this.http
+    return this.authHttp
       .put(this.angelDetailsUrl(angel.id), angel)
       .toPromise()
       .then(response=>response.json())
