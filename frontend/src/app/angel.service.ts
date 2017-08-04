@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { environment} from "../environments/environment"
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,10 +10,9 @@ import { Angel } from './angel';
 @Injectable()
 export class AngelService {
   // Define the routes we are going to interact with
-  private API_URL = 'http://localhost:3001/api';
-  private angelsUrl = this.API_URL + '/angels';
+  private angelsUrl = environment.backend + '/angels';
   private angelDetailsUrl(angelId: string) { return this.angelsUrl + '/' + angelId; }
-  private meUrl = this.API_URL + '/me';
+  private meUrl = environment.backend + '/me';
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 

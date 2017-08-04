@@ -3,12 +3,12 @@ import { Headers, Http, Response } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
+import {environment} from "../environments/environment";
 
 @Injectable()
 export class AdminService {
   // Define the routes we are going to interact with
-  private API_URL = 'http://localhost:3001/api';
-  private usersUrl = this.API_URL + '/admin/users';
+  private usersUrl = environment.backend + '/admin/users';
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
