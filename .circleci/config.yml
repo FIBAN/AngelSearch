@@ -54,7 +54,7 @@ jobs:
       - run:
           name: build frontend
           working_directory: frontend
-          command: ng build --prod
+          command: node_modules/@angular/cli/bin/ng build --prod
       - save_cache:
           key: v1-fe-assets-{{ checksum ".circle-sha" }}
           paths:
