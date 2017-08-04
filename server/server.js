@@ -176,10 +176,10 @@ app.get('/api/dbtest', (req, res) => {
     res.json({msg: "Done"});
 });
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '/dist')));
 
 app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + 'dist/index.html'));
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
 const initDatabase = function () {
