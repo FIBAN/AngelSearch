@@ -60,6 +60,59 @@ jobs:
           paths:
             - ~/angel-search/frontend/dist
 
+  backend_dependencies:
+    working_directory: ~/angel-search
+    docker:
+      - image: circleci/node:7.10
+    steps:
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - v1-repo-{{ checksum ".circle-sha" }}
+      - restore_cache:
+          keys:
+            - v1-be-npm-{{ checksum "server/package.json" }}
+      - run:
+          name: install dependencies
+          working_directory: server
+          command: npm install
+      - save_cache:
+          key: v1-be-npm-{{ checksum "server/package.json" }}
+          paths:
+            - ~/angel-search/server/node_modules
+
+  deploy:
+    machine:
+        enabled: true
+    working_directory: ~/angel-search
+    environment:
+      - HEROKU_APP: business-angel-search
+    steps:
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - v1-repo-{{ checksum ".circle-sha" }}
+      - restore_cache:
+          keys:
+            - v1-be-npm-{{ checksum "server/package.json" }}
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - "20:3b:f2:86:a0:27:47:af:e2:2c:25:cc:7e:90:68:f2"
+      - run:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git subtree push --prefix=server heroku master
+              sleep 5 # sleep for 5 seconds to wait for dynos
+              heroku restart
+            fi
+
 workflows:
   version: 2
   build-and-deploy:
@@ -72,5 +125,13 @@ workflows:
           requires:
             - checkout_code
             - frontend_dependencies
+      - backend_dependencies:
+          requires:
+            - checkout_code
+      - deploy:
+          requires:
+            - checkout_code
+            - backend_dependencies
+            - frontend_build
 
 
