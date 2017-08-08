@@ -6,22 +6,15 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const path = require('path');
-const uuidv4 = require('uuid/v4');
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./database.sqlite3');
 
-const Angels = require('./angels');
-const angels = new Angels(db);
+const angels = require('./src/angels');
 
-const admin = require('./admin');
+const admin = require('./src/admin');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-
-const randomUUID = () => uuidv4(null, new Buffer(16), 0).toString('base64');
 
 const authCheck = jwt({
     secret: jwks.expressJwtSecret({
@@ -157,48 +150,11 @@ app.get('/api/admin/users', (req, res) => {
         .catch((error) => res.json({status: 500, error: error}).status(500));
 });
 
-app.get('/api/dbtest', (req, res) => {
-
-    db.serialize(function () {
-        db.run("CREATE TABLE lorem (info TEXT)", (err) => console.log(err));
-
-        let stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-        for (let i = 0; i < 10; i++) {
-            stmt.run("Ipsum " + i);
-        }
-        stmt.finalize();
-
-        db.each("SELECT rowid AS id, info FROM lorem", function (err, row) {
-            console.log(row.id + ": " + row.info);
-        });
-    });
-
-    res.json({msg: "Done"});
-});
-
 app.use(express.static(path.join(__dirname, '/dist')));
 
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
-
-const initDatabase = function () {
-
-    db.run("CREATE TABLE angels (" +
-        "id TEXT," +
-        "auth0_id TEXT," +
-        "first_name TEXT," +
-        "last_name TEXT," +
-        "email TEXT," +
-        "phone TEXT," +
-        "city TEXT," +
-        "country TEXT," +
-        "bio TEXT" +
-        ");", (err) => console.log(err));
-
-};
-
-initDatabase();
 
 const listener = app.listen(process.env.PORT || 3001);
 const address = listener.address();
