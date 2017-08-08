@@ -5,22 +5,20 @@ const randomUUID = () => uuidv4(null, new Buffer(16), 0).toString('base64').repl
 
 module.exports = {
 
-    list: (cb) => {
-        db.query('SELECT * FROM angels')
-            .then(res => cb(null, res.rows))
-            .catch(err => cb(err));
+    list: () => {
+        return db.query('SELECT * FROM angels').then(res => res.rows);
     },
 
-    forAngelId: (angelId, cb) => {
-        db.query('SELECT * FROM angels WHERE id = $1', [angelId], cb);
+    forAngelId: (angelId) => {
+        return db.query('SELECT * FROM angels WHERE id = $1', [angelId]).then(res => res.rows[0]);
     },
 
-    forAuthId: (authId, cb) => {
-        db.query('SELECT * FROM angels WHERE auth0_id = $1', [authId], cb);
+    forAuthId: (authId) => {
+        return db.query('SELECT * FROM angels WHERE auth0_id = $1', [authId]).then(res => res.rows[0]);
     },
 
-    create: (angel, cb) => {
-        db.query(
+    create: (angel) => {
+        return db.query(
             'INSERT INTO angels (id, first_name, last_name, email, phone, city, country, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
             [
                 randomUUID(),
@@ -31,13 +29,12 @@ module.exports = {
                 angel.city,
                 angel.country,
                 angel.bio
-            ],
-            cb
-        );
+            ]
+        ).then(res => res.rowCount);
     },
 
-    update: (angel, cb) => {
-        db.run('UPDATE angels SET first_name = $1, last_name = $2, email = $3, phone = $4, city = $5, country = $6, bio = $7, auth0_id = $8 WHERE id = $9',
+    update: (angel) => {
+        return db.run('UPDATE angels SET first_name = $1, last_name = $2, email = $3, phone = $4, city = $5, country = $6, bio = $7, auth0_id = $8 WHERE id = $9',
             [
                 angel.first_name,
                 angel.last_name,
@@ -48,12 +45,11 @@ module.exports = {
                 angel.bio,
                 angel.auth0_id,
                 angel.id
-            ],
-            cb
-        );
+            ]
+        ).then(res => res.rowCount);
     },
 
-    delete: (angelId, cb) => {
-        db.run('DELETE FROM angels WHERE id = $1', [angelId], cb);
+    delete: (angelId) => {
+        return db.run('DELETE FROM angels WHERE id = $1', [angelId]).then(res => res.rowCount);
     }
 };

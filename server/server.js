@@ -43,19 +43,22 @@ const modifyCheck = function (req, res, next) {
     const userId = req.user.sub;
     canModify(userId, angelId, (success) => {
         if(success) next();
-        else res.json({status: 403, message: 'Forbidden'}).status(403)
+        else res.status(403).json({status: 403, message: 'Forbidden'});
     })
+};
+
+const absoluteAngelId = function (req, angel)  {
+    return req.protocol + '://' + req.get('host') + '/api/angels/' + angel.id;
 };
 
 app.get('/api/angels', (req, res) => {
 
-    angels.list((err, rows) => {
-        if(err) {
-            console.error(err);
-            res.json({status: 500, message: err}).status(500);
-        } else {
-            res.json(rows);
-        }
+    angels.list().then(rows => {
+        rows = rows.map(a => (a.href = absoluteAngelId(req, a)) && a);
+        res.json(rows);
+    }).catch(err => {
+        console.error(err);
+        res.status(500).json({status: 500, message: err});
     });
 
 });
@@ -65,9 +68,9 @@ app.post('/api/angels', (req, res) => {
     angels.create(req.body, (err) => {
         if(err) {
             console.error(err);
-            res.json({status: 500, message: err}).status(500);
+            res.status(500).json({status: 500, message: err});
         } else {
-            res.json({status: 201, message: 'Created'});
+            res.status(201).json({status: 201, message: 'Created'});
         }
     });
 
@@ -75,18 +78,17 @@ app.post('/api/angels', (req, res) => {
 
 app.get('/api/angels/:angelId', (req, res) => {
 
-    angels.forAngelId(req.params.angelId,
-        (err, row) => {
-            if(err) {
-                console.error(err);
-                res.json({status: 500, message: err}).status(500);
-            } else if (!row) {
-                res.json({status: 404, message: 'Angel not found'}).status(404);
-            } else {
-                res.json(row);
-            }
+    angels.forAngelId(req.params.angelId).then(row => {
+        if (!row) {
+            res.status(404).json({status: 404, message: 'Angel not found'});
+        } else {
+            row.href = absoluteAngelId(req, row);
+            res.json(row);
         }
-    );
+    }).catch(err => {
+        console.error(err);
+        res.status(500).json({status: 500, message: err});
+    });
 
 });
 
@@ -101,43 +103,34 @@ app.put('/api/angels/:angelId', authCheck, modifyCheck, (req, res) => {
         }
     }
     angel.id = req.params.angelId;
-    angels.update(angel, (err) => {
-            if(err) {
-                console.error(err);
-                res.json({status: 500, message: err}).status(500);
-            } else {
-                res.json({status: 200, message: 'Updated'});
-            }
-        }
-    );
+    angels.update(angel).then(() => {
+        res.json({status: 200, message: 'Updated'});
+    }).catch(err => {
+        console.error(err);
+        res.status(500).json({status: 500, message: err});
+    });
 
 });
 
 app.delete('/api/angels/:angelId', authCheck, modifyCheck, (req, res) => {
 
-    angels.delete( req.params.angelId, (err) => {
-            if(err) {
-                console.error(err);
-                res.json({status: 500, message: err}).status(500);
-            } else {
-                res.json({status: 200, message: 'Deleted'});
-            }
-        }
-    );
-
+    angels.delete(req.params.angelId).then(() => {
+        res.json({status: 200, message: 'Deleted'});
+    }).catch(err => {
+        console.error(err);
+        res.status(500).json({status: 500, message: err});
+    });
 });
 
 app.get('/api/me', authCheck, (req, res) => {
 
-    angels.forAuthId( req.user.sub, (err, row) => {
-            if(err) {
-                console.error(err);
-                res.json({status: 500, message: err}).status(500);
-            } else {
-                res.json(row);
-            }
-        }
-    );
+    angels.forAuthId(req.user.sub).then(row => {
+        row.href = absoluteAngelId(req, row);
+        res.json(row);
+    }).catch(err => {
+        console.error(err);
+        res.status(500).json({status: 500, message: err});
+    });
 
 });
 
