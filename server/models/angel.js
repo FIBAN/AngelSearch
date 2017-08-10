@@ -1,7 +1,5 @@
-const uuidv4 = require('uuid/v4');
 const db = require('./db');
-
-const randomUUID = () => uuidv4(null, new Buffer(16), 0).toString('base64').replace(/\//g,'_');
+const util = require('../helpers/util');
 
 module.exports.all = () => {
     return db.query('SELECT * FROM angels').then(res => res.rows);
@@ -19,7 +17,7 @@ module.exports.create = (angel) => {
     return db.query(
         'INSERT INTO angels (id, first_name, last_name, email, phone, city, country, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
         [
-            randomUUID(),
+            util.randomUUID(),
             angel.first_name,
             angel.last_name,
             angel.email,
