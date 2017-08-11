@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Invitation = require('../models/invitation');
-const auth = require('../middleware/auth');
 
 const absoluteInvitationId = function (req, invite)  {
     return req.protocol + '://' + req.get('host') + '/api/invitations/' + invite.id;
@@ -34,37 +33,5 @@ router.get('/:inviteId', (req, res) => {
     });
 
 });
-
-
-
-router.put('/:angelId', auth.loggedIn, auth.canModify, (req, res) => {
-
-    let angel = {};
-    for (let key in req.body) {
-        if(req.body.hasOwnProperty(key)){
-            angel[key] = req.body[key];
-        }
-    }
-    angel.id = req.params.angelId;
-    Angel.update(angel).then(() => {
-        res.json({status: 200, message: 'Updated'});
-    }).catch(err => {
-        console.error(err);
-        res.status(500).json({status: 500, message: err});
-    });
-
-});
-
-router.delete('/:angelId', auth.loggedIn, auth.canModify, (req, res) => {
-
-    Angel.delete(req.params.angelId).then(() => {
-        res.json({status: 200, message: 'Deleted'});
-    }).catch(err => {
-        console.error(err);
-        res.status(500).json({status: 500, message: err});
-    });
-});
-
-
 
 module.exports = router;

@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 const Angel = require('../models/angel');
 
 router.use('/angels', require('./angels'));
+router.use('/invitations', require('./invitations'));
 router.use('/admin', require('./admin'));
 
 router.get('/me', auth.loggedIn, (req, res) => {

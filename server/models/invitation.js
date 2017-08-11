@@ -41,7 +41,7 @@ module.exports.create = (angelId) => {
             }
         }))
     ).then(() => db.query(
-        'INSERT INTO invite (id, angel_id, status) VALUES ($1, $2, $3)',
+        'INSERT INTO invitations (id, angel_id, status) VALUES ($1, $2, $3)',
         [
             util.randomUUID(),
             angelId,
