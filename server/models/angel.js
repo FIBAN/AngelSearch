@@ -30,7 +30,7 @@ module.exports.create = (angel) => {
 };
 
 module.exports.update = (angel) => {
-    return db.query('UPDATE angels SET first_name = $1, last_name = $2, email = $3, phone = $4, city = $5, country = $6, bio = $7, auth0_id = $8 WHERE id = $9',
+    return db.query('UPDATE angels SET first_name = $1, last_name = $2, email = $3, phone = $4, city = $5, country = $6, bio = $7 WHERE id = $8',
         [
             angel.first_name,
             angel.last_name,
@@ -39,10 +39,13 @@ module.exports.update = (angel) => {
             angel.city,
             angel.country,
             angel.bio,
-            angel.auth0_id,
             angel.id
         ]
     ).then(res => res.rowCount);
+};
+
+module.exports.linkAuth0Id = (angelId, auth0Id) => {
+    return db.query('UPDATE angels SET auth0_id = $1 WHERE id = $2', [auth0Id, angelId]).then(res => res.rowCount);
 };
 
 module.exports.delete = (angelId) => {
