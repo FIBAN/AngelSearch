@@ -13,6 +13,9 @@ export class AngelService {
   private angelsUrl = environment.backend + '/angels';
   private angelDetailsUrl(angelId: string) { return this.angelsUrl + '/' + angelId; }
   private meUrl = environment.backend + '/me';
+  private invitationsUrl = environment.backend + '/invitations';
+  private invitationDetailsUrl(inviteId: string) { return this.invitationsUrl + '/' + inviteId; }
+  private invitationAcceptUrl(inviteId: string) { return this.invitationsUrl + '/' + inviteId + '/accept'; }
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
@@ -46,6 +49,22 @@ export class AngelService {
       .put(this.angelDetailsUrl(angel.id), angel)
       .toPromise()
       .then(response=>response.json())
+      .catch(this.handleError);
+  }
+
+  getInvitation(inviteId: string) {
+    return this.http
+      .get(this.invitationDetailsUrl(inviteId))
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  acceptInvitation(inviteId: string) {
+    return this.authHttp
+      .post(this.invitationAcceptUrl(inviteId), null)
+      .toPromise()
+      .then(response => response.json())
       .catch(this.handleError);
   }
 

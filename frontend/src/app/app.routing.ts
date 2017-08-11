@@ -7,6 +7,7 @@ import { AngelDetailsComponent } from "./angel-details.component";
 import { ProfileComponent } from "./profile.component"
 import {AdminComponent} from "./admin.component";
 import {LandingComponent} from "./landing.component";
+import {InviteComponent} from "./invite.component";
 
 const appRoutes: Routes = [
   {
@@ -35,6 +36,10 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'invite',
+    component: InviteComponent
+  },
+  {
     path: 'callback',
     component: CallbackComponent,
   }
@@ -48,5 +53,6 @@ export const routedComponents = [
   AngelDetailsComponent,
   ProfileComponent,
   AdminComponent,
-  LandingComponent
+  LandingComponent,
+  InviteComponent
 ];

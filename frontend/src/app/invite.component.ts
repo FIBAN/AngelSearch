@@ -13,43 +13,27 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['invite.component.css']
 })
 export class InviteComponent implements OnInit {
-  angel: Angel;
-  newEmail: string;
-  activeEdit: string;
-  edits: any;
+  invitation: any;
 
   constructor(
     private angelService: AngelService,
     private authService: AuthService,
+    private router: Router,
     private route: ActivatedRoute) {
-    this.edits = {};
   }
 
   ngOnInit(): void {
-    this.angelService.getMyAngel().then(angel => {
-      this.angel = angel;
-      for(let k in angel){
-        if(angel.hasOwnProperty(k)) this.edits[k] = angel[k];
-      }
-    });
+    if (this.authService.authenticated) {
+      this.router.navigate(['/angels']);
+    }
+    this.route.queryParamMap
+      .switchMap((params: ParamMap) =>
+        this.angelService.getInvitation(params.get("i")))
+      .subscribe((invitation: any) => this.invitation = invitation);
   }
 
-  startEdit(key): void {
-    this.activeEdit = key;
-  }
-
-  stopEdit(): void {
-    this.activeEdit = "";
-  }
-
-  saveEdit(key): void {
-    this.angel[key] = this.edits[key];
-    this.angelService.updateAngel(this.angel).then(() => location.reload())
-  }
-
-  changeEmail(): void {
-    this.angel.email = this.newEmail;
-    this.angelService.updateAngel(this.angel).then(() => location.reload())
+  register(): void {
+    this.authService.register(this.invitation.id)
   }
 
 }

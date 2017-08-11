@@ -44,6 +44,17 @@ export class AuthService {
     });
   }
 
+  register(inviteId: string) {
+    // Auth0 authorize request
+    // Note: nonce is automatically generated: https://auth0.com/docs/libraries/auth0js/v8#using-nonce
+    this.auth0.authorize({
+      responseType: 'token id_token',
+      redirectUri: AUTH_CONFIG.REDIRECT + '?i=' + inviteId,
+      audience: AUTH_CONFIG.AUDIENCE,
+      scope: AUTH_CONFIG.SCOPE
+    });
+  }
+
   handleAuth() {
     // When Auth0 hash parsed, get profile
     this.auth0.parseHash((err, authResult) => {

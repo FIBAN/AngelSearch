@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div *ngIf="invitation">
+  <p>
+    In order to start using the Angel Search you need to register.
+    You can register with an email and password or by using a social media account.
+  </p>
 
-</body>
-</html>
+  <div *ngIf="invitation.status === 'pending'" class="panel panel-default">
+    <div class="panel-body">
+      <a class="btn btn-info" (click)="register()">Register</a>
+    </div>
+  </div>
+  <div *ngIf="invitation.status !== 'pending'" class="panel panel-danger">
+    <div class="panel-body">
+      <p>
+        This invitation link has expired.
+      </p>
+    </div>
+  </div>
+
+</div>
+
