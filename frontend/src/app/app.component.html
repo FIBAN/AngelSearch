@@ -7,7 +7,7 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li>
-        <a *ngIf="!authService.authenticated" (click)="authService.login()">Log In</a>
+        <a *ngIf="!authService.authenticated" (click)="authService.login(router.url)">Log In</a>
       </li>
       <li>
         <a *ngIf="authService.authenticated" routerLink="/profile" routerLinkActive="active">My Profile</a>

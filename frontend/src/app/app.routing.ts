@@ -8,6 +8,7 @@ import { ProfileComponent } from "./profile.component"
 import {AdminComponent} from "./admin.component";
 import {LandingComponent} from "./landing.component";
 import {InviteComponent} from "./invite.component";
+import {RegisterComponent} from "./register.component";
 
 const appRoutes: Routes = [
   {
@@ -42,6 +43,10 @@ const appRoutes: Routes = [
   {
     path: 'callback',
     component: CallbackComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   }
 ];
 
@@ -54,5 +59,6 @@ export const routedComponents = [
   ProfileComponent,
   AdminComponent,
   LandingComponent,
-  InviteComponent
+  InviteComponent,
+  RegisterComponent
 ];

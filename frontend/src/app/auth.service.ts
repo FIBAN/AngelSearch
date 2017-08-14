@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth0-variables';
 import { tokenNotExpired } from 'angular2-jwt';
+import {AngelService} from "./angel.service";
 
 // Avoid name not found warnings
 declare var auth0: any;
@@ -20,7 +21,7 @@ export class AuthService {
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private angelService: AngelService) {
     // If authenticated, set local profile property and update login status subject
     if (this.authenticated) {
       this.setLoggedIn(true);
@@ -33,9 +34,12 @@ export class AuthService {
     this.loggedIn = value;
   }
 
-  login() {
+  login(redirectAfterLogin?: string) {
     // Auth0 authorize request
     // Note: nonce is automatically generated: https://auth0.com/docs/libraries/auth0js/v8#using-nonce
+    if(redirectAfterLogin) localStorage.setItem("redirectAfterLogin", redirectAfterLogin);
+    else localStorage.removeItem("redirectAfterLogin");
+    console.log("ls: " + localStorage.getItem("redirectAfterLogin"));
     this.auth0.authorize({
       responseType: 'token id_token',
       redirectUri: AUTH_CONFIG.REDIRECT,
@@ -60,8 +64,11 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
-        this._getProfile(authResult);
-        this.router.navigate(['/']);
+        this._getProfile(authResult)
+          .then(()=> {
+            const savedRedirect = localStorage.getItem("redirectAfterLogin");
+            this.router.navigateByUrl(savedRedirect ? savedRedirect : '/');
+          });
       } else if (err) {
         this.router.navigate(['/']);
         console.error(`Error: ${err.error}`, err);
@@ -71,9 +78,17 @@ export class AuthService {
 
   private _getProfile(authResult) {
     // Use access token to retrieve user's profile and set session
-    this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
-      this._setSession(authResult, profile);
-    });
+    return new Promise((resolve, reject) =>
+      this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+        if(err) {
+          reject(err);
+        }
+        else {
+          this._setSession(authResult, profile);
+          resolve();
+        }
+      })
+    );
   }
 
   private _setSession(authResult, profile) {
