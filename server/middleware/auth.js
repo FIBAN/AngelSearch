@@ -15,6 +15,18 @@ module.exports.loggedIn = jwt({
     algorithms: ['RS256']
 });
 
+module.exports.loggedInAngel = [module.exports.loggedIn, function (req, res, next) {
+    Angel.getByAuthId(req.user.sub).then(angel => {
+        if(angel) {
+            req.angel = angel;
+            next();
+        }
+        else {
+            res.status(403).json({status: 403, message: "User not registered"});
+        }
+    });
+}];
+
 const canModify = function (user, angelId, cb) {
     Angel.get(angelId, (err, angel) => {
         if(err || !angel) {

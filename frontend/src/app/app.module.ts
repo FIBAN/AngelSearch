@@ -17,6 +17,7 @@ import { SearchFilterPipe } from './search.pipe';
 import {KeysPipe} from "./keys.pipe";
 import {AdminService} from "./admin.service";
 import {AngelInfoComponent} from "./angel-info.component";
+import {NewAngelFormComponent} from "./new-angel-form.component";
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import {AngelInfoComponent} from "./angel-info.component";
     AppComponent,
     routedComponents,
     AngelInfoComponent,
+    NewAngelFormComponent,
     SearchFilterPipe,
     KeysPipe
   ],

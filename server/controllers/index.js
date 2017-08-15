@@ -7,7 +7,7 @@ router.use('/angels', require('./angels'));
 router.use('/invitations', require('./invitations'));
 router.use('/admin', require('./admin'));
 
-router.get('/me', auth.loggedIn, (req, res) => {
+router.get('/me', auth.loggedInAngel, (req, res) => {
 
     Angel.getByAuthId(req.user.sub).then(row => {
         res.json(row);

@@ -39,21 +39,9 @@ export class AuthService {
     // Note: nonce is automatically generated: https://auth0.com/docs/libraries/auth0js/v8#using-nonce
     if(redirectAfterLogin) localStorage.setItem("redirectAfterLogin", redirectAfterLogin);
     else localStorage.removeItem("redirectAfterLogin");
-    console.log("ls: " + localStorage.getItem("redirectAfterLogin"));
     this.auth0.authorize({
       responseType: 'token id_token',
       redirectUri: AUTH_CONFIG.REDIRECT,
-      audience: AUTH_CONFIG.AUDIENCE,
-      scope: AUTH_CONFIG.SCOPE
-    });
-  }
-
-  register(inviteId: string) {
-    // Auth0 authorize request
-    // Note: nonce is automatically generated: https://auth0.com/docs/libraries/auth0js/v8#using-nonce
-    this.auth0.authorize({
-      responseType: 'token id_token',
-      redirectUri: AUTH_CONFIG.REDIRECT + '?i=' + inviteId,
       audience: AUTH_CONFIG.AUDIENCE,
       scope: AUTH_CONFIG.SCOPE
     });

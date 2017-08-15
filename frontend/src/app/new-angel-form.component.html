@@ -1,0 +1,35 @@
+{{diagnostic}}
+
+<form (ngSubmit)="submit()" #angelForm="ngForm">
+  <div class="form-group">
+    <label for="fname">First name</label>
+    <input type="text" class="form-control" id="fname" required [(ngModel)]="model.first_name" name="fname">
+  </div>
+
+  <div class="form-group">
+    <label for="lname">First name</label>
+    <input type="text" class="form-control" id="lname" required [(ngModel)]="model.last_name" name="lname">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" id="email" required [(ngModel)]="model.email" name="email">
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone number</label>
+    <input type="text" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone">
+  </div>
+
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="text" class="form-control" id="city" [(ngModel)]="model.city " name="city">
+  </div>
+
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input type="text" class="form-control" id="country" [(ngModel)]="model.country" name="country">
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="!angelForm.form.valid">Submit</button>
+</form>

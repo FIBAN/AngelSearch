@@ -13,7 +13,7 @@ export class AdminService {
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
   getUsers() {
-    return this.http
+    return this.authHttp
       .get(this.usersUrl)
       .toPromise()
       .then(response=>response.json())

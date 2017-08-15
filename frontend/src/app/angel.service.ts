@@ -20,7 +20,7 @@ export class AngelService {
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
   getAngels() {
-    return this.http
+    return this.authHttp
       .get(this.angelsUrl)
       .toPromise()
       .then(response=>response.json() as Angel[])
@@ -29,7 +29,7 @@ export class AngelService {
 
 
   getAngel(angelId: string) {
-    return this.http
+    return this.authHttp
       .get(this.angelDetailsUrl(angelId))
       .toPromise()
       .then(response=>response.json() as Angel)
@@ -66,6 +66,14 @@ export class AngelService {
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
+  }
+
+  createAngel(angel: Angel) {
+    return this.authHttp
+      .post(this.angelsUrl, angel)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError)
   }
 
   // Implement a method to handle errors if any

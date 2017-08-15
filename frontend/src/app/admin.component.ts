@@ -52,6 +52,11 @@ export class AdminComponent implements OnInit {
     console.log('Select Event', selected);
   }
 
+  onAngelCreate(angel: Angel) {
+    this.angelService.createAngel(angel)
+      .then(() => location.reload())
+  }
+
   linkSelected() {
     if(this.selectedAngel[0] && this.selectedUser[0]) {
       const linkedAngel = this.selectedAngel[0];

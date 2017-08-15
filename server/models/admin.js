@@ -23,13 +23,11 @@ exports.getUsers = function () {
                 console.error("didn't get credentials", err);
                 return;
             }
-            console.log(response.access_token);
             const management = new ManagementClient({
                 token: response.access_token,
                 domain: 'fiban.eu.auth0.com'
             });
             management.getUsers().then((users) => {
-                console.log("users", users);
                 success(users);
             }).catch(err => error(err));
         });
