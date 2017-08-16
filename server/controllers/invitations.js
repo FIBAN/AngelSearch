@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Invitation = require('../models/invitation');
 const Angel = require('../models/angel');
+const Admin = require('../models/admin');
 const auth = require('../middleware/auth');
 
 const absoluteInvitationId = function (req, invite)  {

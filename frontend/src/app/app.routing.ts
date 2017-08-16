@@ -9,6 +9,7 @@ import {AdminComponent} from "./admin.component";
 import {LandingComponent} from "./landing.component";
 import {InviteComponent} from "./invite.component";
 import {RegisterComponent} from "./register.component";
+import {RegistrationNeededComponent} from "./registration-needed.component";
 
 const appRoutes: Routes = [
   {
@@ -47,6 +48,10 @@ const appRoutes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'sorry',
+    component: RegistrationNeededComponent
   }
 ];
 
@@ -60,5 +65,6 @@ export const routedComponents = [
   AdminComponent,
   LandingComponent,
   InviteComponent,
-  RegisterComponent
+  RegisterComponent,
+  RegistrationNeededComponent
 ];

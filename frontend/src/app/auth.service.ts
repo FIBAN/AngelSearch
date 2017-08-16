@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth0-variables';
 import { tokenNotExpired } from 'angular2-jwt';
-import {AngelService} from "./angel.service";
+import { AngelService } from "./angel.service";
 
 // Avoid name not found warnings
 declare var auth0: any;
@@ -20,6 +20,8 @@ export class AuthService {
   // Create a stream of logged in status to communicate throughout app
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+
+  angelId: string;
 
   constructor(private router: Router, private angelService: AngelService) {
     // If authenticated, set local profile property and update login status subject
@@ -52,7 +54,8 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
-        this._getProfile(authResult)
+        this._getAuth0Profile(authResult)
+          .then(() => this._getAngelProfile())
           .then(()=> {
             const savedRedirect = localStorage.getItem("redirectAfterLogin");
             this.router.navigateByUrl(savedRedirect ? savedRedirect : '/');
@@ -64,7 +67,7 @@ export class AuthService {
     });
   }
 
-  private _getProfile(authResult) {
+  private _getAuth0Profile(authResult) {
     // Use access token to retrieve user's profile and set session
     return new Promise((resolve, reject) =>
       this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
@@ -77,6 +80,13 @@ export class AuthService {
         }
       })
     );
+  }
+
+  private _getAngelProfile() {
+    // Use access token to retrieve user's profile and set session
+    return this.angelService.getMyAngel().then(angel => {
+      this.angelId = angel.id;
+    }).catch(() => this.angelId = undefined)
   }
 
   private _setSession(authResult, profile) {
@@ -94,11 +104,16 @@ export class AuthService {
     localStorage.removeItem('profile');
     this.router.navigate(['/']);
     this.setLoggedIn(false);
+    this.angelId = undefined;
   }
 
   get authenticated() {
     // Check if there's an unexpired access token
     return tokenNotExpired('token');
+  }
+
+  get registered() {
+    return !!this.angelId;
   }
 
 }

@@ -13,5 +13,5 @@ export const AUTH_CONFIG: AuthConfig = {
   CLIENT_DOMAIN: 'fiban.eu.auth0.com',
   AUDIENCE: 'https://angel-search/',
   REDIRECT: environment.host + '/callback',
-  SCOPE: 'openid profile'
+  SCOPE: 'openid profile email'
 };

@@ -1,36 +1,11 @@
 "use strict";
-require('dotenv').config();
+const auth0 = require('./auth0-management');
 
 
 exports.getUsers = function () {
-    return new Promise((success, error) => {
+    return auth0.then(client => client.getUsers());
+};
 
-        const AuthenticationClient = require('auth0').AuthenticationClient;
-
-        const auth0 = new AuthenticationClient({
-            domain: 'fiban.eu.auth0.com',
-            clientId: process.env.AUTH0_CLIENTID,
-            clientSecret: process.env.AUTH0_SECRET,
-        });
-
-        const ManagementClient = require('auth0').ManagementClient;
-
-
-        auth0.clientCredentialsGrant({
-            audience: 'https://fiban.eu.auth0.com/api/v2/'
-        }, function (err, response) {
-            if (err) {
-                console.error("didn't get credentials", err);
-                return;
-            }
-            const management = new ManagementClient({
-                token: response.access_token,
-                domain: 'fiban.eu.auth0.com'
-            });
-            management.getUsers().then((users) => {
-                success(users);
-            }).catch(err => error(err));
-        });
-    });
-
+exports.setUserAngelId = function (auth0Id, angelId) {
+    return auth0.then(client => client.updateAppMetadata({id: auth0Id}, {angel_id: angelId}));
 };
