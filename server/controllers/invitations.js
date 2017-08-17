@@ -9,7 +9,7 @@ const absoluteInvitationId = function (req, invite)  {
     return req.protocol + '://' + req.get('host') + '/api/invitations/' + invite.id;
 };
 
-router.get('/', auth.loggedInAngel, (req, res) => {
+router.get('/', auth.loggedInAdmin, (req, res) => {
 
     Invitation.all().then(rows => {
         rows = rows.map(i => (i.href = absoluteInvitationId(req, i)) && i);

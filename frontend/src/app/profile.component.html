@@ -4,15 +4,15 @@
   <div class="panel-heading">Details</div>
   <table class="table">
     <tbody>
-    <tr *ngFor="let key of angel | keys">
-      <td><span class="propLabel">{{key}}</span></td>
-      <td *ngIf="activeEdit !== key">
-        {{angel[key]}}
-        <a href="#" class="edit-button" (click)="startEdit(key); false;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+    <tr *ngFor="let prop of profileProps">
+      <td><span class="propLabel">{{prop.name}}</span></td>
+      <td *ngIf="activeEdit !== prop.key">
+        {{angel[prop.key]}}
+        <a *ngIf="prop.editable" href="#" class="edit-button" (click)="startEdit(prop.key); false;"><i class="fa fa-edit" aria-hidden="true"></i></a>
       </td>
-      <td *ngIf="activeEdit === key">
-        <input [(ngModel)]="edits[key]" name="{{'a' + key}}">
-        <a href="#" class="btn btn-success" (click)="saveEdit(key); false">Save</a>
+      <td *ngIf="activeEdit === prop.key">
+        <input [(ngModel)]="edits[prop.key]" name="{{'a' + prop.key}}">
+        <a href="#" class="btn btn-success" (click)="saveEdit(prop.key); false">Save</a>
         <a href="#" class="btn btn-danger" (click)="stopEdit(); false">Cancel</a>
       </td>
     </tr>

@@ -18,7 +18,7 @@ router.get('/', auth.loggedInAngel, (req, res) => {
     });
 });
 
-router.post('/', auth.loggedInAngel, (req, res) => {
+router.post('/', auth.loggedInAdmin, (req, res) => {
     Angel.create(req.body).then(() => {
         res.status(201).json({status: 201, message: 'Created'})
     }).catch((err) => {
@@ -41,9 +41,7 @@ router.get('/:angelId', auth.loggedInAngel, (req, res) => {
     });
 });
 
-
-
-router.put('/:angelId', auth.loggedInAngel, auth.canModify, (req, res) => {
+router.put('/:angelId', auth.loggedInAngel, auth.ownsAngel, (req, res) => {
     let angel = {};
     for (let key in req.body) {
         if(req.body.hasOwnProperty(key)){
@@ -59,7 +57,7 @@ router.put('/:angelId', auth.loggedInAngel, auth.canModify, (req, res) => {
     });
 });
 
-router.delete('/:angelId', auth.loggedInAngel, auth.canModify, (req, res) => {
+router.delete('/:angelId', auth.loggedInAdmin, (req, res) => {
     Angel.delete(req.params.angelId).then(() => {
         res.json({status: 200, message: 'Deleted'});
     }).catch(err => {
@@ -68,7 +66,7 @@ router.delete('/:angelId', auth.loggedInAngel, auth.canModify, (req, res) => {
     });
 });
 
-router.get('/:angelId/invites', auth.loggedInAngel, (req, res) => {
+router.get('/:angelId/invites', auth.loggedInAngel, auth.ownsAngel, (req, res) => {
     Invitation.allByAngelId(req.params.angelId).then((invites) => {
         res.json(invites);
     }).catch(err => {
@@ -77,7 +75,7 @@ router.get('/:angelId/invites', auth.loggedInAngel, (req, res) => {
     });
 });
 
-router.post('/:angelId/invites', auth.loggedInAngel, (req, res) => {
+router.post('/:angelId/invites', auth.loggedInAdmin, (req, res) => {
     Invitation.create(req.params.angelId).then(() => {
         res.status(201).json({status: 201, message: 'Created'});
     }).catch(err => {

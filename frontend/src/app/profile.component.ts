@@ -18,6 +18,16 @@ export class ProfileComponent implements OnInit {
   activeEdit: string;
   edits: any;
 
+  profileProps: any[] = [
+    {name: 'Id', key: 'id', editable: false},
+    {name: 'First name', key: 'first_name', editable: true},
+    {name: 'Last name', key: 'last_name', editable: true},
+    {name: 'Email', key: 'email', editable: true},
+    {name: 'Phone', key: 'phone', editable: true},
+    {name: 'City', key: 'city', editable: true},
+    {name: 'Country', key: 'country', editable: true}
+  ];
+
   constructor(
     private angelService: AngelService,
     private authService: AuthService,

@@ -27,21 +27,21 @@ module.exports.loggedInAngel = [module.exports.loggedIn, function (req, res, nex
     });
 }];
 
-const canModify = function (user, angelId, cb) {
-    Angel.get(angelId, (err, angel) => {
-        if(err || !angel) {
-            cb(false);
-        } else {
-            cb(angel.auth0_id === user)
-        }
-    });
+module.exports.loggedInAdmin = [module.exports.loggedIn, function (req, res, next) {
+    if(req.user['https://angel-search/role'] === 'admin') {
+        next();
+    } else {
+        res.status(403).json({status: 403, message: "Requires admin privileges"})
+    }
+}];
+
+module.exports.ownsAngel = function (req, res, next) {
+    if(req.angel && req.angel.id === req.params.angelId) {
+        next();
+    } else if (req.user && req.user['https://angel-search/role'] === 'admin') {
+        next();
+    } else {
+        res.status(403).json({status: 403, message: 'Forbidden'});
+    }
 };
 
-module.exports.canModify = function (req, res, next) {
-    const angelId = req.params.angelId;
-    const userId = req.user.sub;
-    canModify(userId, angelId, (success) => {
-        if(success) next();
-        else res.status(403).json({status: 403, message: 'Forbidden'});
-    });
-};

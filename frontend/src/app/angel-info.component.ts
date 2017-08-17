@@ -9,9 +9,33 @@ import { Angel } from './angel';
       <div class="panel-heading">Details</div>
       <table class="table">
         <tbody>
-        <tr *ngFor="let key of angel | keys">
-          <td><span class="propLabel">{{key}}</span></td>
-          <td>{{angel[key]}}</td>
+        <tr>
+          <td><span class="propLabel">First name</span></td>
+          <td>{{angel.first_name}}</td>
+        </tr>
+        <tr>
+          <td><span class="propLabel">Last name</span></td>
+          <td>{{angel.last_name}}</td>
+        </tr>
+        <tr>
+          <td><span class="propLabel">Email</span></td>
+          <td>{{angel.email}}</td>
+        </tr>
+        <tr>
+          <td><span class="propLabel">Phone</span></td>
+          <td>{{angel.phone}}</td>
+        </tr>
+        <tr>
+          <td><span class="propLabel">City</span></td>
+          <td>{{angel.city}}</td>
+        </tr>
+        <tr>
+          <td><span class="propLabel">Country</span></td>
+          <td>{{angel.country}}</td>
+        </tr>
+        <tr>
+          <td><span class="propLabel">Bio</span></td>
+          <td>{{angel.bio}}</td>
         </tr>
         </tbody>
       </table>

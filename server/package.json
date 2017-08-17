@@ -1,5 +1,5 @@
 {
-  "name": "angular2-authentication-tutorial",
+  "name": "angel-search-backend",
   "version": "0.0.1",
   "description": "",
   "main": "server.js",
@@ -8,8 +8,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "author": "Auth0",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "dependencies": {
     "auth0": "^2.7.0",
     "body-parser": "^1.15.2",

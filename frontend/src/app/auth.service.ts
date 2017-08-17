@@ -21,8 +21,6 @@ export class AuthService {
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
-  angelId: string;
-
   constructor(private router: Router, private angelService: AngelService) {
     // If authenticated, set local profile property and update login status subject
     if (this.authenticated) {
@@ -85,8 +83,8 @@ export class AuthService {
   private _getAngelProfile() {
     // Use access token to retrieve user's profile and set session
     return this.angelService.getMyAngel().then(angel => {
-      this.angelId = angel.id;
-    }).catch(() => this.angelId = undefined)
+      localStorage.setItem('angel_id', angel.id);
+    }).catch(() => localStorage.removeItem('angel_id'))
   }
 
   private _setSession(authResult, profile) {
@@ -102,9 +100,9 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
+    localStorage.removeItem('angel_id');
     this.router.navigate(['/']);
     this.setLoggedIn(false);
-    this.angelId = undefined;
   }
 
   get authenticated() {
@@ -113,7 +111,7 @@ export class AuthService {
   }
 
   get registered() {
-    return !!this.angelId;
+    return !!localStorage.getItem('angel_id');
   }
 
 }
