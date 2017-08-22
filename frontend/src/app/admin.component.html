@@ -1,27 +1,40 @@
 <h3 class="text-center">Admin tools</h3>
 
 <h4>Angels</h4>
-<ngx-datatable
-  [rows]="angels"
-  [columns]="angelColumns"
-  [selected]="selectedAngel"
-  [selectionType]="'single'"
-  (select)="onSelect($event)"
->
-</ngx-datatable>
-
-<h4>Auth0 users</h4>
-<ngx-datatable
-  [rows]="users"
-  [columns]="userColumns"
-  [selected]="selectedUser"
-  [selectionType]="'single'"
-  (select)="onSelect($event)"
->
-</ngx-datatable>
-
-<p>Choose a user and angel to link them together</p>
-<a href="#" class="btn btn-success" (click)="linkSelected()">Link Selected</a>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Auth0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let angel of angels; let i=index; let odd=odd">
+      <tr [class.odd]="odd">
+        <td>{{angel.id}}</td>
+        <td>{{angel.first_name}} {{angel.last_name}}</td>
+        <td>{{angel.email}}</td>
+        <td>{{angel.phone}}</td>
+        <td><a *ngIf="auth0UserByAngel(angel)" (click)="selectAngel(i)">Show</a></td>
+      </tr>
+      <tr *ngIf="selectedAngels[i]" [class.odd]="odd">
+        <td colspan="5">
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              <dl>
+                <dt>Auth0 Id</dt>
+                <dd>{{angel.auth0_id}}</dd>
+              </dl>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
 
 <h4>Create user</h4>
 <new-angel-form (onSubmit)="onAngelCreate($event)"></new-angel-form>

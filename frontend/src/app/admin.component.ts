@@ -11,16 +11,13 @@ import {AdminService} from "./admin.service";
 @Component({
   selector: 'admin',
   templateUrl: 'admin.component.html',
-  styleUrls: []
+  styles: ['tr.odd { background-color: #f2f2f2}']
 })
 export class AdminComponent implements OnInit {
   angels: Angel[];
   users: any[];
 
-  angelColumns = [];
-  userColumns = [];
-  selectedAngel = [];
-  selectedUser = [];
+  selectedAngels = {};
 
   constructor(
     private angelService: AngelService,
@@ -32,24 +29,14 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.angelService.getAngels().then((angels: Angel[]) => this.angels = angels);
     this.adminService.getUsers().then((users: any[]) => this.users = users);
-
-    this.angelColumns = [
-      { name: 'Id', width: 250, draggable: false},
-      { name: 'First Name', prop: 'first_name', width: 100,  draggable: false },
-      { name: 'Last Name', prop: 'last_name', width: 100, draggable: false },
-      { name: 'Email', draggable: false },
-      { name: 'Auth0 Id', prop: 'auth0_id', width: 250, draggable: false }
-    ];
-
-    this.userColumns = [
-      { name: 'Id', prop: 'user_id', width: 250, draggable: false},
-      { name: 'Name', width: 100,  draggable: false },
-      { name: 'Email', draggable: false }
-    ];
   }
 
-  onSelect({ selected }) {
-    console.log('Select Event', selected);
+  auth0UserByAngel(angel) {
+    return this.users && this.users.find(u => u.user_id === angel.auth0_id);
+  }
+
+  selectAngel(index) {
+    this.selectedAngels[index] = !this.selectedAngels[index];
   }
 
   onAngelCreate(angel: Angel) {
@@ -57,13 +44,6 @@ export class AdminComponent implements OnInit {
       .then(() => location.reload())
   }
 
-  linkSelected() {
-    if(this.selectedAngel[0] && this.selectedUser[0]) {
-      const linkedAngel = this.selectedAngel[0];
-      linkedAngel.auth0_id = this.selectedUser[0].user_id;
-      this.angelService.updateAngel(linkedAngel).then(() => location.reload());
-    }
-  }
 
 
 }

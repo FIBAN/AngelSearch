@@ -111,7 +111,7 @@ export class AuthService {
   }
 
   get registered() {
-    return !!localStorage.getItem('angel_id');
+    return tokenNotExpired('token') && !!localStorage.getItem('angel_id');
   }
 
 }
