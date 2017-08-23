@@ -66,7 +66,7 @@ router.delete('/:angelId', auth.loggedInAdmin, (req, res) => {
     });
 });
 
-router.get('/:angelId/invites', auth.loggedInAngel, auth.ownsAngel, (req, res) => {
+router.get('/:angelId/invitations', auth.loggedInAngel, auth.ownsAngel, (req, res) => {
     Invitation.allByAngelId(req.params.angelId).then((invites) => {
         res.json(invites);
     }).catch(err => {
@@ -75,7 +75,7 @@ router.get('/:angelId/invites', auth.loggedInAngel, auth.ownsAngel, (req, res) =
     });
 });
 
-router.post('/:angelId/invites', auth.loggedInAdmin, (req, res) => {
+router.post('/:angelId/invitations', auth.loggedInAdmin, (req, res) => {
     Invitation.create(req.params.angelId).then(() => {
         res.status(201).json({status: 201, message: 'Created'});
     }).catch(err => {

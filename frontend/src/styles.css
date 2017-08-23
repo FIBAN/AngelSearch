@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+.monospace {
+  font-family: monospace;
+}
 
 /* General ngx-datatable styles */
 span.sort-btn.sort-desc.datatable-icon-down {
