@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Invitation = require('../models/invitation');
 const Angel = require('../models/angel');
-const Admin = require('../models/admin');
 const auth = require('../middleware/auth');
 
 const absoluteInvitationId = function (req, invite)  {
@@ -38,13 +37,17 @@ router.get('/:inviteId', (req, res) => {
 });
 
 router.post('/:inviteId/accept', auth.loggedIn, (req, res) => {
-    Invitation.markAccepted(req.params.inviteId).then(updated => {
-        if(!updated) {
-            res.status(404).json({status: 404, message: 'No pending invitation found'})
+    Invitation.get(req.params.inviteId).then(invite => {
+        if(!invite || invite.status !== 'pending') {
+            res.status(404).json({status: 404, message: 'No pending invitation found'});
         } else {
-            return Invitation.get(req.params.inviteId)
-                .then(invite => Angel.linkAuth0Id(invite.angel_id, req.user.sub))
-                .then(res.json({status: 200, message: 'Success'}));
+            return Angel.linkAuth0Id(invite.angel_id, req.user.sub)
+                .then(() => Invitation.markAccepted(req.params.inviteId))
+                .then(() => res.json({status: 200, message: 'Success'}))
+                .catch(err => {
+                    console.error(err);
+                    return Promise.reject("Invite couldn't be accepted");
+                });
         }
     }).catch(err => {
         console.error(err);

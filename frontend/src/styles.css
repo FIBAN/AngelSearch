@@ -4,6 +4,10 @@
   font-family: monospace;
 }
 
+a {
+  cursor: pointer;
+}
+
 /* General ngx-datatable styles */
 span.sort-btn.sort-desc.datatable-icon-down {
   width: 0;
