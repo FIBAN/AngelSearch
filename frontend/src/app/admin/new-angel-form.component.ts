@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
-import { Angel }    from './angel';
+import { Angel }    from '../angels/angel';
 
 @Component({
   selector: 'new-angel-form',

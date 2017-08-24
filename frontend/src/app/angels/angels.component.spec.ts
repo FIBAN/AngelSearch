@@ -8,7 +8,6 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { FormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AngelService } from "./angel.service";
-import { AuthService } from "./auth.service";
 
 describe('Angels list', () => {
 
@@ -32,15 +31,12 @@ describe('Angels list', () => {
     )
   };
 
-  const authServiceStub = {};
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ FormsModule, RouterTestingModule, NgxDatatableModule ],
       declarations: [ SearchFilterPipe, AngelsComponent ], // declare the test component
       providers: [
-        {provide: AngelService, useValue: angelServiceStub},
-        {provide: AuthService, useValue: authServiceStub},
+        {provide: AngelService, useValue: angelServiceStub}
       ]
     })
     .compileComponents();

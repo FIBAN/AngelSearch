@@ -7,17 +7,17 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AppComponent } from './app.component';
 import { routing, routedComponents } from './app.routing';
-import { AuthModule } from './auth.module';
+import { AuthModule } from './auth/auth.module';
 
-import { AngelService } from './angel.service';
-import { AuthService } from './auth.service';
-import { AuthGuard } from './auth-guard.service';
+import { AngelService } from './angels/angel.service';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth-guard.service';
 
-import { SearchFilterPipe } from './search.pipe';
-import {KeysPipe} from "./keys.pipe";
-import {AdminService} from "./admin.service";
-import {AngelInfoComponent} from "./angel-info.component";
-import {NewAngelFormComponent} from "./new-angel-form.component";
+import { SearchFilterPipe } from './angels/search.pipe';
+import {KeysPipe} from "./angels/keys.pipe";
+import {AdminService} from "./admin/admin.service";
+import {AngelInfoComponent} from "./angels/angel-info.component";
+import {NewAngelFormComponent} from "./admin/new-angel-form.component";
 
 @NgModule({
   imports: [

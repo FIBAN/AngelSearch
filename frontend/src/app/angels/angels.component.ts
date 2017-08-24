@@ -1,5 +1,4 @@
 import {Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import { AuthService } from './auth.service';
 
 import { Angel } from './angel';
 import { AngelService } from './angel.service';
@@ -21,8 +20,7 @@ export class AngelsComponent implements OnInit {
 
 
   constructor(
-    private angelService: AngelService,
-    private authService: AuthService) {
+    private angelService: AngelService) {
   }
 
   ngOnInit(): void {

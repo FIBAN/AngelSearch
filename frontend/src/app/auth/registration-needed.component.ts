@@ -1,7 +1,4 @@
 import { Component} from '@angular/core';
-import { AuthService } from './auth.service';
-
-import { AngelService } from './angel.service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -14,7 +11,6 @@ import 'rxjs/add/operator/switchMap';
 })
 export class RegistrationNeededComponent {
 
-  constructor(
-    private authService: AuthService) {
+  constructor() {
   }
 }

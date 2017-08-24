@@ -1,9 +1,7 @@
-import { Component, Input, OnInit} from '@angular/core';
-import { AuthService } from './auth.service';
+import { Component, OnInit} from '@angular/core';
 
-import { Angel } from './angel';
-import { AngelService } from './angel.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Angel } from '../angels/angel';
+import { AngelService } from '../angels/angel.service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -29,9 +27,7 @@ export class ProfileComponent implements OnInit {
   ];
 
   constructor(
-    private angelService: AngelService,
-    private authService: AuthService,
-    private route: ActivatedRoute) {
+    private angelService: AngelService) {
     this.edits = {};
   }
 

@@ -1,15 +1,16 @@
-import { Routes, RouterModule, CanActivate } from '@angular/router';
-import { AuthGuard } from './auth-guard.service';
+import { Routes, RouterModule} from '@angular/router';
+import { AuthGuard } from './auth/auth-guard.service';
 
-import { CallbackComponent } from './callback.component';
-import { AngelsComponent } from './angels.component';
-import { AngelDetailsComponent } from "./angel-details.component";
-import { ProfileComponent } from "./profile.component"
-import {AdminComponent} from "./admin.component";
+import { CallbackComponent } from './auth/callback.component';
+import { AngelsComponent } from './angels/angels.component';
+import { AngelDetailsComponent } from "./angels/angel-details.component";
+import { ProfileComponent } from "./profile/profile.component"
+import {AdminComponent} from "./admin/admin.component";
 import {LandingComponent} from "./landing.component";
-import {InviteComponent} from "./invite.component";
-import {RegisterComponent} from "./register.component";
-import {RegistrationNeededComponent} from "./registration-needed.component";
+import {InviteComponent} from "./auth/invite.component";
+import {RegisterComponent} from "./auth/register.component";
+import {RegistrationNeededComponent} from "./auth/registration-needed.component";
+import {ErrorComponent} from "./error.component";
 
 const appRoutes: Routes = [
   {
@@ -52,6 +53,10 @@ const appRoutes: Routes = [
   {
     path: 'sorry',
     component: RegistrationNeededComponent
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
   }
 ];
 
@@ -66,5 +71,6 @@ export const routedComponents = [
   LandingComponent,
   InviteComponent,
   RegisterComponent,
-  RegistrationNeededComponent
+  RegistrationNeededComponent,
+  ErrorComponent
 ];

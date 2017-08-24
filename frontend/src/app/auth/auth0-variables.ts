@@ -1,4 +1,4 @@
-import { environment } from "../environments/environment"
+import { environment } from "../../environments/environment"
 
 interface AuthConfig {
   CLIENT_ID: string;

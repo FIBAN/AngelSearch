@@ -1,8 +1,7 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { AuthService } from './auth.service';
 
-import { Angel } from './angel';
-import { AngelService } from './angel.service';
+import { AngelService } from '../angels/angel.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';

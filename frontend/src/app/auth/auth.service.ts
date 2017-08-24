@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth0-variables';
 import { tokenNotExpired } from 'angular2-jwt';
-import { AngelService } from "./angel.service";
+import { AngelService } from "../angels/angel.service";
 
 // Avoid name not found warnings
 declare var auth0: any;
