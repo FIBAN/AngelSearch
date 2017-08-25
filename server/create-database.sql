@@ -3,7 +3,7 @@ create table angels (
     auth0_id text unique,
     first_name text not null,
     last_name text not null,
-    email text not null,
+    email text not null unique,
     phone text,
     city text,
     country text,
