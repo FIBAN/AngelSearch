@@ -8,6 +8,10 @@ const absoluteAngelId = function (req, angel)  {
     return req.protocol + '://' + req.get('host') + '/api/angels/' + angel.id;
 };
 
+const angelAccessDenied = function (res) {
+    res.status(403).json({status: 403, message: "Forbidden"});
+};
+
 router.get('/', auth.loggedInAngel, (req, res) => {
     Angel.all().then(rows => {
         rows = rows.map(a => (a.href = absoluteAngelId(req, a)) && a);
@@ -41,7 +45,12 @@ router.get('/:angelId', auth.loggedInAngel, (req, res) => {
     });
 });
 
-router.put('/:angelId', auth.loggedInAngel, auth.ownsAngel, (req, res) => {
+router.put('/:angelId', auth.loggedInAngel, (req, res) => {
+    if(req.angel.id !== req.params.angelId && req.user['https://angel-search/role'] !== 'admin') {
+        angelAccessDenied(res);
+        return;
+    }
+
     let angel = {};
     for (let key in req.body) {
         if(req.body.hasOwnProperty(key)){
@@ -66,7 +75,12 @@ router.delete('/:angelId', auth.loggedInAdmin, (req, res) => {
     });
 });
 
-router.get('/:angelId/invitations', auth.loggedInAngel, auth.ownsAngel, (req, res) => {
+router.get('/:angelId/invitations', auth.loggedInAngel, (req, res) => {
+    if(req.angel.id !== req.params.angelId && req.user['https://angel-search/role'] !== 'admin') {
+        angelAccessDenied(res);
+        return;
+    }
+
     Invitation.allByAngelId(req.params.angelId).then((invites) => {
         res.json(invites);
     }).catch(err => {

@@ -16,3 +16,8 @@ create table invitations (
     status text not null default 'pending'
 );
 
+create table auth0_users (
+    "id" text not null primary key,
+    angel_id text not null references angels ("id") on delete cascade
+)
+

@@ -10,7 +10,11 @@ module.exports.get = (angelId) => {
 };
 
 module.exports.getByAuthId = (authId) => {
-    return db.query('SELECT * FROM angels WHERE auth0_id = $1', [authId]).then(res => res.rows[0]);
+    return db.query('SELECT a.* FROM auth0_users u JOIN angels a ON u.angel_id = a.id WHERE u.id = $1', [authId]).then(res => res.rows[0]);
+};
+
+module.exports.getByEmail = (email) => {
+    return db.query('SELECT * FROM angels WHERE email = $1', [email]).then(res => res.rows[0]);
 };
 
 module.exports.create = (angel) => {
@@ -45,7 +49,7 @@ module.exports.update = (angel) => {
 };
 
 module.exports.linkAuth0Id = (angelId, auth0Id) => {
-    return db.query('UPDATE angels SET auth0_id = $1 WHERE id = $2', [auth0Id, angelId]).then(res => res.rowCount);
+    return db.query('INSERT INTO auth0_users (id, angel_id) VALUES ($1, $2)', [auth0Id, angelId]).then(res => res.rowCount);
 };
 
 module.exports.delete = (angelId) => {

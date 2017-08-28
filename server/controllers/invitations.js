@@ -36,7 +36,7 @@ router.get('/:inviteId', (req, res) => {
 
 });
 
-router.post('/:inviteId/accept', auth.loggedIn, (req, res) => {
+router.post('/:inviteId/accept', auth.authenticated, (req, res) => {
     Invitation.get(req.params.inviteId).then(invite => {
         if(!invite || invite.status !== 'pending') {
             res.status(404).json({status: 404, message: 'No pending invitation found'});

@@ -1,21 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const Angel = require('../models/angel');
 
 router.use('/angels', require('./angels'));
 router.use('/invitations', require('./invitations'));
 router.use('/admin', require('./admin'));
 
 router.get('/me', auth.loggedInAngel, (req, res) => {
-
-    Angel.getByAuthId(req.user.sub).then(row => {
-        res.json(row);
-    }).catch(err => {
-        console.error(err);
-        res.status(500).json({status: 500, message: err});
-    });
-
+    res.json(req.angel);
 });
 
 router.use(function(req, res, next) {
