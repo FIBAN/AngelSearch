@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth0-variables';
 import { tokenNotExpired } from 'angular2-jwt';
 import { AngelService } from "../angels/angel.service";
+import { Observable } from "rxjs/Rx";
 
 // Avoid name not found warnings
 declare var auth0: any;
@@ -18,10 +19,31 @@ export class AuthService {
   });
 
   // Create a stream of logged in status to communicate throughout app
-  loggedIn: boolean;
-  loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+  loggedIn$ = new BehaviorSubject<boolean>(undefined);
+
+  angelId$ = new BehaviorSubject<string>(localStorage.getItem('angel_id'));
+
+  registered$ = new BehaviorSubject<boolean>(undefined);
 
   constructor(private router: Router, private angelService: AngelService) {
+
+    Observable.combineLatest(this.angelId$, Observable.timer(0, 5 * 1000))
+      .switchMap(values => {
+        const authenticated = this.authenticated;
+        const angelId = values[0];
+        if (!authenticated) return Observable.of(false);
+        if (angelId) return Observable.of(true);
+        return Observable.fromPromise(
+          this.angelService.getMyAngel().then(angel => {
+            localStorage.setItem('angel_id', angel.id);
+            this.angelId$.next(angel.id);
+            return true;
+          }).catch((err) => {
+            return false
+          })
+        );
+      }).distinctUntilChanged().subscribe(this.registered$);
+
     // If authenticated, set local profile property and update login status subject
     if (this.authenticated) {
       this.setLoggedIn(true);
@@ -31,7 +53,6 @@ export class AuthService {
   setLoggedIn(value: boolean) {
     // Update login status subject
     this.loggedIn$.next(value);
-    this.loggedIn = value;
   }
 
   login(redirectAfterLogin?: string) {
@@ -84,6 +105,7 @@ export class AuthService {
     // Use access token to retrieve user's profile and set session
     return this.angelService.getMyAngel().then(angel => {
       localStorage.setItem('angel_id', angel.id);
+      this.angelId$.next(angel.id);
     }).catch(() => localStorage.removeItem('angel_id'))
   }
 
@@ -102,16 +124,13 @@ export class AuthService {
     localStorage.removeItem('profile');
     localStorage.removeItem('angel_id');
     this.router.navigate(['/']);
+    this.angelId$.next(null);
     this.setLoggedIn(false);
   }
 
   get authenticated() {
     // Check if there's an unexpired access token
     return tokenNotExpired('token');
-  }
-
-  get registered() {
-    return tokenNotExpired('token') && !!localStorage.getItem('angel_id');
   }
 
 }

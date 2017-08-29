@@ -2,7 +2,7 @@
   <nav class="navbar navbar-default">
     <ul class="nav navbar-nav">
       <li>
-        <a *ngIf="authService.registered" routerLink="/angels" routerLinkActive="active">Angels</a>
+        <a *ngIf="authService.registered$ | async" routerLink="/angels" routerLinkActive="active">Angels</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -10,7 +10,7 @@
         <a *ngIf="!authService.authenticated" (click)="authService.login(router.url)">Log In</a>
       </li>
       <li>
-        <a *ngIf="authService.registered" routerLink="/profile" routerLinkActive="active">My Profile</a>
+        <a *ngIf="authService.registered$ | async" routerLink="/profile" routerLinkActive="active">My Profile</a>
       </li>
       <li>
         <a (click)=authService.logout() *ngIf="authService.authenticated">Log Out</a>
