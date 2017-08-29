@@ -11,6 +11,7 @@ import {InviteComponent} from "./auth/invite.component";
 import {RegisterComponent} from "./auth/register.component";
 import {RegistrationNeededComponent} from "./auth/registration-needed.component";
 import {ErrorComponent} from "./error.component";
+import {EmailVerificationMissingComponent} from "./auth/email-verification-missing.component";
 
 const appRoutes: Routes = [
   {
@@ -55,6 +56,10 @@ const appRoutes: Routes = [
     component: RegistrationNeededComponent
   },
   {
+    path: 'email-verification',
+    component: EmailVerificationMissingComponent
+  },
+  {
     path: 'error',
     component: ErrorComponent
   }
@@ -72,5 +77,6 @@ export const routedComponents = [
   InviteComponent,
   RegisterComponent,
   RegistrationNeededComponent,
-  ErrorComponent
+  ErrorComponent,
+  EmailVerificationMissingComponent
 ];

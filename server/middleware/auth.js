@@ -45,17 +45,33 @@ module.exports.loggedInAngel = [module.exports.authenticated, function (req, res
         else {
             getProfile(req).then(profile => {
                 Angel.getByEmail(profile.email).then(angel => {
-                    if(angel) {
-                        req.angel = angel;
-                        Angel.linkAuth0Id(angel.id, req.user.sub).then(() => next()).catch(() => next());
+                    if (angel) {
+                        if(!profile.email_verified) {
+                            res.status(403).json({status: 403, email_verified: false, message: "Email needs verification"})
+                        } else {
+                            req.angel = angel;
+                            Angel.linkAuth0Id(angel.id, req.user.sub).then(() => next()).catch(() => next());
+                        }
                     }
                     else {
                         res.status(403).json({status: 403, message: "Registration needed"});
                     }
-                }).catch(err => res.status(500).json({status: 500, message: "Couldn't retrieve angel for email", error: err}));
-            }).catch(err => res.status(500).json({status: 500, message: "Couldn't retrieve profile", error: err}));
+                }).catch(err => res.status(500).json({
+                    status: 500,
+                    message: "Couldn't retrieve angel for email",
+                    error: err
+                }));
+            }).catch(err => res.status(500).json({
+                status: 500,
+                message: "Couldn't retrieve profile",
+                error: err
+            }));
         }
-    }).catch(err => res.status(500).json({status: 500, message: "Couldn't retrieve angel for JWT", error: err}));
+    }).catch(err => res.status(500).json({
+        status: 500,
+        message: "Couldn't retrieve angel for JWT",
+        error: err
+    }));
 }];
 
 module.exports.loggedInAdmin = [module.exports.authenticated, function (req, res, next) {

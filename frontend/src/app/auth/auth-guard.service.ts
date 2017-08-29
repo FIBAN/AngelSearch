@@ -11,16 +11,25 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     // If the user is not logged in we'll send them back to the home page
-    if (!this.auth.authenticated) {
-      this.router.navigate(['']);
-      return Observable.of(false);
-    } else {
-      return this.auth.registered$.find(r => r).timeout(5 * 1000)
-        .catch(err => {
+    return Observable.fromPromise(this.auth.getAuthStatus())
+      .map((status) => {
+      switch (status) {
+        case AuthService.AUTH_STATUS.LOGGED_OUT:
+          this.router.navigate(['']);
+          return false;
+        case AuthService.AUTH_STATUS.NOT_REGISTERED:
           this.router.navigate(['sorry']);
-          return Observable.of(false);
-        });
-    }
+          return false;
+        case AuthService.AUTH_STATUS.EMAIL_NOT_VERIFIED:
+          console.log("email not verified");
+          this.router.navigate(['email-verification']);
+          return false;
+        case AuthService.AUTH_STATUS.LOGGED_IN:
+          return true;
+        default:
+          return false;
+      }
+    });
   }
 
 }

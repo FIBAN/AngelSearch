@@ -8,15 +8,19 @@ import {Router} from "@angular/router";
 })
 export class LandingComponent implements OnInit{
 
+  loggedIn = false;
+
   constructor(
     public authService: AuthService,
     private router: Router
   ){}
 
   ngOnInit(): void {
-      this.authService.loggedIn$.subscribe((loggedIn) => {
-        if(loggedIn) {
-          this.router.navigate(['/angels'])
+      this.authService.authStatus$.subscribe((status) => {
+        console.log('firing with status ', status);
+        if(this.loggedIn === false && status !== AuthService.AUTH_STATUS.LOGGED_OUT) {
+          this.loggedIn = true;
+          this.router.navigate(['/angels']);
         }
       });
   }

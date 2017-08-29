@@ -9,7 +9,14 @@ import {Router} from "@angular/router";
   styleUrls : ['app.component.css']
 })
 export class AppComponent {
+
+  authenticated: boolean;
+  authorized: boolean;
   // We'll need to include a reference to our authService in the constructor to gain access to the API's in the view
   constructor(public authService: AuthService, public router: Router) {
+    authService.authStatus$.subscribe(s => {
+      this.authenticated = s !== AuthService.AUTH_STATUS.LOGGED_OUT;
+      this.authorized = s === AuthService.AUTH_STATUS.LOGGED_IN;
+    });
   }
 }

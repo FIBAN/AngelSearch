@@ -18,36 +18,57 @@ export class AuthService {
     domain: AUTH_CONFIG.CLIENT_DOMAIN
   });
 
+  static readonly AUTH_STATUS = {
+    LOGGED_OUT: "logged_out",
+    NOT_REGISTERED: "not_registered",
+    EMAIL_NOT_VERIFIED: "email_not_verified",
+    LOGGED_IN: "logged_in"
+  };
+
   // Create a stream of logged in status to communicate throughout app
   loggedIn$ = new BehaviorSubject<boolean>(undefined);
 
-  angelId$ = new BehaviorSubject<string>(localStorage.getItem('angel_id'));
-
-  registered$ = new BehaviorSubject<boolean>(undefined);
+  authStatus$ = new BehaviorSubject<string>(AuthService.AUTH_STATUS.LOGGED_OUT);
 
   constructor(private router: Router, private angelService: AngelService) {
 
-    Observable.combineLatest(this.angelId$, Observable.timer(0, 5 * 1000))
-      .switchMap(values => {
-        const authenticated = this.authenticated;
-        const angelId = values[0];
-        if (!authenticated) return Observable.of(false);
-        if (angelId) return Observable.of(true);
-        return Observable.fromPromise(
-          this.angelService.getMyAngel().then(angel => {
-            localStorage.setItem('angel_id', angel.id);
-            this.angelId$.next(angel.id);
-            return true;
-          }).catch((err) => {
-            return false
-          })
-        );
-      }).distinctUntilChanged().subscribe(this.registered$);
+    Observable.timer(0, 30 * 1000)
+      .flatMap(() => Observable.fromPromise(this._authStatus()))
+      .distinctUntilChanged()
+      .subscribe(this.authStatus$);
 
     // If authenticated, set local profile property and update login status subject
     if (this.authenticated) {
       this.setLoggedIn(true);
     }
+  }
+
+  private _authStatus() {
+    if(!this.authenticated) {
+      return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_OUT);
+    }
+    else {
+      return this.angelService.getMyAngel().then(angel => {
+        if (!angel) {
+          return AuthService.AUTH_STATUS.NOT_REGISTERED;
+        }
+        else {
+          return AuthService.AUTH_STATUS.LOGGED_IN;
+        }
+      }).catch((err) => {
+        if(err.status === 403 && JSON.parse(err._body).email_verified === false) {
+          return AuthService.AUTH_STATUS.EMAIL_NOT_VERIFIED
+        }
+        console.error("angel error", err);
+        return AuthService.AUTH_STATUS.LOGGED_OUT
+      });
+    }
+  }
+
+  getAuthStatus() {
+    const status = this._authStatus();
+    status.then(s => this.authStatus$.next(s));
+    return status;
   }
 
   setLoggedIn(value: boolean) {
@@ -74,7 +95,6 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this._getAuth0Profile(authResult)
-          .then(() => this._getAngelProfile())
           .then(()=> {
             const savedRedirect = localStorage.getItem("redirectAfterLogin");
             this.router.navigateByUrl(savedRedirect ? savedRedirect : '/');
@@ -101,14 +121,6 @@ export class AuthService {
     );
   }
 
-  private _getAngelProfile() {
-    // Use access token to retrieve user's profile and set session
-    return this.angelService.getMyAngel().then(angel => {
-      localStorage.setItem('angel_id', angel.id);
-      this.angelId$.next(angel.id);
-    }).catch(() => localStorage.removeItem('angel_id'))
-  }
-
   private _setSession(authResult, profile) {
     // Save session data and update login status subject
     localStorage.setItem('token', authResult.accessToken);
@@ -122,9 +134,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
-    localStorage.removeItem('angel_id');
     this.router.navigate(['/']);
-    this.angelId$.next(null);
     this.setLoggedIn(false);
   }
 
