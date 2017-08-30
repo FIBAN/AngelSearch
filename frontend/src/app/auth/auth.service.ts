@@ -25,25 +25,24 @@ export class AuthService {
     LOGGED_IN: "logged_in"
   };
 
-  // Create a stream of logged in status to communicate throughout app
-  loggedIn$ = new BehaviorSubject<boolean>(undefined);
-
   authStatus$ = new BehaviorSubject<string>(AuthService.AUTH_STATUS.LOGGED_OUT);
+
+  readonly initialized: Promise<boolean>;
 
   constructor(private router: Router, private angelService: AngelService) {
 
-    Observable.timer(0, 30 * 1000)
-      .flatMap(() => Observable.fromPromise(this._authStatus()))
-      .distinctUntilChanged()
-      .subscribe(this.authStatus$);
+    // if the access token is expired log user out
+    Observable.timer(0, 5 * 1000)
+      .filter(() => !!localStorage.getItem('token'))
+      .map(() => tokenNotExpired('token'))
+      .filter(v => v == false)
+      .subscribe(() => this.logout());
 
-    // If authenticated, set local profile property and update login status subject
-    if (this.authenticated) {
-      this.setLoggedIn(true);
-    }
+    // load auth status
+    this.initialized = this._loadAuthStatus().then(s => this.authStatus$.next(s)).then(() => true);
   }
 
-  private _authStatus() {
+  private _loadAuthStatus(): Promise<string> {
     if(!this.authenticated) {
       return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_OUT);
     }
@@ -65,15 +64,8 @@ export class AuthService {
     }
   }
 
-  getAuthStatus() {
-    const status = this._authStatus();
-    status.then(s => this.authStatus$.next(s));
-    return status;
-  }
-
-  setLoggedIn(value: boolean) {
-    // Update login status subject
-    this.loggedIn$.next(value);
+  refreshAuthStatus(): Promise<void> {
+    return this._loadAuthStatus().then(s => this.authStatus$.next(s));
   }
 
   login(redirectAfterLogin?: string) {
@@ -95,7 +87,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this._getAuth0Profile(authResult)
-          .then(() => this._authStatus().then(s => this.authStatus$.next(s)))
+          .then(() => this._loadAuthStatus().then(s => this.authStatus$.next(s)))
           .then(()=> {
             const savedRedirect = localStorage.getItem("redirectAfterLogin");
             this.router.navigateByUrl(savedRedirect ? savedRedirect : '/');
@@ -123,20 +115,19 @@ export class AuthService {
   }
 
   private _setSession(authResult, profile) {
-    // Save session data and update login status subject
+    // Save session data
     localStorage.setItem('token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('profile', JSON.stringify(profile));
-    this.setLoggedIn(true);
   }
 
   logout() {
-    // Remove tokens and profile and update login status subject
+    // Remove tokens and profile
     localStorage.removeItem('token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
+    this.authStatus$.next(AuthService.AUTH_STATUS.LOGGED_OUT);
     this.router.navigate(['/']);
-    this.setLoggedIn(false);
   }
 
   get authenticated() {

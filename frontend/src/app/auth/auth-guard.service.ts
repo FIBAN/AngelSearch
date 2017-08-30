@@ -11,9 +11,9 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     // If the user is not logged in we'll send them back to the home page
-    return Observable.fromPromise(this.auth.getAuthStatus())
-      .map((status) => {
-      switch (status) {
+    return Observable.fromPromise(this.auth.initialized)
+      .map(() => {
+      switch (this.auth.authStatus$.getValue()) {
         case AuthService.AUTH_STATUS.LOGGED_OUT:
           this.router.navigate(['']);
           return false;

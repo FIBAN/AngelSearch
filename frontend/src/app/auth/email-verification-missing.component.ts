@@ -1,8 +1,11 @@
-import { Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Rx";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'email-verification',
@@ -11,13 +14,27 @@ import {Router} from "@angular/router";
     <p>You should have received a verification request to your email. It might possibly be in your spam folder. A verified email address is required to use this service.</p>
   `
 })
-export class EmailVerificationMissingComponent {
+export class EmailVerificationMissingComponent implements OnInit {
+
+  checkEmailSub: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router) {
-    authService.authStatus$.subscribe(s => {
-      if(s === AuthService.AUTH_STATUS.LOGGED_IN)
-        this.router.navigate(['/'])
-    })
+  }
+
+  ngOnInit (): void {
+    const userLoggedIn$ = this.authService.authStatus$.filter(s => s === AuthService.AUTH_STATUS.LOGGED_IN);
+    this.checkEmailSub = Observable.timer(0, 5 * 1000)
+      .do(() => this.authService.refreshAuthStatus())
+      .takeUntil(userLoggedIn$)
+      .subscribe(
+        (next) => next,
+        (error) => error,
+        () => this.router.navigate(['/'])
+      );
+  }
+
+  ngOnDestroy (): void {
+    this.checkEmailSub.unsubscribe();
   }
 }
