@@ -95,6 +95,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this._getAuth0Profile(authResult)
+          .then(() => this._authStatus().then(s => this.authStatus$.next(s)))
           .then(()=> {
             const savedRedirect = localStorage.getItem("redirectAfterLogin");
             this.router.navigateByUrl(savedRedirect ? savedRedirect : '/');
