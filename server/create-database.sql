@@ -19,5 +19,12 @@ create table invitations (
 create table auth0_users (
     "id" text not null primary key,
     angel_id text not null references angels ("id") on delete cascade
+);
+
+create table angel_industries (
+    "id" text not null primary key,
+    angel_id text not null references angels ("id") on delete cascade,
+    industry text not null,
+    unique (angel_id, industry)
 )
 

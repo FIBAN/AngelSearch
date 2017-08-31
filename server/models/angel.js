@@ -34,18 +34,45 @@ module.exports.create = (angel) => {
 };
 
 module.exports.update = (angel) => {
-    return db.query('UPDATE angels SET first_name = $1, last_name = $2, email = $3, phone = $4, city = $5, country = $6, bio = $7 WHERE id = $8',
-        [
-            angel.first_name,
-            angel.last_name,
-            angel.email,
-            angel.phone,
-            angel.city,
-            angel.country,
-            angel.bio,
-            angel.id
-        ]
-    ).then(res => res.rowCount);
+    let query = "UPDATE angels SET";
+    let queryParams = [];
+    if(angel.first_name) {
+        queryParams.push(angel.first_name);
+        query += " first_name = $" + queryParams.length;
+    }
+    if(angel.last_name) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.last_name);
+        query += " last_name = $" + queryParams.length;
+    }
+    if(angel.email) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.email);
+        query += " email = $" + queryParams.length;
+    }
+    if(angel.phone) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.phone);
+        query += " phone = $" + queryParams.length;
+    }
+    if(angel.city) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.city);
+        query += " city = $" + queryParams.length;
+    }
+    if(angel.country) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.country);
+        query += " country = $" + queryParams.length;
+    }
+    if(angel.bio) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.bio);
+        query += " bio = $" + queryParams.length;
+    }
+    queryParams.push(angel.id);
+    query += " WHERE id = $" + queryParams.length;
+    return db.query(query, queryParams).then(res => res.rowCount);
 };
 
 module.exports.linkAuth0Id = (angelId, auth0Id) => {
