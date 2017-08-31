@@ -1,20 +1,18 @@
 <h3 class="text-center">Business Angels</h3>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <label>search:</label>
-    <input name="search" [(ngModel)]="searchString"/>
-  </div>
-</div>
+<angel-filter-controls
+  (filterChanged)="filterChanged($event)"
+  [countries]="countries"
+  [cities]="cities"
+></angel-filter-controls>
 
 <ngx-datatable
   id="angelTable"
   class="bootstrap"
   [columnMode]="'flex'"
-  [rows]="angels | searchFilter:searchString"
+  [rows]="angels | angelFilter:filter"
   [columns]="columns"
   [reorderable]="false"
-  [limit]="20"
 >
   <ng-template #idLinkTmpl let-row="row" let-value="value">
     <a [routerLink]="['/angels', value]" routerLinkActive="true">{{value}}</a>

@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 
 import { Angel } from './angel';
 import { AngelService } from './angel.service';
@@ -14,13 +14,16 @@ export class AngelsComponent implements OnInit {
   @ViewChild('cityCountryTmpl') cityCountryTmpl: TemplateRef<any>;
   @ViewChild('nameTmpl') nameTmpl: TemplateRef<any>;
   angels: Angel[];
-  searchString: string;
+
+  filter: any = {};
 
   columns = [];
 
+  countries = [];
 
-  constructor(
-    private angelService: AngelService) {
+  cities = [];
+
+  constructor(private angelService: AngelService) {
   }
 
   ngOnInit(): void {
@@ -33,7 +36,21 @@ export class AngelsComponent implements OnInit {
     ];
 
     this.angelService.getAngels()
-      .then(angels => this.angels = angels);
+      .then(angels => {
+        this.angels = angels;
+        this.countries = angels.map(a => a.country)
+          .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
+          .sort();
+        this.cities = angels.map(a => a.city)
+          .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
+          .sort();
+      });
+
+  }
+
+  filterChanged(filter): void {
+    console.log("filter changed", filter);
+    this.filter = filter;
   }
 
 }

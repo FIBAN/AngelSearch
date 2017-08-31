@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By }              from '@angular/platform-browser';
 
-import { SearchFilterPipe } from "./search.pipe";
+import { SearchFilterPipe } from "./angel-filter.pipe";
 
 import { AngelsComponent } from './angels.component';
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
