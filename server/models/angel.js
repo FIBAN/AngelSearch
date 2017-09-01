@@ -70,6 +70,16 @@ module.exports.update = (angel) => {
         queryParams.push(angel.bio);
         query += " bio = $" + queryParams.length;
     }
+    if(angel.linkedin) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.linkedin);
+        query += " linkedin = $" + queryParams.length;
+    }
+    if(angel.network) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.network);
+        query += " network = $" + queryParams.length;
+    }
 
     if(!queryParams.length) {
         return Promise.resolve(0);

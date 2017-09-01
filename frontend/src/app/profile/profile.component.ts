@@ -23,7 +23,10 @@ export class ProfileComponent implements OnInit {
     {name: 'Email', key: 'email', editable: true},
     {name: 'Phone', key: 'phone', editable: true},
     {name: 'City', key: 'city', editable: true},
-    {name: 'Country', key: 'country', editable: true}
+    {name: 'Country', key: 'country', editable: true},
+    {name: 'Network', key: 'network', editable: true},
+    {name: 'LinkedIn', key: 'linkedin', editable: true},
+    {name: 'Bio', key: 'bio', editable: true},
   ];
 
   constructor(

@@ -13,6 +13,7 @@ export class AngelsComponent implements OnInit {
   @ViewChild('cityCountryTmpl') cityCountryTmpl: TemplateRef<any>;
   @ViewChild('nameTmpl') nameTmpl: TemplateRef<any>;
   @ViewChild('industriesTmpl') industriesTmpl: TemplateRef<any>;
+  @ViewChild('linkedInTmpl') linkedInTmpl: TemplateRef<any>;
   angels: Angel[];
 
   filter: any = {};
@@ -28,10 +29,11 @@ export class AngelsComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { name: 'Name', prop: 'last_name', cellTemplate: this.nameTmpl, resizeable: false, flexGrow: 1 },
-      { name: 'Location', prop: 'city', cellTemplate: this.cityCountryTmpl, resizeable: false, flexGrow: 1 },
-      { name: 'Industries', prop: 'industries', cellTemplate: this.industriesTmpl, resizeable: false, flexGrow: 2},
-      { name: 'Bio', resizeable: false, flexGrow: 2 }
+      { name: 'Name', prop: 'last_name', cellTemplate: this.nameTmpl, resizeable: false, flexGrow: 2 },
+      { name: 'Location', prop: 'city', cellTemplate: this.cityCountryTmpl, resizeable: false, flexGrow: 2 },
+      { name: 'Industries', prop: 'industries', cellTemplate: this.industriesTmpl, resizeable: false, flexGrow: 4},
+      { name: 'Bio', resizeable: false, flexGrow: 4 },
+      { name: 'LinkedIn', prop: 'linkedin', cellTemplate: this.linkedInTmpl, resizeable: false, flexGrow: 1}
     ];
 
     this.angelService.getAngels()

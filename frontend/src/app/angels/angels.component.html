@@ -29,6 +29,10 @@
     <span *ngFor="let industry of value.slice(0, 4)" class="badge industry-badge">{{industry}}</span>
     <span *ngIf="value.length > 4">...</span>
   </ng-template>
+
+  <ng-template #linkedInTmpl let-row="row" let-value="value">
+    <a *ngIf="value" href="https://www.linkedin.com/in/{{value}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+  </ng-template>
 </ngx-datatable>
 
 
