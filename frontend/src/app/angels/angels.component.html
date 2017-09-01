@@ -14,6 +14,7 @@
   [rows]="angels | angelFilter:filter"
   [columns]="columns"
   [reorderable]="false"
+  [sorts]="[{prop: 'last_name', order: 'desc'}]"
 >
 
   <ng-template #cityCountryTmpl let-row="row" let-value="value">
