@@ -9,7 +9,8 @@ export class Angel {
     public city?: string,
     public country?: string,
     public bio?: string,
-    public auth0_id?: string
+    public auth0_id?: string,
+    public industries?: string[]
   ) {};
 
 }

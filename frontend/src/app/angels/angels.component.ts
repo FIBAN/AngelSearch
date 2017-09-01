@@ -10,9 +10,9 @@ import { AngelService } from './angel.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AngelsComponent implements OnInit {
-  @ViewChild('idLinkTmpl') idLinkTmpl: TemplateRef<any>;
   @ViewChild('cityCountryTmpl') cityCountryTmpl: TemplateRef<any>;
   @ViewChild('nameTmpl') nameTmpl: TemplateRef<any>;
+  @ViewChild('industriesTmpl') industriesTmpl: TemplateRef<any>;
   angels: Angel[];
 
   filter: any = {};
@@ -20,18 +20,17 @@ export class AngelsComponent implements OnInit {
   columns = [];
 
   countries = [];
-
   cities = [];
+  industries = [];
 
   constructor(private angelService: AngelService) {
   }
 
   ngOnInit(): void {
     this.columns = [
-      { name: 'Name', prop: 'last_name', cellTemplate: this.nameTmpl, resizeable: false, flexGrow: 2 },
-      { name: 'Email', resizeable: false, flexGrow: 2 },
-      { name: 'Phone', resizeable: false, flexGrow: 1 },
-      { name: 'Location', prop: 'city', cellTemplate: this.cityCountryTmpl, resizeable: false, flexGrow: 2 },
+      { name: 'Name', prop: 'last_name', cellTemplate: this.nameTmpl, resizeable: false, flexGrow: 1 },
+      { name: 'Location', prop: 'city', cellTemplate: this.cityCountryTmpl, resizeable: false, flexGrow: 1 },
+      { name: 'Industries', prop: 'industries', cellTemplate: this.industriesTmpl, resizeable: false, flexGrow: 2},
       { name: 'Bio', resizeable: false, flexGrow: 2 }
     ];
 
@@ -42,6 +41,10 @@ export class AngelsComponent implements OnInit {
           .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
           .sort();
         this.cities = angels.map(a => a.city)
+          .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
+          .sort();
+        this.industries = angels.map(a => a.industries || [])
+          .reduce((x,y) => x.concat(y), [])
           .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
           .sort();
       });

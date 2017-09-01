@@ -9,6 +9,7 @@ export class AngelFilterPipe implements PipeTransform {
     console.log("params:", params);
     data = this.filterByCity(data, params.cities);
     data = this.filterByCountry(data, params.countries);
+    data = this.filterByIndustry(data, params.industries);
     data = this.filterByQuery(data, params.searchString);
     return data;
   }
@@ -18,16 +19,16 @@ export class AngelFilterPipe implements PipeTransform {
       return data;
     } else {
       return data.filter((angel) =>
-        (angel.first_name && this.contains(angel.first_name, query)) ||
-        (angel.last_name && this.contains(angel.last_name, query)) ||
-        (angel.email && this.contains(angel.email, query)) ||
-        (angel.country && this.contains(angel.country, query)) ||
-        (angel.city && this.contains(angel.city, query))
+        (angel.first_name && this.strContains(angel.first_name, query)) ||
+        (angel.last_name && this.strContains(angel.last_name, query)) ||
+        (angel.email && this.strContains(angel.email, query)) ||
+        (angel.country && this.strContains(angel.country, query)) ||
+        (angel.city && this.strContains(angel.city, query))
       );
     }
   }
 
-  private filterByCountry(data: Angel[], countries): Angel[] {
+  private filterByCountry(data: Angel[], countries: string[]): Angel[] {
     if(!countries || !countries.length) {
       return data;
     } else {
@@ -36,7 +37,7 @@ export class AngelFilterPipe implements PipeTransform {
     }
   }
 
-  private filterByCity(data: Angel[], cities): Angel[] {
+  private filterByCity(data: Angel[], cities: string[]): Angel[] {
     if(!cities || !cities.length) {
       return data;
     } else {
@@ -45,11 +46,38 @@ export class AngelFilterPipe implements PipeTransform {
     }
   }
 
-  private contains(str: string, query: string): boolean {
+  private filterByIndustry(data: Angel[], industries: string[]): Angel[] {
+    if(!industries || !industries.length) {
+      return data;
+    } else {
+      industries = industries.map(c => c.toLowerCase());
+      return data.filter((angel) => angel.industries && this.containsSome(angel.industries.map(i => i.toLowerCase()), industries));
+    }
+  }
+
+  private strContains(str: string, query: string): boolean {
     if(!str) return false;
     if(!query) return true;
     const lq = query.toLowerCase();
     return str.toLowerCase().indexOf(lq) !== -1;
+  }
+
+  private containsSome(haystack: string[], needles: string[]): boolean {
+    haystack.sort();
+    needles.sort();
+    let hi=0, ni=0;
+
+    while( hi < haystack.length && ni < needles.length )
+    {
+      if      (haystack[hi] < needles[ni] ){ hi++; }
+      else if (haystack[hi] > needles[ni] ){ ni++; }
+      else /* they're equal */
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
 }

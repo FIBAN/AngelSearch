@@ -34,6 +34,14 @@ import { Angel } from './angel';
           <td>{{angel.country}}</td>
         </tr>
         <tr>
+          <td><span class="propLabel">Industries</span></td>
+          <td>
+            <ul class="list-unstyled">
+                <li *ngFor="let industry of angel.industries">{{industry}}</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
           <td><span class="propLabel">Bio</span></td>
           <td>{{angel.bio}}</td>
         </tr>

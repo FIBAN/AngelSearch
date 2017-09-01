@@ -21,6 +21,11 @@ import {AngelFilter} from "./angel-filter";
             <option selected value="">Any</option>
             <option *ngFor="let c of cities" value="{{c.toLowerCase()}}">{{c}}</option>
           </select>
+          <label for="industry">Industry</label>
+          <select class="form-control" id="industry" formControlName="industry">
+            <option selected value="">Any</option>
+            <option *ngFor="let i of industries" value="{{i.toLowerCase()}}">{{i}}</option>
+          </select>
           <a class="btn btn-default" id="filterClearBtn" (click)="clearFilter()">Clear Filters</a>
         </form>
       </div>
@@ -36,18 +41,21 @@ export class AngelFilterControlsComponent implements OnInit {
 
   @Input() countries: string[];
   @Input() cities: string[];
+  @Input() industries: string[];
 
   filtersForm = new FormGroup({
     searchString: new FormControl(),
     country: new FormControl(),
-    city: new FormControl()
+    city: new FormControl(),
+    industry: new FormControl()
   });
   filtersFormSub;
 
   formDefaults = {
     searchString: "",
     country: "",
-    city: ""
+    city: "",
+    industry: ""
   };
 
   constructor() {}
@@ -62,7 +70,8 @@ export class AngelFilterControlsComponent implements OnInit {
         this.filterChanged.emit(new AngelFilter(
           s.searchString,
           s.country && [s.country],
-          s.city && [s.city]
+          s.city && [s.city],
+          s.industry && [s.industry]
         ));
       })
   }

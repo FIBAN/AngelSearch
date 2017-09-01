@@ -4,6 +4,7 @@
   (filterChanged)="filterChanged($event)"
   [countries]="countries"
   [cities]="cities"
+  [industries]="industries"
 ></angel-filter-controls>
 
 <ngx-datatable
@@ -14,9 +15,6 @@
   [columns]="columns"
   [reorderable]="false"
 >
-  <ng-template #idLinkTmpl let-row="row" let-value="value">
-    <a [routerLink]="['/angels', value]" routerLinkActive="true">{{value}}</a>
-  </ng-template>
 
   <ng-template #cityCountryTmpl let-row="row" let-value="value">
     {{row.city}}, {{row.country}}
@@ -24,6 +22,11 @@
 
   <ng-template #nameTmpl let-row="row" let-value="value">
     <a [routerLink]="['/angels', row.id]" routerLinkActive="true">{{row.last_name}} {{row.first_name}}</a>
+  </ng-template>
+
+  <ng-template #industriesTmpl let-row="row" let-value="value">
+    <span *ngFor="let industry of value.slice(0, 4)" class="badge industry-badge">{{industry}}</span>
+    <span *ngIf="value.length > 4">...</span>
   </ng-template>
 </ngx-datatable>
 
