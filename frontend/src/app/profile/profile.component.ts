@@ -12,9 +12,9 @@ import 'rxjs/add/operator/switchMap';
 })
 export class ProfileComponent implements OnInit {
   angel: Angel;
-  newEmail: string;
   activeEdit: string;
   edits: any;
+  newIndustry: string;
 
   profileProps: any[] = [
     {name: 'Id', key: 'id', editable: false},
@@ -37,6 +37,11 @@ export class ProfileComponent implements OnInit {
       for(let k in angel){
         if(angel.hasOwnProperty(k)) this.edits[k] = angel[k];
       }
+      //deep copy industries array
+      this.edits.industries = [];
+      for (let i of angel.industries) {
+        this.edits.industries.push(i);
+      }
     });
   }
 
@@ -49,13 +54,24 @@ export class ProfileComponent implements OnInit {
   }
 
   saveEdit(key): void {
-    this.angel[key] = this.edits[key];
-    this.angelService.updateAngel(this.angel).then(() => location.reload())
+    let toBeSavedEdits = {id: this.angel.id};
+    toBeSavedEdits[key] = this.edits[key];
+    this.angelService.updateAngel(toBeSavedEdits as Angel).then(() => location.reload())
   }
 
-  changeEmail(): void {
-    this.angel.email = this.newEmail;
-    this.angelService.updateAngel(this.angel).then(() => location.reload())
+  removeIndustry(industry): void {
+    const idx = this.edits.industries.indexOf(industry);
+    if(idx !== -1) {
+      this.edits.industries.splice(idx, 1);
+    }
+  }
+
+  addIndustry(industry): void {
+    const idx = this.edits.industries.indexOf(industry);
+    if(industry && idx === -1) {
+      this.edits.industries.push(industry);
+    }
+    this.newIndustry = "";
   }
 
 }

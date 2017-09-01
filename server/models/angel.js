@@ -70,9 +70,16 @@ module.exports.update = (angel) => {
         queryParams.push(angel.bio);
         query += " bio = $" + queryParams.length;
     }
-    queryParams.push(angel.id);
-    query += " WHERE id = $" + queryParams.length;
-    return db.query(query, queryParams).then(res => res.rowCount);
+
+    if(!queryParams.length) {
+        return Promise.resolve(0);
+    }
+    else {
+        queryParams.push(angel.id);
+        query += " WHERE id = $" + queryParams.length;
+        console.log("query:", query, queryParams);
+        return db.query(query, queryParams).then(res => res.rowCount);
+    }
 };
 
 module.exports.linkAuth0Id = (angelId, auth0Id) => {
