@@ -1,11 +1,7 @@
-<h1 class="text-center">Business Angel Search</h1>
-
-<div class="col-sm-6 col-sm-offset-3">
-  <div class="panel panel-default ">
-    <div class="panel-body text-center">
-      <h4>Please login</h4>
-      <a *ngIf="!authService.authenticated" (click)="authService.login()" class="btn btn-info">Log In</a>
-    </div>
+<div class="row justify-content-center">
+  <div class="jumbotron text-center col-lg-8">
+    <h1 class="display-4">Please login</h1>
+    <button *ngIf="!authService.authenticated" (click)="authService.login()" class="btn btn-primary">Log In</button>
   </div>
 </div>
 

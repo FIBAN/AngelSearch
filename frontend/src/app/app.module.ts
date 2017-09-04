@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { routing, routedComponents } from './app.routing';
@@ -29,7 +30,8 @@ import {AngelFilterControlsComponent} from "./angels/angel-filter-controls.compo
     routing,
     HttpModule,
     AuthModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgbModule.forRoot()
   ],
   declarations: [
     AppComponent,

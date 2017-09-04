@@ -1,7 +1,7 @@
 <h3 class="text-center">My Profile</h3>
 
-<div *ngIf="angel" class="panel panel-default ">
-  <div class="panel-heading">Details</div>
+<div *ngIf="angel" class="card">
+  <div class="card-header">Details</div>
   <table class="table">
     <tbody>
     <tr *ngFor="let prop of profileProps">
@@ -11,9 +11,9 @@
         <a *ngIf="prop.editable" href="#" class="edit-button" (click)="startEdit(prop.key); false;"><i class="fa fa-edit" aria-hidden="true"></i></a>
       </td>
       <td class="form-inline" *ngIf="activeEdit === prop.key">
-        <input class="form-control" [(ngModel)]="edits[prop.key]" name="{{'a' + prop.key}}">
-        <a href="#" class="btn btn-success" (click)="saveEdit(prop.key); false">Save</a>
-        <a href="#" class="btn btn-danger" (click)="stopEdit(); false">Cancel</a>
+        <input class="form-control mr-2" [(ngModel)]="edits[prop.key]" name="{{'a' + prop.key}}">
+        <a href="#" class="btn btn-success mr-1" (click)="saveEdit(prop.key); false">Save</a>
+        <a href="#" class="btn btn-danger mr-1" (click)="stopEdit(); false">Cancel</a>
       </td>
     </tr>
     <tr>
@@ -23,18 +23,20 @@
           <li *ngIf="!angel.industries || !angel.industries.length" class="text-muted">None</li>
           <li *ngFor="let i of angel.industries">{{i}}</li>
         </ul>
-        <a class="edit-button pull-left" (click)="startEdit('industries')"><i class="fa fa-edit" aria-hidden="true"></i></a>
+        <a href="#" class="edit-button" (click)="startEdit('industries'); false"><i class="fa fa-edit" aria-hidden="true"></i></a>
       </td>
-      <td class="form-inline" *ngIf="activeEdit === 'industries'">
-        <ul class="list-unstyled angelIndustriesList">
-          <li *ngFor="let i of edits.industries">{{i}} <a class="edit-button" (click)="removeIndustry(i)"><i class="fa fa-times" aria-hidden="true"></i></a></li>
-          <li>
-            <input class="form-control" [(ngModel)]="newIndustry" name="newIndustry" placeholder="Add an industry">
-            <a class="edit-button" (click)="addIndustry(newIndustry)"><i class="fa fa-check text-success" aria-hidden="true"></i></a>
-          </li>
-        </ul>
-        <a class="btn btn-success" (click)="addIndustry(newIndustry); saveEdit('industries')">Save</a>
-        <a class="btn btn-danger" (click)="stopEdit()">Cancel</a>
+      <td *ngIf="activeEdit === 'industries'">
+        <div class="form-inline">
+          <ul class="list-unstyled angelIndustriesList">
+            <li *ngFor="let i of edits.industries">{{i}} <a class="edit-button" (click)="removeIndustry(i)"><i class="fa fa-times text-danger" aria-hidden="true"></i></a></li>
+            <li>
+              <input class="form-control" [(ngModel)]="newIndustry" name="newIndustry" placeholder="Add an industry">
+              <a class="edit-button" (click)="addIndustry(newIndustry)"><i class="fa fa-check text-success" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+        </div>
+        <button class="btn btn-success" (click)="addIndustry(newIndustry); saveEdit('industries')">Save</button>
+        <button class="btn btn-danger" (click)="stopEdit()">Cancel</button>
       </td>
     </tr>
     </tbody>

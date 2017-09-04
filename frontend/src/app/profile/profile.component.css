@@ -4,7 +4,8 @@ span.propLabel {
 }
 
 table td:first-child {
-  width: 120px;text-align: right;
+  width: 120px;
+  text-align: right;
 }
 
 .edit-button {

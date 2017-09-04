@@ -1,5 +1,3 @@
-<h3 class="text-center">Business Angels</h3>
-
 <angel-filter-controls
   (filterChanged)="filterChanged($event)"
   [countries]="countries"
@@ -12,9 +10,10 @@
   class="bootstrap"
   [columnMode]="'flex'"
   [rows]="angels | angelFilter:filter"
+  [rowHeight]="undefined"
   [columns]="columns"
   [reorderable]="false"
-  [sorts]="[{prop: 'last_name', order: 'desc'}]"
+  [sorts]="[{prop: 'first_name', order: 'desc'}]"
 >
 
   <ng-template #cityCountryTmpl let-row="row" let-value="value">
@@ -26,12 +25,12 @@
   </ng-template>
 
   <ng-template #industriesTmpl let-row="row" let-value="value">
-    <span *ngFor="let industry of value.slice(0, 4)" class="badge industry-badge">{{industry}}</span>
-    <span *ngIf="value.length > 4">...</span>
+    <span *ngFor="let industry of value.slice(0, 3)" class="badge badge-primary industry-badge">{{industry}}</span>
+    <span *ngIf="value.length > 3">...</span>
   </ng-template>
 
   <ng-template #linkedInTmpl let-row="row" let-value="value">
-    <a *ngIf="value" href="https://www.linkedin.com/in/{{value}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+    <a *ngIf="value" href="https://www.linkedin.com/in/{{value}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
   </ng-template>
 </ngx-datatable>
 

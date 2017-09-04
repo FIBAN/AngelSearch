@@ -6,35 +6,45 @@ import {AngelFilter} from "./angel-filter";
 @Component({
   selector: 'angel-filter-controls',
   template: `
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <form class="form-inline" [formGroup]="filtersForm" novalidate>
-          <label for="searchString">Search</label>
-          <input class="form-control" placeholder="Search" id="searchString" formControlName="searchString"/>
-          <label for="country">Country</label>
-          <select class="form-control" id="country" formControlName="country">
-            <option selected value="">Any</option>
-            <option *ngFor="let c of countries" value="{{c.toLowerCase()}}">{{c}}</option>
-          </select>
-          <label for="city">City</label>
-          <select class="form-control" id="city" formControlName="city">
-            <option selected value="">Any</option>
-            <option *ngFor="let c of cities" value="{{c.toLowerCase()}}">{{c}}</option>
-          </select>
-          <label for="industry">Industry</label>
-          <select class="form-control" id="industry" formControlName="industry">
-            <option selected value="">Any</option>
-            <option *ngFor="let i of industries" value="{{i.toLowerCase()}}">{{i}}</option>
-          </select>
-          <a class="btn btn-default" id="filterClearBtn" (click)="clearFilter()">Clear Filters</a>
+    <div class="card">
+      <div class="card-header">Filters</div>
+      <div class="card-body">
+        <form [formGroup]="filtersForm" novalidate>
+          <div class="form-row align-items-center">
+            <div class="col-lg-3 col-12 mb-lg-0 mb-2">
+              <label for="searchString" class="sr-only">Search</label>
+              <input class="form-control" placeholder="Search" id="searchString" formControlName="searchString"/>
+            </div>
+            <div class="col-lg-2 col-12 mb-lg-0 mb-2">
+              <label for="country" class="sr-only">Country</label>
+              <select class="form-control" id="country" formControlName="country">
+                <option selected value="">Country</option>
+                <option *ngFor="let c of countries" value="{{c.toLowerCase()}}">{{c}}</option>
+              </select>          
+            </div>
+            <div class="col-lg-2 col-12 mb-lg-0 mb-2">
+              <label for="city" class="sr-only">City</label>
+              <select class="form-control" id="city" formControlName="city">
+                <option selected value="">City</option>
+                <option *ngFor="let c of cities" value="{{c.toLowerCase()}}">{{c}}</option>
+              </select>            
+            </div>
+            <div class="col-lg-2 col-12 mb-lg-0 mb-2">
+              <label for="industry" class="sr-only">Industry</label>
+              <select class="form-control" id="industry" formControlName="industry">
+                <option selected value="">Industry</option>
+                <option *ngFor="let i of industries" value="{{i.toLowerCase()}}">{{i}}</option>
+              </select>            
+            </div>
+            <div class="col-lg-3 col-12 mb-lg-0 mb-2">
+              <button class="btn btn-secondary" id="filterClearBtn" (click)="clearFilter()">Clear Filters</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
   `,
-  styles: [
-    '.form-inline .form-control {margin-right: 1em;}',
-    '#filterClearBtn {float: right;}'
-  ]
+  styles: []
 })
 export class AngelFilterControlsComponent implements OnInit {
   @Output() filterChanged = new EventEmitter();
