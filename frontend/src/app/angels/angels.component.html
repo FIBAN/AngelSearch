@@ -22,7 +22,7 @@
   </ng-template>
 
   <ng-template #nameTmpl let-row="row" let-value="value">
-    <a [routerLink]="['/angels', row.id]" routerLinkActive="true">{{row.last_name}} {{row.first_name}}</a>
+    <a [routerLink]="['/angels', row.id]" routerLinkActive="true">{{row.first_name}} {{row.last_name}}</a>
   </ng-template>
 
   <ng-template #industriesTmpl let-row="row" let-value="value">

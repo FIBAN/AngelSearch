@@ -57,9 +57,18 @@ export class ProfileComponent implements OnInit {
   }
 
   saveEdit(key): void {
+    if(key === 'linkedin') {
+      this.edits.linkedin = this.parseLinkedInId(this.edits.linkedin);
+    }
     let toBeSavedEdits = {id: this.angel.id};
     toBeSavedEdits[key] = this.edits[key];
     this.angelService.updateAngel(toBeSavedEdits as Angel).then(() => location.reload())
+  }
+
+  parseLinkedInId(input: string): string {
+    const urlMatch = input.match(/\/in\/([^/]*)\/?/); //check if input is a linkedIn profile url
+    const idMatch = input.match(/^([^/]*)$/); //otherwise check if input looks like a linkedIn id string
+    return (urlMatch && urlMatch[1]) || (idMatch && idMatch[1]) || "";
   }
 
   removeIndustry(industry): void {
