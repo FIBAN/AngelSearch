@@ -1,7 +1,9 @@
 <div class="row justify-content-center">
-  <div class="jumbotron text-center col-lg-8">
-    <h1 class="display-4">Please login</h1>
-    <button *ngIf="!authService.authenticated" (click)="authService.login()" class="btn btn-primary">Log In</button>
+  <div class="card text-center col-lg-4 col-md-6 mt-3">
+    <div class="card-body">
+      <h2>Please login</h2>
+      <a href="#" *ngIf="!authService.authenticated" (click)="authService.login(); false" class="btn btn-primary" role="button">Log In</a>
+    </div>
   </div>
 </div>
 
