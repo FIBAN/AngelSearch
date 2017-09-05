@@ -17,7 +17,7 @@
 >
 
   <ng-template #cityCountryTmpl let-row="row" let-value="value">
-    {{row.city}}, {{row.country}}
+    {{locationString(row.city, row.country)}}
   </ng-template>
 
   <ng-template #nameTmpl let-row="row" let-value="value">

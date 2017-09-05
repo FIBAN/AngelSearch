@@ -33,7 +33,6 @@ span.sort-btn.sort-asc.datatable-icon-up {
   vertical-align: bottom;
   padding: 0.75rem 0;
   border-bottom: 2px solid #e9ecef;
-  border-top: 1px solid #e9ecef;
 }
 .ngx-datatable.bootstrap .datatable-body .datatable-body-row {
   vertical-align: top;

@@ -58,4 +58,13 @@ export class AngelsComponent implements OnInit {
     this.filter = filter;
   }
 
+  locationString(city?: string, country?: string): string {
+    if(city && country) {
+      return city + ', ' + country;
+    }
+    else {
+      return city || country || '';
+    }
+  }
+
 }
