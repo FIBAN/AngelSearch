@@ -1,8 +1,3 @@
-create table investment_levels (
-    "id" text not null primary key,
-    description text not null
-);
-
 create table angels (
     "id" text not null primary key,
     auth0_id text unique,
@@ -15,7 +10,7 @@ create table angels (
     bio text,
     linkedin text,
     network text,
-    investment_level text references investment_levels ("id") on delete set null
+    investment_level integer
 );
 
 create table invitations (
@@ -27,13 +22,6 @@ create table invitations (
 create table auth0_users (
     "id" text not null primary key,
     angel_id text not null references angels ("id") on delete cascade
-);
-
-create table angel_industries (
-    "id" text not null primary key,
-    angel_id text not null references angels ("id") on delete cascade,
-    industry text not null,
-    unique (angel_id, industry)
 );
 
 create table angel_industries (

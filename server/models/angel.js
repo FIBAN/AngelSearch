@@ -80,6 +80,11 @@ module.exports.update = (angel) => {
         queryParams.push(angel.network);
         query += " network = $" + queryParams.length;
     }
+    if(angel.investment_level) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.investment_level);
+        query += " investment_level = $" + queryParams.length;
+    }
 
     if(!queryParams.length) {
         return Promise.resolve(0);
