@@ -32,6 +32,10 @@
   <ng-template #linkedInTmpl let-row="row" let-value="value">
     <a *ngIf="value" href="https://www.linkedin.com/in/{{value}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
   </ng-template>
+
+  <ng-template #investmentLevelTmpl let-row="row" let-value="value">
+    <span *ngIf="value || value === 0">{{investmentLevels[value]}}</span>
+  </ng-template>
 </ngx-datatable>
 
 

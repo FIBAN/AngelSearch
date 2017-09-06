@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 
 import { Angel } from '../angels/angel';
 import { AngelService } from '../angels/angel.service';
@@ -11,23 +11,18 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('industriesViewTmpl') industriesViewTmpl: TemplateRef<any>;
+  @ViewChild('industriesEditTmpl') industriesEditTmpl: TemplateRef<any>;
+  @ViewChild('investmentLevelViewTmpl') investmentLevelViewTmpl: TemplateRef<any>;
+  @ViewChild('investmentLevelEditTmpl') investmentLevelEditTmpl: TemplateRef<any>;
   angel: Angel;
   activeEdit: string;
   edits: any;
   newIndustry: string;
 
-  profileProps: any[] = [
-    {name: 'Id', key: 'id', editable: false},
-    {name: 'First name', key: 'first_name', editable: true},
-    {name: 'Last name', key: 'last_name', editable: true},
-    {name: 'Email', key: 'email', editable: true},
-    {name: 'Phone', key: 'phone', editable: true},
-    {name: 'City', key: 'city', editable: true},
-    {name: 'Country', key: 'country', editable: true},
-    {name: 'Network', key: 'network', editable: true},
-    {name: 'LinkedIn', key: 'linkedin', editable: true},
-    {name: 'Bio', key: 'bio', editable: true},
-  ];
+  profileProps: any[];
+
+  investmentLevels = Angel.INVESTMENT_LEVELS;
 
   constructor(
     private angelService: AngelService) {
@@ -35,6 +30,21 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.profileProps = [
+      {name: 'Id', key: 'id', editable: false},
+      {name: 'First name', key: 'first_name', editable: true},
+      {name: 'Last name', key: 'last_name', editable: true},
+      {name: 'Email', key: 'email', editable: true},
+      {name: 'Phone', key: 'phone', editable: true},
+      {name: 'City', key: 'city', editable: true},
+      {name: 'Country', key: 'country', editable: true},
+      {name: 'Network', key: 'network', editable: true},
+      {name: 'LinkedIn', key: 'linkedin', editable: true},
+      {name: 'Investments', key: 'investment_level', editable: true, viewTemplate: this.investmentLevelViewTmpl, editTemplate: this.investmentLevelEditTmpl},
+      {name: 'Industries', key: 'industries', editable: true, viewTemplate: this.industriesViewTmpl, editTemplate: this.industriesEditTmpl},
+      {name: 'Bio', key: 'bio', editable: true},
+    ];
+
     this.angelService.getMyAngel().then(angel => {
       this.angel = angel;
       for(let k in angel){

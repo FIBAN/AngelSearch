@@ -14,6 +14,7 @@ export class AngelsComponent implements OnInit {
   @ViewChild('nameTmpl') nameTmpl: TemplateRef<any>;
   @ViewChild('industriesTmpl') industriesTmpl: TemplateRef<any>;
   @ViewChild('linkedInTmpl') linkedInTmpl: TemplateRef<any>;
+  @ViewChild('investmentLevelTmpl') investmentLevelTmpl: TemplateRef<any>;
   angels: Angel[];
 
   filter: any = {};
@@ -24,6 +25,8 @@ export class AngelsComponent implements OnInit {
   cities = [];
   industries = [];
 
+  investmentLevels = Angel.INVESTMENT_LEVELS;
+
   constructor(private angelService: AngelService) {
   }
 
@@ -32,7 +35,7 @@ export class AngelsComponent implements OnInit {
       { name: 'Name', prop: 'first_name', cellTemplate: this.nameTmpl, resizeable: false, flexGrow: 2 },
       { name: 'Location', prop: 'city', cellTemplate: this.cityCountryTmpl, resizeable: false, flexGrow: 2 },
       { name: 'Industries', prop: 'industries', cellTemplate: this.industriesTmpl, resizeable: false, flexGrow: 3},
-      { name: 'Bio', resizeable: false, flexGrow: 4 },
+      { name: 'Investments', prop: 'investment_level', cellTemplate: this.investmentLevelTmpl,resizeable: false, flexGrow: 2 },
       { name: 'LinkedIn', prop: 'linkedin', cellTemplate: this.linkedInTmpl, resizeable: false, flexGrow: 1}
     ];
 

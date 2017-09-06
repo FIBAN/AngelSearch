@@ -7,39 +7,53 @@
     <tr *ngFor="let prop of profileProps">
       <td><span class="propLabel">{{prop.name}}</span></td>
       <td *ngIf="activeEdit !== prop.key">
-        {{angel[prop.key]}}
+        <span *ngIf="!prop.viewTemplate">{{angel[prop.key]}}</span>
+        <ng-template *ngIf="prop.viewTemplate" [ngTemplateOutlet]="prop.viewTemplate" [ngTemplateOutletContext]="{prop: prop}"></ng-template>
         <a *ngIf="prop.editable" href="#" class="edit-button" (click)="startEdit(prop.key); false;"><i class="fa fa-edit" aria-hidden="true"></i></a>
       </td>
-      <td class="form-inline" *ngIf="activeEdit === prop.key">
-        <input class="form-control mr-2" [(ngModel)]="edits[prop.key]" name="{{'a' + prop.key}}">
-        <a href="#" class="btn btn-success mr-1" (click)="saveEdit(prop.key); false">Save</a>
-        <a href="#" class="btn btn-danger mr-1" (click)="stopEdit(); false">Cancel</a>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="propLabel">Industries</span></td>
-      <td *ngIf="activeEdit !== 'industries'">
-        <ul class="list-unstyled pull-left">
-          <li *ngIf="!angel.industries || !angel.industries.length" class="text-muted">None</li>
-          <li *ngFor="let i of angel.industries">{{i}}</li>
-        </ul>
-        <a href="#" class="edit-button" (click)="startEdit('industries'); false"><i class="fa fa-edit" aria-hidden="true"></i></a>
-      </td>
-      <td *ngIf="activeEdit === 'industries'">
-        <div class="form-inline">
-          <ul class="list-unstyled angelIndustriesList">
-            <li *ngFor="let i of edits.industries">{{i}} <a class="edit-button" (click)="removeIndustry(i)"><i class="fa fa-times text-danger" aria-hidden="true"></i></a></li>
-            <li>
-              <input class="form-control" [(ngModel)]="newIndustry" name="newIndustry" placeholder="Add an industry">
-              <a class="edit-button" (click)="addIndustry(newIndustry)"><i class="fa fa-check text-success" aria-hidden="true"></i></a>
-            </li>
-          </ul>
+      <td *ngIf="activeEdit === prop.key">
+        <div *ngIf="!prop.editTemplate" class="form-inline">
+          <input class="form-control mr-2" [(ngModel)]="edits[prop.key]" name="{{'a' + prop.key}}">
+          <a href="#" class="btn btn-success mr-1" (click)="saveEdit(prop.key); false">Save</a>
+          <a href="#" class="btn btn-danger mr-1" (click)="stopEdit(); false">Cancel</a>
         </div>
-        <button class="btn btn-success" (click)="addIndustry(newIndustry); saveEdit('industries')">Save</button>
-        <button class="btn btn-danger" (click)="stopEdit()">Cancel</button>
+        <ng-template *ngIf="prop.editTemplate" [ngTemplateOutlet]="prop.editTemplate" [ngTemplateOutletContext]="{prop: prop}"></ng-template>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #investmentLevelViewTmpl let-prop="prop">
+  {{investmentLevels[angel.investment_level]}}
+</ng-template>
+<ng-template #investmentLevelEditTmpl let-prop="prop">
+  <div class="form-inline">
+    <select class="form-control mr-2" [(ngModel)]="edits[prop.key]" name="{{'a' + prop.key}}">
+      <option *ngFor="let il of investmentLevels; let i = index" value="{{i}}">{{il}}</option>
+    </select>
+    <a href="#" class="btn btn-success mr-1" (click)="saveEdit(prop.key); false">Save</a>
+    <a href="#" class="btn btn-danger mr-1" (click)="stopEdit(); false">Cancel</a>
+  </div>
+</ng-template>
+
+<ng-template #industriesViewTmpl let-prop="prop">
+  <ul class="list-unstyled pull-left">
+    <li *ngIf="!angel.industries || !angel.industries.length" class="text-muted">None</li>
+    <li *ngFor="let i of angel.industries">{{i}}</li>
+  </ul>
+</ng-template>
+<ng-template #industriesEditTmpl let-prop="prop">
+  <div class="form-inline">
+    <ul class="list-unstyled angelIndustriesList">
+      <li *ngFor="let i of edits[prop.key]">{{i}} <a class="edit-button" (click)="removeIndustry(i)"><i class="fa fa-times text-danger" aria-hidden="true"></i></a></li>
+      <li>
+        <input class="form-control" [(ngModel)]="newIndustry" name="newIndustry" placeholder="Add an industry">
+        <a class="edit-button" (click)="addIndustry(newIndustry)"><i class="fa fa-check text-success" aria-hidden="true"></i></a>
+      </li>
+    </ul>
+  </div>
+  <button class="btn btn-success" (click)="addIndustry(newIndustry); saveEdit(prop.key)">Save</button>
+  <button class="btn btn-danger" (click)="stopEdit()">Cancel</button>
+</ng-template>
 
