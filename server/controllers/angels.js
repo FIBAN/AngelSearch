@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Angel = require('../models/angel');
 const Invitation = require('../models/invitation');
-const Industry = require('../models/industry');
 const auth = require('../middleware/auth');
 
 const absoluteAngelId = function (req, angel)  {
@@ -14,12 +13,9 @@ const angelAccessDenied = function (res) {
 };
 
 router.get('/', auth.loggedInAngel, (req, res) => {
-    Promise.all([Angel.all(), Industry.all()]).then(results => {
-        const angels = results[0];
-        const industries = results[1];
+    Angel.all().then(angels => {
         const jsonAngels = angels.map(a => {
             a.href = absoluteAngelId(req, a);
-            a.industries = industries.filter(i => i.angel_id === a.id).map(i => i.industry);
             return a;
         });
         res.json(jsonAngels);
@@ -44,10 +40,7 @@ router.get('/:angelId', auth.loggedInAngel, (req, res) => {
             res.status(404).json({status: 404, message: 'Angel not found'});
         } else {
             angel.href = absoluteAngelId(req, angel);
-            return Industry.allByAngelId(angel.id).then(industries => {
-                angel.industries = industries.map(i => i.industry);
-                res.json(angel);
-            });
+            res.json(angel);
         }
     }).catch(err => {
         console.error(err);
@@ -70,26 +63,7 @@ router.put('/:angelId', auth.loggedInAngel, (req, res) => {
     angel.id = req.params.angelId;
 
     Angel.update(angel).then(() => {
-        if(req.body.industries) {
-            let newIndustries = req.body.industries;
-            return Industry.allByAngelId(req.params.angelId).then(currentIndustries => {
-                let changes = [];
-                for(let i of currentIndustries) {
-                    if(newIndustries.indexOf(i.industry) === -1) {
-                        changes.push(Industry.delete(i.id));
-                    }
-                }
-                for(let i of newIndustries) {
-                    if(!currentIndustries.find(v => v.industry === i)) {
-                        changes.push(Industry.create(req.params.angelId, i));
-                    }
-                }
-                return Promise.all(changes).then(() => res.json({status: 200, message: 'Updated'}));
-            })
-        }
-        else {
-            res.json({status: 200, message: 'Updated'});
-        }
+        res.json({status: 200, message: 'Updated'});
     }).catch(err => {
         console.error(err);
         res.status(500).json({status: 500, message: err});

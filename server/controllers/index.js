@@ -1,18 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const Industry = require('../models/industry');
 
 router.use('/angels', require('./angels'));
 router.use('/invitations', require('./invitations'));
 router.use('/admin', require('./admin'));
 
 router.get('/me', auth.loggedInAngel, (req, res) => {
-    const angel = req.angel;
-    return Industry.allByAngelId(angel.id).then(industries => {
-        angel.industries = industries.map(i => i.industry);
-        res.json(angel);
-    });
+    res.json(req.angel);
 });
 
 router.use(function(req, res, next) {

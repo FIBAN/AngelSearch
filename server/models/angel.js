@@ -85,6 +85,11 @@ module.exports.update = (angel) => {
         queryParams.push(angel.investment_level);
         query += " investment_level = $" + queryParams.length;
     }
+    if(angel.industries) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.industries);
+        query += " industries = $" + queryParams.length;
+    }
 
     if(!queryParams.length) {
         return Promise.resolve(0);
