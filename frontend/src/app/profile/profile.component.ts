@@ -22,10 +22,11 @@ export class ProfileComponent implements OnInit {
 
   profileProps: any[];
 
+  saving: string;
+
   investmentLevels = Angel.INVESTMENT_LEVELS;
 
-  constructor(
-    private angelService: AngelService) {
+  constructor(private angelService: AngelService) {
     this.edits = {};
   }
 
@@ -45,7 +46,13 @@ export class ProfileComponent implements OnInit {
       {name: 'Bio', key: 'bio', editable: true},
     ];
 
-    this.angelService.getMyAngel().then(angel => {
+    this.loadProfile();
+  }
+
+  loadProfile(): Promise<void> {
+    this.edits = {};
+    this.activeEdit = "";
+    return this.angelService.getMyAngel().then(angel => {
       this.angel = angel;
       for(let k in angel){
         if(angel.hasOwnProperty(k)) this.edits[k] = angel[k];
@@ -72,7 +79,11 @@ export class ProfileComponent implements OnInit {
     }
     let toBeSavedEdits = {id: this.angel.id};
     toBeSavedEdits[key] = this.edits[key];
-    this.angelService.updateAngel(toBeSavedEdits as Angel).then(() => location.reload())
+    this.activeEdit = "";
+    this.saving = key;
+    this.angelService.updateAngel(toBeSavedEdits as Angel)
+      .then(() => this.loadProfile())
+      .then(() => this.saving = "");
   }
 
   parseLinkedInId(input: string): string {
@@ -88,10 +99,15 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  addIndustry(industry): void {
-    const idx = this.edits.industries.indexOf(industry);
-    if(industry && idx === -1) {
-      this.edits.industries.push(industry);
+  addIndustry(industries): void {
+    if (industries) {
+      for (let industry of industries.split(',')) {
+        industry = industry.trim();
+        const idx = this.edits.industries.indexOf(industry);
+        if (industry && idx === -1) {
+          this.edits.industries.push(industry);
+        }
+      }
     }
     this.newIndustry = "";
   }

@@ -11,3 +11,15 @@ table td:first-child {
 .edit-button {
   margin-left: 0.5em;
 }
+
+.loader {
+  margin-left: 0.5em;
+  -webkit-animation: spin 2s linear infinite;
+  -o-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
