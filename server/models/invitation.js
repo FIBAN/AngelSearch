@@ -23,11 +23,11 @@ module.exports.get = (inviteId) => {
 };
 
 module.exports.markAccepted = (inviteId) => {
-    return db.query('UPDATE invitations SET status = $1 WHERE id = $2 and status = $3', [INVITE_STATUS.ACCEPTED, inviteId, INVITE_STATUS.PENDING]).then(res => res.rowCount);
+    return db.query('UPDATE invitations SET status = $1, updated_at = now() WHERE id = $2 and status = $3', [INVITE_STATUS.ACCEPTED, inviteId, INVITE_STATUS.PENDING]).then(res => res.rowCount);
 };
 
 module.exports.markCancelled = (inviteId) => {
-    return db.query('UPDATE invitations SET status = $1 WHERE id = $2 and status = $3', [INVITE_STATUS.CANCELLED, inviteId, INVITE_STATUS.PENDING]).then(res => res.rowCount);
+    return db.query('UPDATE invitations SET status = $1, updated_at = now() WHERE id = $2 and status = $3', [INVITE_STATUS.CANCELLED, inviteId, INVITE_STATUS.PENDING]).then(res => res.rowCount);
 };
 
 module.exports.create = (angelId) => {

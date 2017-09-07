@@ -95,6 +95,7 @@ module.exports.update = (angel) => {
         return Promise.resolve(0);
     }
     else {
+        query += ", updated_at = now()";
         queryParams.push(angel.id);
         query += " WHERE id = $" + queryParams.length;
         console.log("query:", query, queryParams);
