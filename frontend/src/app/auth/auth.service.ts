@@ -56,7 +56,10 @@ export class AuthService {
         }
       }).catch((err) => {
         if(err.status === 403 && JSON.parse(err._body).email_verified === false) {
-          return AuthService.AUTH_STATUS.EMAIL_NOT_VERIFIED
+          return AuthService.AUTH_STATUS.EMAIL_NOT_VERIFIED;
+        }
+        if(err.status === 403) {
+          return AuthService.AUTH_STATUS.NOT_REGISTERED;
         }
         console.error("angel error", err);
         return AuthService.AUTH_STATUS.LOGGED_OUT
