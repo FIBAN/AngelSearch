@@ -142,6 +142,9 @@ workflows:
           requires:
             - checkout_code
       - deploy:
+          filters:
+            branches:
+              only: prod
           requires:
             - checkout_code
             - backend_dependencies
