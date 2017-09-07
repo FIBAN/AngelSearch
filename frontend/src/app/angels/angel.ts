@@ -1,10 +1,10 @@
 export class Angel {
 
   static INVESTMENT_LEVELS = [
-    "0 - 10,000 €",
-    "10,000 - 100,000€",
-    "100,000 - 1,000,000 €",
-    "Over 1,000,000 €"
+    "1",
+    "2 - 5",
+    "6 - 10",
+    "Over 10"
   ];
 
   constructor(

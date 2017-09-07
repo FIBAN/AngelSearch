@@ -59,8 +59,10 @@ export class ProfileComponent implements OnInit {
       }
       //deep copy industries array
       this.edits.industries = [];
-      for (let i of angel.industries) {
-        this.edits.industries.push(i);
+      if(angel.industries) {
+        for (let i of angel.industries) {
+          this.edits.industries.push(i);
+        }
       }
     });
   }
@@ -83,7 +85,8 @@ export class ProfileComponent implements OnInit {
     this.saving = key;
     this.angelService.updateAngel(toBeSavedEdits as Angel)
       .then(() => this.loadProfile())
-      .then(() => this.saving = "");
+      .then(() => this.saving = "")
+      .catch(() => location.reload());
   }
 
   parseLinkedInId(input: string): string {

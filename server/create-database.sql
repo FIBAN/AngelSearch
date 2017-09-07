@@ -10,7 +10,7 @@ create table angels (
     linkedin text,
     network text,
     investment_level integer,
-    industries text[],
+    industries text[] not null default '{}',
     created_at timestamp with time zone default now(),
     updated_at timestamp with time zone default now()
 );

@@ -6,3 +6,5 @@
 * ~~names presented in first name - last name~~
 * ~~More intuitive way to input industries. Support for comma separated list~~
 * Support for batch insert of angels from excel
+
+* Investments -> investment count (1, 2-5, 6-10, 10+)
