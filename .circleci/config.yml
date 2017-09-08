@@ -121,7 +121,7 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "prod" ]; then
-              git push heroku `git subtree split --prefix server prod`:master --force
+              git push heroku `git subtree split --prefix server master`:master --force
               sleep 5 # sleep for 5 seconds to wait for dynos
               heroku restart
             fi
