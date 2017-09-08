@@ -120,8 +120,8 @@ jobs:
             - "20:3b:f2:86:a0:27:47:af:e2:2c:25:cc:7e:90:68:f2"
       - run:
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              git push heroku `git subtree split --prefix server master`:master --force
+            if [ "${CIRCLE_BRANCH}" == "prod" ]; then
+              git push heroku `git subtree split --prefix server prod`:master --force
               sleep 5 # sleep for 5 seconds to wait for dynos
               heroku restart
             fi
