@@ -6,5 +6,10 @@
 export const environment = {
   production: false,
   host: "http://localhost:4200",
-  backend: "http://localhost:3001/api"
+  backend: "http://localhost:3001/api",
+  auth0: {
+    clientId: 'S7UnGqOFi58Ce2vKTl58KUESIfGl2GA1',
+    clientDomain: 'fiban.eu.auth0.com',
+    audience: 'https://angel-search/'
+  }
 };

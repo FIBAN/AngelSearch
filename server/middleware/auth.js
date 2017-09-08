@@ -3,23 +3,24 @@ const jwks = require('jwks-rsa');
 const https = require('https');
 
 const Angel = require('../models/angel');
+require('dotenv').config();
 
 module.exports.authenticated = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: "https://fiban.eu.auth0.com/.well-known/jwks.json"
+        jwksUri: "https://" + process.env.AUTH0_DOMAIN + "/.well-known/jwks.json"
     }),
-    audience: 'https://angel-search/',
-    issuer: "https://fiban.eu.auth0.com/",
+    audience: process.env.AUTH0_AUDIENCE,
+    issuer: "https://" + process.env.AUTH0_DOMAIN + "/",
     algorithms: ['RS256']
 });
 
 const getProfile = function (req) {
     return new Promise((res, rjt) => {
         https.get({
-            host: 'fiban.eu.auth0.com',
+            host: process.env.AUTH0_DOMAIN,
             path: '/userinfo',
             headers: {
                 'Authorization': req.headers.authorization

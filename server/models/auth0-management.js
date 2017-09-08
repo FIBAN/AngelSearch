@@ -7,17 +7,17 @@ const ManagementClient = require('auth0').ManagementClient;
 
 module.exports.client = function () {
     const auth0 = new AuthenticationClient({
-        domain: 'fiban.eu.auth0.com',
+        domain: process.env.AUTH0_DOMAIN,
         clientId: process.env.AUTH0_CLIENTID,
         clientSecret: process.env.AUTH0_SECRET,
     });
 
     return auth0.clientCredentialsGrant({
-        audience: 'https://fiban.eu.auth0.com/api/v2/'
+        audience: 'https://' + process.env.AUTH0_DOMAIN + '/api/v2/'
     }).then(response => {
         return new ManagementClient({
             token: response.access_token,
-            domain: 'fiban.eu.auth0.com'
+            domain: process.env.AUTH0_DOMAIN
         });
     }).catch(err => {
         console.error("didn't get auth0 credentials", err);
