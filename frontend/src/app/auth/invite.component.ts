@@ -32,7 +32,7 @@ export class InviteComponent implements OnInit {
   }
 
   register(): void {
-    this.authService.login('/register?i=' + this.invitation.id)
+    this.authService.login('/register?i=' + this.invitation.id, true)
   }
 
 }
