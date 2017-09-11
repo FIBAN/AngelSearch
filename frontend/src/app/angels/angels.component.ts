@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, HostListener, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 
 import { Angel } from './angel';
 import { AngelService } from './angel.service';
@@ -13,6 +13,9 @@ export class AngelsComponent implements OnInit {
   angels: Angel[];
 
   filter: any = {};
+
+  sortBy: string = 'first_name';
+  reverseSort: boolean = false;
 
   countries = [];
   cities = [];
@@ -53,6 +56,16 @@ export class AngelsComponent implements OnInit {
     }
     else {
       return city || country || '';
+    }
+  }
+
+  onSort(key: string) {
+    if(this.sortBy != key) {
+      this.sortBy = key;
+      this.reverseSort = false;
+    }
+    else {
+      this.reverseSort = ! this.reverseSort;
     }
   }
 

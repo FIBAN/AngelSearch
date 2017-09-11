@@ -15,12 +15,13 @@ import { AngelService } from './angels/angel.service';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 
-import {AngelFilterPipe} from './angels/angel-filter.pipe';
-import {KeysPipe} from "./angels/keys.pipe";
-import {AdminService} from "./admin/admin.service";
-import {AngelInfoComponent} from "./angels/angel-info.component";
-import {NewAngelFormComponent} from "./admin/new-angel-form.component";
-import {AngelFilterControlsComponent} from "./angels/angel-filter-controls.component";
+import { AngelFilterPipe } from './angels/angel-filter.pipe';
+import { AngelSorterPipe } from './angels/angel-sorter.pipe';
+import { KeysPipe } from "./angels/keys.pipe";
+import { AdminService } from "./admin/admin.service";
+import { AngelInfoComponent } from "./angels/angel-info.component";
+import { NewAngelFormComponent } from "./admin/new-angel-form.component";
+import { AngelFilterControlsComponent } from "./angels/angel-filter-controls.component";
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import {AngelFilterControlsComponent} from "./angels/angel-filter-controls.compo
     NewAngelFormComponent,
     AngelFilterControlsComponent,
     AngelFilterPipe,
+    AngelSorterPipe,
     KeysPipe
   ],
   providers: [

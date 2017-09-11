@@ -1,15 +1,15 @@
 <h3 *ngIf="angel" class="text-center">{{angel.first_name}} {{angel.last_name}}</h3>
 
 <div *ngIf="angel" class="row">
-  <div class="col-lg-8">
+  <div class="col-lg-8 mb-3">
     <angel-info [angel]="angel"></angel-info>
   </div>
 
-  <div class="col-lg-4 col-6">
+  <div class="col-lg-4">
     <div class="card">
       <div class="card-header">Actions</div>
       <div class="card-body">
-        <a href="mailto:{{angel.email}}" class="btn btn-success"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
+        <a href="mailto:{{angel.email}}" class="btn btn-success mr-1"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
         <a href="tel:{{angel.phone}}" class="btn btn-info"><i class="fa fa-phone" aria-hidden="true"></i> Call</a>
       </div>
     </div>

@@ -6,7 +6,7 @@ import {AngelFilter} from "./angel-filter";
 @Component({
   selector: 'angel-filter-controls',
   template: `
-    <div class="card">
+    <div class="card mb-3">
       <div class="card-header">Filters</div>
       <div class="card-body">
         <form [formGroup]="filtersForm" novalidate>

@@ -5,50 +5,68 @@
   [industries]="industries"
 ></angel-filter-controls>
 
-<ngx-datatable
-  id="angelTable"
-  class="bootstrap"
-  [columnMode]="'force'"
-  [rows]="angels | angelFilter:filter"
-  [rowHeight]="50"
-  [scrollbarH]="50"
-  [headerHeight]="50"
-  [footerHeight]="50"
-  [reorderable]="false"
-  [sorts]="[{prop: 'first_name', order: 'desc'}]"
->
-  <!-- Columns -->
-  <ngx-datatable-column name="Name" prop="first_name" [resizeable]="false" [flexGrow]="2" [minWidth]="200">
-    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-      <a [routerLink]="['/angels', row.id]" routerLinkActive="true">{{row.first_name}} {{row.last_name}}</a>
-    </ng-template>
-  </ngx-datatable-column>
+<table class="table table-sm" id="angelTable">
+  <thead>
+    <th>
+      <a href="#" (click)="onSort('first_name'); false;">Name</a>
+      <span *ngIf="sortBy === 'first_name' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'first_name' && reverseSort" class="fa fa-caret-up"></span>
+    </th>
+    <th>
+      <a href="#" (click)="onSort('city'); false;">Location</a>
+      <span *ngIf="sortBy === 'city' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'city' && reverseSort" class="fa fa-caret-up"></span>
+    </th>
+    <th class="d-none d-lg-table-cell">
+      <a href="#" (click)="onSort('industries'); false;">Industries</a>
+      <span *ngIf="sortBy === 'industries' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'industries' && reverseSort" class="fa fa-caret-up"></span>
+    </th>
+    <th class="d-none d-md-table-cell">
+      <a href="#" (click)="onSort('investment_level'); false;">Investments</a>
+      <span *ngIf="sortBy === 'investment_level' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'investment_level' && reverseSort" class="fa fa-caret-up"></span>
+    </th>
+    <th class="d-none d-md-table-cell">
+      <a href="#" (click)="onSort('linkedin'); false;">LinkedIn</a>
+      <span *ngIf="sortBy === 'linkedin' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'linkedin' && reverseSort" class="fa fa-caret-up"></span>
+    </th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let angel of angels|angelFilter:filter|angelSorter:sortBy:reverseSort">
+    <!-- Name -->
+    <td>
+      <a [routerLink]="['/angels', angel.id]" routerLinkActive="true">{{angel.first_name}} {{angel.last_name}}</a>
+    </td>
 
-  <ngx-datatable-column name="Location" prop="city" [resizeable]="false" [flexGrow]="2" [minWidth]="200">
-    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-      {{locationString(row.city, row.country)}}
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Location -->
+    <td>
+      {{locationString(angel.city, angel.country)}}
+    </td>
 
-  <ngx-datatable-column name="Industries" prop="industries" [resizeable]="false" [flexGrow]="3">
-    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-      <span *ngFor="let industry of value.slice(0, 3)" class="badge badge-primary industry-badge">{{industry}}</span>
-      <span *ngIf="value.length > 3">...</span>
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Industries -->
+    <td class="d-none d-lg-table-cell">
+      <div *ngIf="angel.industries">
+        <span *ngFor="let industry of angel.industries.slice(0, 3)" class="badge badge-primary industry-badge">{{industry}}</span>
+        <span *ngIf="angel.industries.length > 3">...</span>
+      </div>
+    </td>
 
-  <ngx-datatable-column name="Investments" prop="investments" [resizeable]="false" [flexGrow]="2">
-    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-      <span *ngIf="value || value === 0">{{investmentLevels[value]}}</span>
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Investments -->
+    <td class="d-none d-md-table-cell">
+      <span *ngIf="angel.investment_level || angel.investment_level === 0">{{investmentLevels[angel.investment_level]}}</span>
+    </td>
 
-  <ngx-datatable-column name="LinkedIn" prop="linkedin" [resizeable]="false" [flexGrow]="1">
-    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-      <a *ngIf="value" href="https://www.linkedin.com/in/{{value}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
-    </ng-template>
-  </ngx-datatable-column>
-
-</ngx-datatable>
+    <!-- LinkedIn -->
+    <td class="d-none d-md-table-cell">
+      <a *ngIf="angel.linkedin" href="https://www.linkedin.com/in/{{angel.linkedin}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
+    </td>
+  </tr>
+  <tr *ngIf="!angels">
+    <td colspan="5" class="text-center">Nothing to display</td>
+  </tr>
+  </tbody>
+</table>
 
 
