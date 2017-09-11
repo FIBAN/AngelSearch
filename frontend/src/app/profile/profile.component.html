@@ -14,7 +14,7 @@
       </td>
       <td *ngIf="activeEdit === prop.key">
         <div *ngIf="!prop.editTemplate" class="form-inline">
-          <input class="form-control mr-2" [(ngModel)]="edits[prop.key]" (keyup.enter)="saveEdit(prop.key)" name="{{'a' + prop.key}}">
+          <input class="form-control mr-2 mb-1 col-12 col-md-6" [(ngModel)]="edits[prop.key]" (keyup.enter)="saveEdit(prop.key)" name="{{'a' + prop.key}}">
           <a href="#" class="btn btn-success mr-1" (click)="saveEdit(prop.key); false">Save</a>
           <a href="#" class="btn btn-danger mr-1" (click)="stopEdit(); false">Cancel</a>
         </div>
