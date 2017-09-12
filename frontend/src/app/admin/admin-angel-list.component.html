@@ -1,0 +1,46 @@
+<table class="table table-sm">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Details</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let angel of angels; let i=index; let odd=odd">
+    <tr [class.odd]="odd">
+      <td class="monospace small">{{angel.id}}</td>
+      <td>{{angel.first_name}} {{angel.last_name}}</td>
+      <td>{{angel.email}}</td>
+      <td>{{angel.phone}}</td>
+      <td><a href="#" (click)="selectAngel(i); false;">Show</a></td>
+    </tr>
+    <tr *ngIf="selectedAngels[i]" [class.odd]="odd" class="details-row">
+      <td colspan="5">
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <dl>
+              <dt>Invitations</dt>
+              <dd>
+                <div class="col-lg-8">
+                  <table class="table table-sm mb-0">
+                    <tbody>
+                      <tr *ngFor="let invite of invitationsByAngel(angel)" class="invitation-row">
+                        <td class="small text-info monospace">{{inviteUrl(invite.id)}}</td>
+                        <td>{{invite.status}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <button class="btn btn-primary btn-sm" (click)="sendInvite(angel)">New Invitation</button>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

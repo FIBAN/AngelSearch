@@ -7,6 +7,7 @@ import { AngelsComponent } from './angels/angels.component';
 import { AngelDetailsComponent } from "./angels/angel-details.component";
 import { ProfileComponent } from "./profile/profile.component"
 import { AdminComponent } from "./admin/admin.component";
+import { AdminAngelListComponent } from "./admin/admin-angel-list.component";
 import { LandingComponent } from "./landing.component";
 import { InviteComponent } from "./auth/invite.component";
 import { RegisterComponent } from "./auth/register.component";
@@ -74,6 +75,7 @@ export const routedComponents = [
   AngelDetailsComponent,
   ProfileComponent,
   AdminComponent,
+  AdminAngelListComponent,
   LandingComponent,
   InviteComponent,
   RegisterComponent,
