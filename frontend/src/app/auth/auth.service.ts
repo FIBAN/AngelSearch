@@ -22,7 +22,8 @@ export class AuthService {
     LOGGED_OUT: "logged_out",
     NOT_REGISTERED: "not_registered",
     EMAIL_NOT_VERIFIED: "email_not_verified",
-    LOGGED_IN: "logged_in"
+    LOGGED_IN: "logged_in",
+    LOGGED_IN_ADMIN: "logged_in_admin"
   };
 
   authStatus$ = new BehaviorSubject<string>(AuthService.AUTH_STATUS.LOGGED_OUT);
@@ -46,6 +47,9 @@ export class AuthService {
     if(!this.authenticated) {
       return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_OUT);
     }
+    else if(this.isAdmin()) {
+      return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_IN_ADMIN);
+    }
     else {
       return this.angelService.getMyAngel().then(angel => {
         if (!angel) {
@@ -65,6 +69,11 @@ export class AuthService {
         return AuthService.AUTH_STATUS.LOGGED_OUT
       });
     }
+  }
+
+  isAdmin(): boolean {
+    const profile = localStorage.getItem('profile')  && JSON.parse(localStorage.getItem('profile'));
+    return profile && profile['https://angel-search/role'] === 'admin';
   }
 
   refreshAuthStatus(): Promise<void> {

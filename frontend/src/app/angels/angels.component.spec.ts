@@ -1,10 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By }              from '@angular/platform-browser';
 
-import { SearchFilterPipe } from "./angel-filter.pipe";
-
 import { AngelsComponent } from './angels.component';
-import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { FormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AngelService } from "./angel.service";
@@ -33,8 +30,8 @@ describe('Angels list', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule, RouterTestingModule, NgxDatatableModule ],
-      declarations: [ SearchFilterPipe, AngelsComponent ], // declare the test component
+      imports: [ FormsModule, RouterTestingModule ],
+      declarations: [ AngelsComponent ], // declare the test component
       providers: [
         {provide: AngelService, useValue: angelServiceStub}
       ]

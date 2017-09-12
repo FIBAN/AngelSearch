@@ -1,17 +1,18 @@
 import { Routes, RouterModule} from '@angular/router';
 import { AuthGuard } from './auth/auth-guard.service';
+import { AdminAuthGuard } from './auth/admin-auth-guard.service';
 
 import { CallbackComponent } from './auth/callback.component';
 import { AngelsComponent } from './angels/angels.component';
 import { AngelDetailsComponent } from "./angels/angel-details.component";
 import { ProfileComponent } from "./profile/profile.component"
-import {AdminComponent} from "./admin/admin.component";
-import {LandingComponent} from "./landing.component";
-import {InviteComponent} from "./auth/invite.component";
-import {RegisterComponent} from "./auth/register.component";
-import {RegistrationNeededComponent} from "./auth/registration-needed.component";
-import {ErrorComponent} from "./error.component";
-import {EmailVerificationMissingComponent} from "./auth/email-verification-missing.component";
+import { AdminComponent } from "./admin/admin.component";
+import { LandingComponent } from "./landing.component";
+import { InviteComponent } from "./auth/invite.component";
+import { RegisterComponent } from "./auth/register.component";
+import { RegistrationNeededComponent } from "./auth/registration-needed.component";
+import { ErrorComponent } from "./error.component";
+import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 
 const appRoutes: Routes = [
   {
@@ -37,7 +38,7 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminAuthGuard]
   },
   {
     path: 'invite',

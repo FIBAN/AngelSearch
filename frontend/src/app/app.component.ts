@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class AppComponent {
   authenticated: boolean;
   authorized: boolean;
+  isAdmin: boolean;
 
   isNavbarCollapsed = true;
 
@@ -18,7 +19,8 @@ export class AppComponent {
   constructor(public authService: AuthService, public router: Router) {
     authService.authStatus$.subscribe(s => {
       this.authenticated = s !== AuthService.AUTH_STATUS.LOGGED_OUT;
-      this.authorized = s === AuthService.AUTH_STATUS.LOGGED_IN;
+      this.authorized = s === AuthService.AUTH_STATUS.LOGGED_IN || s === AuthService.AUTH_STATUS.LOGGED_IN_ADMIN;
+      this.isAdmin = s === AuthService.AUTH_STATUS.LOGGED_IN_ADMIN;
     });
   }
 }

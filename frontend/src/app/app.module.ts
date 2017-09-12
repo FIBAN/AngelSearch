@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -22,6 +21,7 @@ import { AdminService } from "./admin/admin.service";
 import { AngelInfoComponent } from "./angels/angel-info.component";
 import { NewAngelFormComponent } from "./admin/new-angel-form.component";
 import { AngelFilterControlsComponent } from "./angels/angel-filter-controls.component";
+import { AdminAuthGuard } from "./auth/admin-auth-guard.service";
 
 @NgModule({
   imports: [
@@ -31,7 +31,6 @@ import { AngelFilterControlsComponent } from "./angels/angel-filter-controls.com
     routing,
     HttpModule,
     AuthModule,
-    NgxDatatableModule,
     NgbModule.forRoot()
   ],
   declarations: [
@@ -48,7 +47,8 @@ import { AngelFilterControlsComponent } from "./angels/angel-filter-controls.com
     AngelService,
     AuthService,
     AdminService,
-    AuthGuard
+    AuthGuard,
+    AdminAuthGuard
   ],
   bootstrap: [AppComponent]
 })

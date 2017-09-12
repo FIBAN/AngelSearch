@@ -26,6 +26,8 @@ export class AuthGuard implements CanActivate {
           return false;
         case AuthService.AUTH_STATUS.LOGGED_IN:
           return true;
+        case AuthService.AUTH_STATUS.LOGGED_IN_ADMIN:
+          return true;
         default:
           return false;
       }
