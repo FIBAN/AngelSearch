@@ -14,6 +14,7 @@ import { RegisterComponent } from "./auth/register.component";
 import { RegistrationNeededComponent } from "./auth/registration-needed.component";
 import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
+import { BatchInsertComponent } from "./admin/batch-insert.component";
 
 const appRoutes: Routes = [
   {
@@ -39,6 +40,11 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard, AdminAuthGuard]
+  },
+  {
+    path: 'admin/batch',
+    component: BatchInsertComponent,
     canActivate: [AuthGuard, AdminAuthGuard]
   },
   {
@@ -81,5 +87,6 @@ export const routedComponents = [
   RegisterComponent,
   RegistrationNeededComponent,
   ErrorComponent,
-  EmailVerificationMissingComponent
+  EmailVerificationMissingComponent,
+  BatchInsertComponent
 ];

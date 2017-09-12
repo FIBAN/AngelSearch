@@ -18,8 +18,11 @@ module.exports.getByEmail = (email) => {
 };
 
 module.exports.create = (angel) => {
+    if(!angel.investment_level && angel.investment_level !== 0) {
+        angel.investment_level = null;
+    }
     return db.query(
-        'INSERT INTO angels (id, first_name, last_name, email, phone, city, country, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+        'INSERT INTO angels (id, first_name, last_name, email, phone, city, country, network, linkedin, investment_level, industries, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
         [
             util.randomUUID(),
             angel.first_name,
@@ -28,6 +31,10 @@ module.exports.create = (angel) => {
             angel.phone,
             angel.city,
             angel.country,
+            angel.network,
+            angel.linkedin,
+            angel.investment_level,
+            angel.industries,
             angel.bio
         ]
     ).then(res => res.rowCount);

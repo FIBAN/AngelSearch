@@ -19,7 +19,8 @@ import {AdminService} from "./admin.service";
       [onSendInvite]="onSendInvite.bind(this)"
     ></admin-angel-list>
 
-    <h4>Create user</h4>
+    <h4>Add an angel</h4>
+    <a routerLink="/admin/batch" routerLinkActive="true">Add multiple angels</a>
     <new-angel-form (onSubmit)="onAngelCreate($event)"></new-angel-form>
   `
 })

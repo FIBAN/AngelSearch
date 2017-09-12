@@ -16,11 +16,12 @@ export class Angel {
     public city?: string,
     public country?: string,
     public bio?: string,
-    public auth0_id?: string,
     public industries?: string[],
     public network?: string,
     public linkedin?: string,
-    public investment_level?: number
+    public investment_level?: number,
+    public created_at?: string,
+    public updated_at?: string
   ) {};
 
 }
