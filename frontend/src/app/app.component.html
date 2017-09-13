@@ -1,5 +1,5 @@
-<div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+  <div class="container">
     <a class="navbar-brand relative" routerLink="/">
       <img src="assets/images/nordicban_logo_small.png" width="200px">
       <span class="small text-muted beta-tag">Beta</span>
@@ -28,8 +28,11 @@
         </li>
       </ul>
     </div>
-  </nav>
-  <div class="col-sm-12">
-    <router-outlet></router-outlet>
   </div>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
 </div>
+<footer>
+
+</footer>
