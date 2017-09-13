@@ -26,8 +26,9 @@ router.get('/', auth.loggedInAngel, (req, res) => {
 });
 
 router.post('/', auth.loggedInAdmin, (req, res) => {
-    Angel.create(req.body).then(() => {
-        res.status(201).json({status: 201, message: 'Created'})
+    Angel.create(req.body).then((angel) => {
+        Invitation.create(angel.id);
+        res.status(201).json(angel);
     }).catch((err) => {
         console.error(err);
         res.status(500).json({status: 500, message: err});

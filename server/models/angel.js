@@ -21,8 +21,25 @@ module.exports.create = (angel) => {
     if(!angel.investment_level && angel.investment_level !== 0) {
         angel.investment_level = null;
     }
+    if(!angel.industries) {
+        angel.industries = [];
+    }
     return db.query(
-        'INSERT INTO angels (id, first_name, last_name, email, phone, city, country, network, linkedin, investment_level, industries, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
+        'INSERT INTO angels (' +
+        'id, ' +
+        'first_name, ' +
+        'last_name, ' +
+        'email, ' +
+        'phone, ' +
+        'city, ' +
+        'country, ' +
+        'network, ' +
+        'linkedin, ' +
+        'investment_level, ' +
+        'industries, ' +
+        'bio' +
+        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) ' +
+        'RETURNING *',
         [
             util.randomUUID(),
             angel.first_name,
@@ -37,7 +54,7 @@ module.exports.create = (angel) => {
             angel.industries,
             angel.bio
         ]
-    ).then(res => res.rowCount);
+    ).then(res => res.rows[0]);
 };
 
 module.exports.update = (angel) => {
@@ -105,13 +122,14 @@ module.exports.update = (angel) => {
         query += ", updated_at = now()";
         queryParams.push(angel.id);
         query += " WHERE id = $" + queryParams.length;
+        query += " RETURNING *";
         console.log("query:", query, queryParams);
-        return db.query(query, queryParams).then(res => res.rowCount);
+        return db.query(query, queryParams).then(res => res.rows[0]);
     }
 };
 
 module.exports.linkAuth0Id = (angelId, auth0Id) => {
-    return db.query('INSERT INTO auth0_users (id, angel_id) VALUES ($1, $2)', [auth0Id, angelId]).then(res => res.rowCount);
+    return db.query('INSERT INTO auth0_users (id, angel_id) VALUES ($1, $2) RETURNING *', [auth0Id, angelId]).then(res => res.rows[0]);
 };
 
 module.exports.delete = (angelId) => {

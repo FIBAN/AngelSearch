@@ -9,7 +9,8 @@ import 'rxjs/add/operator/switchMap';
   styles: [
     'tr.odd { background-color: #f2f2f2; }',
     'tr.details-row td { border-top: none }',
-    'tr.invitation-row td:first-child { width: 1%; white-space: nowrap; }'
+    'tr.invitation-row td:first-child { width: 1%; white-space: nowrap; }',
+    'table.invitations-table { background-color: inherit; }'
   ]
 })
 export class AdminAngelListComponent implements OnInit {
