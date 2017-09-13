@@ -2,6 +2,14 @@
   width: 100%;
 }
 
+td.industry-column {
+  max-width: 20rem;
+}
+
+td.industry-column div.many-industries::after {
+  content: "\00a0...";
+}
+
 .industry-badge {
   margin-right: 5px;
 }

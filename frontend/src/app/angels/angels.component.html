@@ -46,10 +46,9 @@
     </td>
 
     <!-- Industries -->
-    <td class="d-none d-lg-table-cell">
-      <div *ngIf="angel.industries">
+    <td class="d-none d-lg-table-cell industry-column">
+      <div *ngIf="angel.industries" [class.many-industries]="angel?.industries.length > 3">
         <span *ngFor="let industry of angel.industries.slice(0, 3)" class="badge badge-primary industry-badge">{{industry}}</span>
-        <span *ngIf="angel.industries.length > 3">...</span>
       </div>
     </td>
 
@@ -60,7 +59,7 @@
 
     <!-- LinkedIn -->
     <td class="d-none d-md-table-cell">
-      <a *ngIf="angel.linkedin" href="https://www.linkedin.com/in/{{angel.linkedin}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
+      <a *ngIf="angel.linkedin" target="_blank" href="https://www.linkedin.com/in/{{angel.linkedin}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
     </td>
   </tr>
   <tr *ngIf="!angels">
