@@ -1,51 +1,54 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-  <div class="container">
-    <a class="navbar-brand relative" routerLink="/">
-      <img src="assets/images/nordicban_logo_small.png" width="200px">
-      <span class="small text-muted beta-tag">Beta</span>
-    </a>
-    <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="authorized" routerLink="/angels" routerLinkActive="active">Angels</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="authorized" routerLink="/startups" routerLinkActive="active">Startups</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="authorized" routerLink="/documents" routerLinkActive="active">Documents</a>
-        </li>
-        <li class="nav-item dropdown" *ngIf="isAdmin">
-          <div ngbDropdown class="d-inline-block">
-            <a class="nav-link" id="AdminNavDropbox" ngbDropdownToggle>Admin</a>
-            <div ngbDropdownMenu aria-labelledby="AdminNavDropbox">
-              <a class="dropdown-item" routerLink="/admin">Angels</a>
-              <a class="dropdown-item" routerLink="/admin/documents">Documents</a>
-              <a class="dropdown-item" routerLink="/admin/startups">Startups</a>
+<div class="d-flex flex-column" style="height: 100%">
+  <header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand relative" routerLink="/">
+        <img src="assets/images/nordicban_logo_small.png" width="200px">
+        <span class="small text-muted beta-tag">Beta</span>
+      </a>
+      <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="authorized" routerLink="/angels" routerLinkActive="active">Angels</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="authorized" routerLink="/startups" routerLinkActive="active">Startups</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="authorized" routerLink="/documents" routerLinkActive="active">Documents</a>
+          </li>
+          <li class="nav-item dropdown" *ngIf="isAdmin">
+            <div ngbDropdown class="d-inline-block">
+              <a class="nav-link" id="AdminNavDropbox" ngbDropdownToggle>Admin</a>
+              <div ngbDropdownMenu aria-labelledby="AdminNavDropbox">
+                <a class="dropdown-item" routerLink="/admin">Angels</a>
+                <a class="dropdown-item" routerLink="/admin/documents">Documents</a>
+                <a class="dropdown-item" routerLink="/admin/startups">Startups</a>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="authorized" routerLink="/profile" routerLinkActive="active">My Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!authenticated && !hideLogin" href="#" (click)="authService.login(router.url); false">Log In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="authenticated" href="#" (click)="authService.logout(); false">Log Out</a>
-        </li>
-      </ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="authorized" routerLink="/profile" routerLinkActive="active">My Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="!authenticated && !hideLogin" href="#" (click)="authService.login(router.url); false">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="authenticated" href="#" (click)="authService.logout(); false">Log Out</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-<div class="container">
-  <router-outlet></router-outlet>
+  </nav>
+  </header>
+  <main class="container bg-white">
+    <router-outlet></router-outlet>
+  </main>
+  <footer class="bg-dark">
+  </footer>
 </div>
-<footer>
-
-</footer>

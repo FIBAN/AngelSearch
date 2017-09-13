@@ -2,6 +2,10 @@
 @import 'variables';
 @import '../node_modules/bootstrap/scss/bootstrap';
 
+html, body {
+  height: 100%;
+}
+
 .monospace {
   font-family: $font-family-monospace;
 }

@@ -1,0 +1,32 @@
+@import "../styles";
+
+header {
+  border-bottom: 1px solid $gray-400;
+}
+
+main {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  flex-grow: 1;
+}
+
+footer {
+  border-top: 1px solid $gray-600;
+  height: 100px;
+  min-height: 100px;
+  width: 100%;
+}
+
+.beta-tag {
+  position: absolute;
+  left: 160px;
+  bottom: 5px;
+}
+
+.relative {
+  position: relative;
+}
+
+
+
+
