@@ -9,7 +9,7 @@
 * ~~Investments -> investment count (1, 2-5, 6-10, 10+)~~
 
 * ~~Improve displaying of long industry names~~
-* Fix location sorting (null cities)
+* ~~Fix location sorting (null cities)~~
 * ~~Open LinkedIn links in a new window/tab~~ 
 
 * Remove possible query parameters from the linkedin id when parsing a link
