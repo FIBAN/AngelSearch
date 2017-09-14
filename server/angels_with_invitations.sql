@@ -1,0 +1,1 @@
+\copy (select distinct on (a.id) a.*, 'https://business-angel-search.herokuapp.com/invite?i=' || i.id as invitation_url from angels a join invitations i on i.angel_id = a.id where i.status = 'pending') to 'angels.csv' with csv header;
