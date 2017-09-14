@@ -46,7 +46,6 @@ export class AngelsComponent implements OnInit {
   }
 
   filterChanged(filter): void {
-    console.log("filter changed", filter);
     this.filter = filter;
   }
 

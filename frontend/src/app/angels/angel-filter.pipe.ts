@@ -6,7 +6,6 @@ import {AngelFilter} from "./angel-filter";
 export class AngelFilterPipe implements PipeTransform {
 
   transform(data: Angel[], params: AngelFilter): Angel[] {
-    console.log("params:", params);
     data = this.filterByCity(data, params.cities);
     data = this.filterByCountry(data, params.countries);
     data = this.filterByIndustry(data, params.industries);

@@ -1,19 +1,31 @@
-<div *ngIf="invitation">
-  <p>
-    In order to start using the Angel Search you need to register.
-    You can register with an email and password or by using a social media account.
-  </p>
-
-  <div *ngIf="invitation.status === 'pending'" class="card">
-    <div class="card-body">
-      <a href="#" class="btn btn-info" (click)="register(); false">Register</a>
+<div class="text-center">
+  <h1>Welcome to Nordic Business Angels List</h1>
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 text-left">
+      <p>In order to start using the Nordic Business Angels List you need to register.
+        You can register with an email and password or by using an existing social media account.</p>
     </div>
   </div>
-  <div *ngIf="invitation.status !== 'pending'" class="card text-white bg-danger">
-    <div class="card-body">
-      <p>
-        This invitation link has expired.
-      </p>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-sm-8 col-10">
+      <div *ngIf="invitation && invitation.status === 'pending'" class="card">
+        <div class="card-body">
+          <a href="#" class="btn btn-info" (click)="register(); false">Register</a>
+        </div>
+      </div>
+      <div *ngIf="invitation && invitation.status !== 'pending'" class="card text-white bg-danger">
+        <div class="card-body">
+          <p>
+            This invitation link has expired.
+          </p>
+        </div>
+      </div>
+      <div *ngIf="!invitation" class="card">
+        <div class="card-body">
+          <p>No invitation found.</p>
+        </div>
+      </div>
     </div>
   </div>
 
