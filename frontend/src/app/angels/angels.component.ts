@@ -14,7 +14,7 @@ export class AngelsComponent implements OnInit {
 
   filter: any = {};
 
-  sortBy: string = 'first_name';
+  sortBy: string = 'name';
   reverseSort: boolean = false;
 
   countries = [];
@@ -22,6 +22,14 @@ export class AngelsComponent implements OnInit {
   industries = [];
 
   investmentLevels = Angel.INVESTMENT_LEVELS;
+
+  sortKeys = {
+    'name': ['first_name', 'last_name'],
+    'location': ['city', 'country'],
+    'industries': ['industries'],
+    'investments': ['investment_level'],
+    'linkedin': ['linkedin']
+  };
 
   constructor(private angelService: AngelService) {
   }
@@ -58,9 +66,9 @@ export class AngelsComponent implements OnInit {
     }
   }
 
-  onSort(key: string) {
-    if(this.sortBy != key) {
-      this.sortBy = key;
+  onSort(column: string) {
+    if(this.sortBy != column) {
+      this.sortBy = column;
       this.reverseSort = false;
     }
     else {

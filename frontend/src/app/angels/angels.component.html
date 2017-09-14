@@ -8,14 +8,14 @@
 <table class="table table-sm" id="angelTable">
   <thead>
     <th>
-      <a href="#" (click)="onSort('first_name'); false;">Name</a>
-      <span *ngIf="sortBy === 'first_name' && !reverseSort" class="fa fa-caret-down"></span>
-      <span *ngIf="sortBy === 'first_name' && reverseSort" class="fa fa-caret-up"></span>
+      <a href="#" (click)="onSort('name'); false;">Name</a>
+      <span *ngIf="sortBy === 'name' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'name' && reverseSort" class="fa fa-caret-up"></span>
     </th>
     <th>
-      <a href="#" (click)="onSort('city'); false;">Location</a>
-      <span *ngIf="sortBy === 'city' && !reverseSort" class="fa fa-caret-down"></span>
-      <span *ngIf="sortBy === 'city' && reverseSort" class="fa fa-caret-up"></span>
+      <a href="#" (click)="onSort('location'); false;">Location</a>
+      <span *ngIf="sortBy === 'location' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'location' && reverseSort" class="fa fa-caret-up"></span>
     </th>
     <th class="d-none d-lg-table-cell">
       <a href="#" (click)="onSort('industries'); false;">Industries</a>
@@ -23,9 +23,9 @@
       <span *ngIf="sortBy === 'industries' && reverseSort" class="fa fa-caret-up"></span>
     </th>
     <th class="d-none d-md-table-cell">
-      <a href="#" (click)="onSort('investment_level'); false;">Investments</a>
-      <span *ngIf="sortBy === 'investment_level' && !reverseSort" class="fa fa-caret-down"></span>
-      <span *ngIf="sortBy === 'investment_level' && reverseSort" class="fa fa-caret-up"></span>
+      <a href="#" (click)="onSort('investments'); false;">Investments</a>
+      <span *ngIf="sortBy === 'investments' && !reverseSort" class="fa fa-caret-down"></span>
+      <span *ngIf="sortBy === 'investments' && reverseSort" class="fa fa-caret-up"></span>
     </th>
     <th class="d-none d-md-table-cell">
       <a href="#" (click)="onSort('linkedin'); false;">LinkedIn</a>
@@ -34,7 +34,7 @@
     </th>
   </thead>
   <tbody>
-  <tr *ngFor="let angel of angels|angelFilter:filter|angelSorter:sortBy:reverseSort">
+  <tr *ngFor="let angel of angels|angelFilter:filter|angelSorter:sortKeys[sortBy]:reverseSort">
     <!-- Name -->
     <td>
       <a [routerLink]="['/angels', angel.id]" routerLinkActive="true">{{angel.first_name}} {{angel.last_name}}</a>
