@@ -36,6 +36,8 @@
                 </div>
                 <button class="btn btn-primary btn-sm" (click)="sendInvite(angel)">New Invitation</button>
               </dd>
+              <dt>Edit Angel</dt>
+              <dd><a [routerLink]="['/admin/edit-angel', angel.id]">Edit</a></dd>
             </dl>
           </div>
         </div>

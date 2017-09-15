@@ -15,6 +15,7 @@ import { RegistrationNeededComponent } from "./auth/registration-needed.componen
 import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import { BatchInsertComponent } from "./admin/batch-insert.component";
+import {ManageAngelComponent} from "./admin/manage-angel.component";
 
 const appRoutes: Routes = [
   {
@@ -40,6 +41,11 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard, AdminAuthGuard]
+  },
+  {
+    path: 'admin/edit-angel/:angelId',
+    component: ManageAngelComponent,
     canActivate: [AuthGuard, AdminAuthGuard]
   },
   {
@@ -81,6 +87,7 @@ export const routedComponents = [
   AngelDetailsComponent,
   ProfileComponent,
   AdminComponent,
+  ManageAngelComponent,
   AdminAngelListComponent,
   LandingComponent,
   InviteComponent,
