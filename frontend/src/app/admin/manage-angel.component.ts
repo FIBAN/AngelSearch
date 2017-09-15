@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import { Angel } from '../angels/angel';
 import { AngelService } from '../angels/angel.service';
+import { Utils } from "../utils/parsers";
 
 import 'rxjs/add/operator/switchMap';
 import {ActivatedRoute, ParamMap} from "@angular/router";
@@ -37,6 +38,7 @@ export class ManageAngelComponent implements OnInit {
         email: a.email,
         phone: a.phone,
         network: a.network,
+        linkedin: a.linkedin,
         bio: a.bio,
         investment_level: a.investment_level
       });
@@ -76,6 +78,7 @@ export class ManageAngelComponent implements OnInit {
   saveChanges(): void {
       this.addNewIndustries();
       const formData = this.angelForm.getRawValue();
+      formData.linkedin = Utils.parseLinkedInId(formData.linkedin);
       for(let k in formData) {
         if(formData.hasOwnProperty(k)) {
           this.angel[k] = formData[k];

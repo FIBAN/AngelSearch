@@ -2,6 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 
 import { Angel } from '../angels/angel';
 import { AngelService } from '../angels/angel.service';
+import { Utils } from "../utils/parsers";
 
 import 'rxjs/add/operator/switchMap';
 
@@ -77,7 +78,7 @@ export class ProfileComponent implements OnInit {
 
   saveEdit(key): void {
     if(key === 'linkedin') {
-      this.edits.linkedin = this.parseLinkedInId(this.edits.linkedin);
+      this.edits.linkedin = Utils.parseLinkedInId(this.edits.linkedin);
     }
     let toBeSavedEdits = {id: this.angel.id};
     toBeSavedEdits[key] = this.edits[key];
@@ -87,12 +88,6 @@ export class ProfileComponent implements OnInit {
       .then(() => this.loadProfile())
       .then(() => this.saving = "")
       .catch(() => location.reload());
-  }
-
-  parseLinkedInId(input: string): string {
-    const urlMatch = input.match(/\/in\/([^/]*)\/?/); //check if input is a linkedIn profile url
-    const idMatch = input.match(/^([^/]*)$/); //otherwise check if input looks like a linkedIn id string
-    return (urlMatch && urlMatch[1]) || (idMatch && idMatch[1]) || "";
   }
 
   removeIndustry(industry): void {

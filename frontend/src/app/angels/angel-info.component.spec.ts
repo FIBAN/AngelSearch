@@ -36,8 +36,7 @@ describe('Angel info', () => {
       phone: "1234567890",
       city: "TestCity",
       country: "Testland",
-      bio: "Tester",
-      auth0_id: "",
+      bio: "Tester"
     };
     fixture.detectChanges();
     const de = fixture.debugElement.queryAll(By.css('.propLabel'));

@@ -4,6 +4,7 @@ import * as Papa from 'papaparse';
 import { Angel } from '../angels/angel';
 import 'rxjs/add/operator/switchMap';
 import {AngelService} from "../angels/angel.service";
+import { Utils } from "../utils/parsers";
 
 @Component({
   selector: 'admin-batch-insert',
@@ -64,7 +65,7 @@ export class BatchInsertComponent implements OnInit {
         angel.city = row.city;
         angel.country = row.country;
         angel.network = row.network;
-        angel.linkedin = this.parseLinkedInId(row.linkedin);
+        angel.linkedin = Utils.parseLinkedInId(row.linkedin);
         angel.investment_level = row.investment_level;
         angel.bio = row.bio;
         angel.industries = this.parseIndustries(row.industries);
@@ -86,12 +87,6 @@ export class BatchInsertComponent implements OnInit {
       }
     }
     return results;
-  }
-
-  parseLinkedInId(input: string): string {
-    const urlMatch = input.match(/\/in\/([^/]*)\/?/); //check if input is a linkedIn profile url
-    const idMatch = input.match(/^([^/]*)$/); //otherwise check if input looks like a linkedIn id string
-    return (urlMatch && urlMatch[1]) || (idMatch && idMatch[1]) || "";
   }
 
   investmentLevelString(investmentLevel: number): string {
