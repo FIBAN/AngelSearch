@@ -30,3 +30,13 @@ create table auth0_users (
     updated_at timestamp with time zone default now()
 );
 
+create table documents (
+    "id" text not null primary key,
+    "name" text not null,
+    "type" text not null,
+    download_url text,
+    parent text references documents ("id" ) on delete cascade,
+    created_at timestamp with time zone default now(),
+    updated_at timestamp with time zone default now()
+);
+

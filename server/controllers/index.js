@@ -1,9 +1,11 @@
+"use strict";
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 
 router.use('/angels', require('./angels'));
 router.use('/invitations', require('./invitations'));
+router.use('/documents', require('./documents'));
 router.use('/admin', require('./admin'));
 
 router.get('/me', auth.loggedInAngel, (req, res) => {

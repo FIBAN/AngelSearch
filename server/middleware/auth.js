@@ -1,3 +1,4 @@
+"use strict";
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const https = require('https');
