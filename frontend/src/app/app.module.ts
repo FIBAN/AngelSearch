@@ -22,6 +22,7 @@ import { AngelInfoComponent } from "./angels/angel-info.component";
 import { NewAngelFormComponent } from "./admin/new-angel-form.component";
 import { AngelFilterControlsComponent } from "./angels/angel-filter-controls.component";
 import { AdminAuthGuard } from "./auth/admin-auth-guard.service";
+import {DocumentService} from "./documents/document.service";
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { AdminAuthGuard } from "./auth/admin-auth-guard.service";
     AngelService,
     AuthService,
     AdminService,
+    DocumentService,
     AuthGuard,
     AdminAuthGuard
   ],

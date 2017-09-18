@@ -16,6 +16,8 @@ import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import { BatchInsertComponent } from "./admin/batch-insert.component";
 import {ManageAngelComponent} from "./admin/manage-angel.component";
+import {DocumentsComponent} from "./documents/documents.component";
+import {AdminDocumentsComponent} from "./admin/admin-documents.component";
 
 const appRoutes: Routes = [
   {
@@ -31,6 +33,11 @@ const appRoutes: Routes = [
   {
     path: 'angels/:angelId',
     component: AngelDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'documents',
+    component: DocumentsComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -51,6 +58,11 @@ const appRoutes: Routes = [
   {
     path: 'admin/batch',
     component: BatchInsertComponent,
+    canActivate: [AuthGuard, AdminAuthGuard]
+  },
+  {
+    path: 'admin/documents',
+    component: AdminDocumentsComponent,
     canActivate: [AuthGuard, AdminAuthGuard]
   },
   {
@@ -85,10 +97,12 @@ export const routedComponents = [
   CallbackComponent,
   AngelsComponent,
   AngelDetailsComponent,
+  DocumentsComponent,
   ProfileComponent,
   AdminComponent,
   ManageAngelComponent,
   AdminAngelListComponent,
+  AdminDocumentsComponent,
   LandingComponent,
   InviteComponent,
   RegisterComponent,

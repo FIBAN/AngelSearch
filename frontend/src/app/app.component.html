@@ -13,7 +13,16 @@
           <a class="nav-link" *ngIf="authorized" routerLink="/angels" routerLinkActive="active">Angels</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="isAdmin" routerLink="/admin" routerLinkActive="active">Admin</a>
+          <a class="nav-link" *ngIf="authorized" routerLink="/documents" routerLinkActive="active">Documents</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isAdmin">
+          <div ngbDropdown class="d-inline-block">
+            <a class="nav-link" id="AdminNavDropbox" ngbDropdownToggle>Admin</a>
+            <div ngbDropdownMenu aria-labelledby="AdminNavDropbox">
+              <a class="dropdown-item" routerLink="/admin">Angels</a>
+              <a class="dropdown-item" routerLink="/admin/documents">Documents</a>
+            </div>
+          </div>
         </li>
       </ul>
       <ul class="navbar-nav">

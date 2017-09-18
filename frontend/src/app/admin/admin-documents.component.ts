@@ -1,0 +1,95 @@
+import { Component, OnInit} from '@angular/core';
+
+import 'rxjs/add/operator/switchMap';
+import {Document} from "../documents/document";
+import {DocumentService} from "../documents/document.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
+
+@Component({
+  selector: 'admin',
+  template: `
+    <h3 class="text-center">Admin tools</h3>
+
+    <h4>Documents</h4>
+    <div class="row">
+      <div class="col">
+        <table class="table table-sm">
+          <thead>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Download URL</th>
+            <th>Created At</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let document of documents">
+              <!-- Id -->
+              <td><span class="monospace small">{{document.id}}</span></td>
+    
+              <!-- Name -->
+              <td>{{document.name}}</td>
+    
+              <!-- Download URL-->
+              <td>{{document.download_url}}</td>
+    
+              <!-- Created At-->
+              <td>{{document.created_at | date:'medium'}}</td>
+              
+              <!-- Actions -->
+              <td><button class="btn btn-danger" (click)="deleteDocument(document.id)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-8">
+        <h4>New Document</h4>
+        <form [formGroup]="newDocumentForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" required formControlName="name">
+          </div>
+    
+          <div class="form-group">
+            <label for="download_url">Download URL</label>
+            <input type="text" class="form-control" id="download_url" required formControlName="download_url">
+          </div>
+        </form>
+        <button class="btn btn-success" (click)="saveNewDocument()">Save New Document</button>
+      </div>
+    </div>
+  `
+})
+export class AdminDocumentsComponent implements OnInit {
+  documents: Document[];
+
+  newDocumentForm: FormGroup;
+
+  constructor(
+    private documentService: DocumentService,
+    private fb: FormBuilder
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.documentService.getDocuments().then((documents) => this.documents = documents);
+
+    this.newDocumentForm = this.fb.group({
+      name: "",
+      download_url: ""
+    });
+  }
+
+  saveNewDocument(): void {
+    const formData = this.newDocumentForm.getRawValue();
+    formData.type = 'file';
+    this.documentService.createDocument(formData).then(() => this.ngOnInit());
+  }
+
+  deleteDocument(documentId): void {
+    this.documentService.deleteDocument(documentId).then(() => this.ngOnInit());
+  }
+
+}
