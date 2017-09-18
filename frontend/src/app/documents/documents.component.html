@@ -16,7 +16,7 @@
           </td>
 
         </tr>
-        <tr *ngIf="!documents">
+        <tr *ngIf="!documents || !documents.length">
           <td colspan="2" class="text-center">Nothing to display</td>
         </tr>
       </tbody>
