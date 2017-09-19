@@ -18,6 +18,8 @@ import { BatchInsertComponent } from "./admin/batch-insert.component";
 import {ManageAngelComponent} from "./admin/manage-angel.component";
 import {DocumentsComponent} from "./documents/documents.component";
 import {AdminDocumentsComponent} from "./admin/admin-documents.component";
+import {ManageStartupComponent} from "./admin/manage-startup.component";
+import {AdminStartupsComponent} from "./admin/admin-startups.component";
 
 const appRoutes: Routes = [
   {
@@ -66,6 +68,16 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard, AdminAuthGuard]
   },
   {
+    path: 'admin/startups',
+    component: AdminStartupsComponent,
+    canActivate: [AuthGuard, AdminAuthGuard]
+  },
+  {
+    path: 'admin/startups/:startupId',
+    component: ManageStartupComponent,
+    canActivate: [AuthGuard, AdminAuthGuard]
+  },
+  {
     path: 'invite',
     component: InviteComponent
   },
@@ -103,6 +115,8 @@ export const routedComponents = [
   ManageAngelComponent,
   AdminAngelListComponent,
   AdminDocumentsComponent,
+  AdminStartupsComponent,
+  ManageStartupComponent,
   LandingComponent,
   InviteComponent,
   RegisterComponent,
