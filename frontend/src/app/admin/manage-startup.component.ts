@@ -112,7 +112,7 @@ import {Angel} from "../angels/angel";
     
               <!-- Already committed -->
               <tr>
-                <td>Already committed</td>
+                <td>Already committed (%)</td>
                 <td><input class="form-control" formControlName="committed_percentage"></td>
               </tr>
     

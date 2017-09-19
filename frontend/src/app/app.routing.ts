@@ -20,6 +20,8 @@ import {DocumentsComponent} from "./documents/documents.component";
 import {AdminDocumentsComponent} from "./admin/admin-documents.component";
 import {ManageStartupComponent} from "./admin/manage-startup.component";
 import {AdminStartupsComponent} from "./admin/admin-startups.component";
+import {StartupsComponent} from "./startups/startups.component";
+import {StartupDetailsComponent} from "./startups/startup-details.component";
 
 const appRoutes: Routes = [
   {
@@ -40,6 +42,16 @@ const appRoutes: Routes = [
   {
     path: 'documents',
     component: DocumentsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'startups',
+    component: StartupsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'startups/:startupId',
+    component: StartupDetailsComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -110,6 +122,8 @@ export const routedComponents = [
   AngelsComponent,
   AngelDetailsComponent,
   DocumentsComponent,
+  StartupsComponent,
+  StartupDetailsComponent,
   ProfileComponent,
   AdminComponent,
   ManageAngelComponent,

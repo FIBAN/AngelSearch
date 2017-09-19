@@ -1,0 +1,123 @@
+<h3 class="text-center">{{startup?.company_name}}</h3>
+
+<div class="row">
+  <!-- Company Details -->
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">Company details</div>
+      <div class="card-body">
+        <table *ngIf="startup" class="table">
+          <tbody>
+          <tr>
+            <td>Company Name</td>
+            <td>{{startup.company_name}}</td>
+          </tr>
+          <tr>
+            <td>Oneliner</td>
+            <td>{{startup.oneliner}}</td>
+          </tr>
+          <tr>
+            <td>Industry</td>
+            <td>{{startup.industry}}</td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td>{{startup.city}}</td>
+          </tr>
+          <tr>
+            <td>Country</td>
+            <td>{{startup.country}}</td>
+          </tr>
+          <tr>
+            <td>Website</td>
+            <td><a target="_blank" href="{{startup.website}}">{{startup.website}}</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financials -->
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">Financials</div>
+      <div class="card-body">
+        <table *ngIf="startup" class="table">
+          <tbody>
+          <tr>
+            <td>Round size and Open tickets</td>
+            <td>{{startup.round_size_and_open_tickets}}</td>
+          </tr>
+          <tr>
+            <td>Valuation</td>
+            <td>{{startup.valuation}}</td>
+          </tr>
+          <tr>
+            <td>Already committed (%)</td>
+            <td>{{startup.committed_percentage}}</td>
+          </tr>
+          <tr>
+            <td>Pitch Deck</td>
+            <td><a target="_blank" href="{{startup.pitch_deck_link}}">Show pitch deck</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+
+  <!-- Entrepreneur -->
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">Entrepreneur</div>
+      <div class="card-body">
+        <table *ngIf="startup" class="table">
+          <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{{startup.entrepreneur_name}}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{startup.entrepreneur_email}}</td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td>{{startup.entrepreneur_phone}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lead Angel -->
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">Lead Angel</div>
+      <div class="card-body">
+        <table *ngIf="leadAngel" class="table">
+          <tbody>
+          <tr>
+            <td>Name</td>
+            <td><a [routerLink]="['/angels', leadAngel.id]">{{leadAngel.first_name}} {{leadAngel.last_name}}</a></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{leadAngel.email}}</td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td>{{leadAngel.phone}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

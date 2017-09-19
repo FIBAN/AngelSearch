@@ -1,0 +1,49 @@
+<h3 class="text-center">Startups</h3>
+
+<div class="row justify-content-center">
+  <div class="col">
+    <table class="table" id="startupTable">
+      <thead>
+      <th>Name</th>
+      <th>Oneliner</th>
+      <th>Industry</th>
+      <th>Location</th>
+      <th></th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let startup of startups">
+        <!-- Name -->
+        <td>
+          {{startup.company_name}}
+        </td>
+
+        <!-- Oneliner -->
+        <td>
+          {{startup.oneliner}}
+        </td>
+
+        <!-- Industry -->
+        <td>
+          {{startup.industry}}
+        </td>
+
+        <!-- Location -->
+        <td>
+          {{startup.city}}, {{startup.country}}
+        </td>
+
+        <!-- Actions -->
+        <td class="link-col">
+          <a [routerLink]="['/startups', startup.id]" class="btn btn-primary">Read More</a>
+        </td>
+
+      </tr>
+      <tr *ngIf="!startups || !startups.length">
+        <td colspan="4" class="text-center">Nothing to display</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
