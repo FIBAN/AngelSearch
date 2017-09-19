@@ -60,7 +60,11 @@ import {FormBuilder, FormGroup} from "@angular/forms";
         <button class="btn btn-success" (click)="saveNewDocument()">Save New Document</button>
       </div>
     </div>
-  `
+  `,
+  styles: [
+    '.ng-valid[required], .ng-valid.required { border-left: 5px solid #42A948; /* green */}',
+    '.ng-invalid:not(form) { border-left: 5px solid #a94442; /* red */}'
+  ]
 })
 export class AdminDocumentsComponent implements OnInit {
   documents: Document[];

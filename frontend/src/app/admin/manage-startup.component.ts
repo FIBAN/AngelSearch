@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router, Routes} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AngelService} from "../angels/angel.service";
 import {StartupService} from "../startups/startup.service";
 import {Startup} from "../startups/startup";
+import {Angel} from "../angels/angel";
 
 @Component({
   selector: 'admin-manage-startup',
@@ -36,7 +37,11 @@ import {Startup} from "../startups/startup";
               <!-- Lead Angel -->
               <tr>
                 <td>Lead Angel</td>
-                <td><input class="form-control" formControlName="lead_angel_id"></td>
+                <td>
+                  <select class="form-control" formControlName="lead_angel_id">
+                    <option *ngFor="let angel of angels | angelSorter:['first_name', 'last_name']" value="{{angel.id}}">{{angel.first_name}} {{angel.last_name}}</option>
+                  </select>
+                </td>
               </tr>
     
               <!-- Company Name -->
@@ -119,7 +124,8 @@ import {Startup} from "../startups/startup";
             </tbody>
           </table>
           <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
-          <a routerLink="/admin" class="btn btn-secondary" >Discard Changes</a>
+          <a routerLink="/admin/startups" class="btn btn-secondary" >Discard Changes</a>
+          <button class="btn btn-danger pull-right" (click)="deleteStartup()">Delete Startup</button>
         </form>
       </div>
     </div>
@@ -133,10 +139,13 @@ export class ManageStartupComponent implements OnInit {
 
   startupForm: FormGroup;
 
+  angels: Angel[];
+
   constructor(
     private angelService: AngelService,
     private startupService: StartupService,
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ){}
 
@@ -163,6 +172,8 @@ export class ManageStartupComponent implements OnInit {
           'pitch_deck_link': startup.pitch_deck_link
         })
       });
+
+    this.angelService.getAngels().then((angels) => this.angels = angels);
   }
 
   saveChanges(): void {
@@ -176,6 +187,13 @@ export class ManageStartupComponent implements OnInit {
       .then(() => {
         location.reload();
       });
+  }
+
+  deleteStartup(): void {
+      this.startupService.deleteStartup(this.startup.id)
+        .then(() =>
+          this.router.navigate(['/admin/startups'])
+        );
   }
 
 }

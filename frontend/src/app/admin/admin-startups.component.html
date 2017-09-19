@@ -1,0 +1,110 @@
+<h3 class="text-center">Admin tools</h3>
+
+<h4>Startups</h4>
+<div class="row">
+  <div class="col">
+    <table class="table table-sm">
+      <thead>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Created At</th>
+      <th></th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let startup of startups">
+        <!-- Id -->
+        <td><span class="monospace small">{{startup.id}}</span></td>
+
+        <!-- Name -->
+        <td>{{startup.company_name}}</td>
+
+        <!-- Created At-->
+        <td>{{startup.created_at | date:'medium'}}</td>
+
+        <!-- Actions -->
+        <td><a class="btn btn-info" [routerLink]="['/admin/startups', startup.id]">Show</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <h4>New Startup</h4>
+    <form [formGroup]="newStartupForm">
+      <div class="form-group">
+        <label for="lead_angel_id">Lead Angel</label>
+        <select class="form-control" id="lead_angel_id" required formControlName="lead_angel_id">
+          <option *ngFor="let angel of angels | angelSorter:['first_name', 'last_name']" value="{{angel.id}}">{{angel.first_name}} {{angel.last_name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="company_name">Company Name</label>
+        <input type="text" class="form-control" id="company_name" required formControlName="company_name">
+      </div>
+
+      <div class="form-group">
+        <label for="oneliner">Oneliner</label>
+        <input type="text" class="form-control" id="oneliner" required formControlName="oneliner">
+      </div>
+
+      <div class="form-group">
+        <label for="industry">Industry</label>
+        <input type="text" class="form-control" id="industry" required formControlName="industry">
+      </div>
+
+      <div class="form-group">
+        <label for="website">Website</label>
+        <input type="text" class="form-control" id="website" required formControlName="website">
+      </div>
+
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" required formControlName="city">
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" class="form-control" id="country" required formControlName="country">
+      </div>
+
+      <div class="form-group">
+        <label for="entrepreneur_name">Entrepreneur Name</label>
+        <input type="text" class="form-control" id="entrepreneur_name" required formControlName="entrepreneur_name">
+      </div>
+
+      <div class="form-group">
+        <label for="entrepreneur_email">Entrepreneur Email</label>
+        <input type="text" class="form-control" id="entrepreneur_email" required formControlName="entrepreneur_email">
+      </div>
+
+      <div class="form-group">
+        <label for="entrepreneur_phone">Entrepreneur Phone</label>
+        <input type="text" class="form-control" id="entrepreneur_phone" required formControlName="entrepreneur_phone">
+      </div>
+
+      <div class="form-group">
+        <label for="round_size_and_open_tickets">Round size and Open tickets</label>
+        <input type="text" class="form-control" id="round_size_and_open_tickets" required formControlName="round_size_and_open_tickets">
+      </div>
+
+      <div class="form-group">
+        <label for="valuation">Valuation</label>
+        <input type="text" class="form-control" id="valuation" required formControlName="valuation">
+      </div>
+
+      <div class="form-group">
+        <label for="committed_percentage">Already committed</label>
+        <input type="text" class="form-control" id="committed_percentage" required formControlName="committed_percentage">
+      </div>
+
+      <div class="form-group">
+        <label for="pitch_deck_link">Pitch Deck Link</label>
+        <input type="text" class="form-control" id="pitch_deck_link" required formControlName="pitch_deck_link">
+      </div>
+
+    </form>
+    <button class="btn btn-success" (click)="saveNewStartup()">Save New Startup</button>
+  </div>
+</div>
