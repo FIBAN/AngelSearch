@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 
 router.use('/angels', require('./angels'));
 router.use('/invitations', require('./invitations'));
+router.use('/startups', require('./startups'));
 router.use('/documents', require('./documents'));
 router.use('/admin', require('./admin'));
 

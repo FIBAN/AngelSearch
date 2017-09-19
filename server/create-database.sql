@@ -30,6 +30,26 @@ create table auth0_users (
     updated_at timestamp with time zone default now()
 );
 
+create table startups (
+    "id" text not null primary key,
+    lead_angel_id text references angels ("id") on delete set null,
+    company_name text not null,
+    oneliner text not null,
+    industry text not null,
+    website text not null,
+    city text not null,
+    country text not null,
+    entrepreneur_name text not null,
+    entrepreneur_email text not null,
+    entrepreneur_phone text not null,
+    round_size_and_open_tickets text not null,
+    valuation text not null,
+    committed_percentage text not null,
+    pitch_deck_link text not null,
+    created_at timestamp with time zone default now(),
+    updated_at timestamp with time zone default now()
+);
+
 create table documents (
     "id" text not null primary key,
     "name" text not null,
