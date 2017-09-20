@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 
 import { AuthService } from './auth/auth.service';
-import {NavigationEnd, Router} from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
+import { Angulartics2GoogleAnalytics } from "angulartics2";
 
 @Component({
   selector: 'angel-search',
@@ -17,7 +18,10 @@ export class AppComponent{
   isNavbarCollapsed = true;
 
   // We'll need to include a reference to our authService in the constructor to gain access to the API's in the view
-  constructor(public authService: AuthService, public router: Router) {
+  constructor(public angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
+              public authService: AuthService,
+              public router: Router
+  ) {
 
     router.events.subscribe((event) => {
       if(event instanceof NavigationEnd) {

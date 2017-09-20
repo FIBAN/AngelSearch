@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
+
 
 import { AppComponent } from './app.component';
 import { routing, routedComponents } from './app.routing';
@@ -33,7 +35,8 @@ import { StartupService } from "./startups/startup.service";
     routing,
     HttpModule,
     AuthModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ])
   ],
   declarations: [
     AppComponent,
