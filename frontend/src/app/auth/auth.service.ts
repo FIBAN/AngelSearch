@@ -94,22 +94,27 @@ export class AuthService {
     });
   }
 
-  handleAuth() {
-    // When Auth0 hash parsed, get profile
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        window.location.hash = '';
-        this._getAuth0Profile(authResult)
-          .then(() => this._loadAuthStatus().then(s => this.authStatus$.next(s)))
-          .then(()=> {
-            const savedRedirect = localStorage.getItem("redirectAfterLogin");
-            this.router.navigateByUrl(savedRedirect ? savedRedirect : '/');
-          });
-      } else if (err) {
-        this.router.navigate(['/']);
-        console.error(`Error: ${err.error}`, err);
-      }
+  handleAuth(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const context = { hash: window.location.hash };
+      this.auth0.parseHash((err, authResult) => {
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          window.location.hash = '';
+          this._getAuth0Profile(authResult)
+            .then(() => this.refreshAuthStatus())
+            .then(()=> {
+              const savedRedirect = localStorage.getItem("redirectAfterLogin");
+              resolve(savedRedirect ? savedRedirect : '/angels');
+            })
+            .catch(err => reject({context: context, error: err}));
+        } else if (err) {
+          reject({context: context, error: err});
+        } else {
+          reject({context: context, error: "Unknown error"})
+        }
+      });
     });
+
   }
 
   private _getAuth0Profile(authResult) {
