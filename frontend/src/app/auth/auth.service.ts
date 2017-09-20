@@ -140,7 +140,10 @@ export class AuthService {
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
     this.authStatus$.next(AuthService.AUTH_STATUS.LOGGED_OUT);
-    this.router.navigate(['/']);
+    this.auth0.logout({
+      returnTo: AUTH_CONFIG.LOGOUT,
+      clientID: AUTH_CONFIG.CLIENT_ID
+    });
   }
 
   get authenticated() {
