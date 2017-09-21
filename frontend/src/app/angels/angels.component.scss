@@ -1,0 +1,35 @@
+@import "../../styles";
+
+#angelTable {
+  width: 100%;
+}
+
+#angelTable thead th a {
+  color: $body-color;
+  font-weight: $font-weight-bold;
+}
+
+td.industry-column {
+  max-width: 20rem;
+}
+
+td.industry-column div.many-industries::after {
+  content: "\00a0...";
+}
+
+.industry-badge {
+  margin-right: 5px;
+}
+
+$linkedin-link-color: #2d6987;
+
+a.linkedin-link {
+  color: $linkedin-link-color;
+}
+
+a.linkedin-link:hover {
+  color: darken($linkedin-link-color, 15%);
+}
+
+
+

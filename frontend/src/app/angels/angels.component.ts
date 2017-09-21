@@ -6,7 +6,7 @@ import { AngelService } from './angel.service';
 @Component({
   selector: 'angels',
   templateUrl: 'angels.component.html',
-  styleUrls: ['angels.component.css'],
+  styleUrls: ['angels.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class AngelsComponent implements OnInit {

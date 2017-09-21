@@ -37,7 +37,7 @@
   <tr *ngFor="let angel of angels|angelFilter:filter|angelSorter:sortKeys[sortBy]:reverseSort">
     <!-- Name -->
     <td>
-      <a [routerLink]="['/angels', angel.id]" routerLinkActive="true">{{angel.first_name}} {{angel.last_name}}</a>
+      <a [routerLink]="['/angels', angel.id]" routerLinkActive="true" class="font-weight-bold text-dark">{{angel.first_name}} {{angel.last_name}}</a>
     </td>
 
     <!-- Location -->
@@ -48,7 +48,7 @@
     <!-- Industries -->
     <td class="d-none d-lg-table-cell industry-column">
       <div *ngIf="angel.industries" [class.many-industries]="angel?.industries.length > 3">
-        <span *ngFor="let industry of angel.industries.slice(0, 3)" class="badge badge-primary industry-badge">{{industry}}</span>
+        <span *ngFor="let industry of angel.industries.slice(0, 3)" class="badge badge-dark industry-badge">{{industry}}</span>
       </div>
     </td>
 

@@ -6,6 +6,13 @@ html, body {
   height: 100%;
 }
 
+body {
+  background-image: url(/assets/images/nordics_bg.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
 .monospace {
   font-family: $font-family-monospace;
 }

@@ -33,7 +33,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileProps = [
-      {name: 'Id', key: 'id', editable: false},
       {name: 'First name', key: 'first_name', editable: true},
       {name: 'Last name', key: 'last_name', editable: true},
       {name: 'Email', key: 'email', editable: true},
