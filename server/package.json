@@ -1,8 +1,11 @@
 {
   "name": "angel-search-backend",
-  "version": "0.0.1",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Backend API for the Nordic Business Angel List",
   "main": "server.js",
+  "engines": {
+    "node": "8.2.1"
+  },
   "scripts": {
     "test": "mocha test/**/*.js",
     "start": "node server.js",

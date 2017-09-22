@@ -6,6 +6,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const config = require('./config');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -17,6 +19,7 @@ app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
-app.listen(process.env.PORT || 3001, () => {
-    console.log('Listening on ' + (process.env.PORT || 3001));
+console.log(`Starting app using ${config.env} config`);
+app.listen(config.port, () => {
+    console.log(`Listening on ${config.port}`);
 });

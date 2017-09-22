@@ -1,5 +1,5 @@
 "use strict";
-require('dotenv').config();
+require('../config');
 
 const AuthenticationClient = require('auth0').AuthenticationClient;
 
@@ -7,17 +7,17 @@ const ManagementClient = require('auth0').ManagementClient;
 
 module.exports.client = function () {
     const auth0 = new AuthenticationClient({
-        domain: process.env.AUTH0_DOMAIN,
-        clientId: process.env.AUTH0_CLIENTID,
-        clientSecret: process.env.AUTH0_SECRET,
+        domain: config.auth0.domain,
+        clientId: config.auth0.clientId,
+        clientSecret: config.auth0.secret,
     });
 
     return auth0.clientCredentialsGrant({
-        audience: 'https://' + process.env.AUTH0_DOMAIN + '/api/v2/'
+        audience: 'https://' + config.auth0.domain + '/api/v2/'
     }).then(response => {
         return new ManagementClient({
             token: response.access_token,
-            domain: process.env.AUTH0_DOMAIN
+            domain: config.auth0.domain
         });
     }).catch(err => {
         console.error("didn't get auth0 credentials", err);

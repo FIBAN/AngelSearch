@@ -4,24 +4,24 @@ const jwks = require('jwks-rsa');
 const https = require('https');
 
 const Angel = require('../models/angel');
-require('dotenv').config();
+const config = require('../config');
 
 module.exports.authenticated = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: "https://" + process.env.AUTH0_DOMAIN + "/.well-known/jwks.json"
+        jwksUri: "https://" + config.auth0.domain + "/.well-known/jwks.json"
     }),
-    audience: process.env.AUTH0_AUDIENCE,
-    issuer: "https://" + process.env.AUTH0_DOMAIN + "/",
+    audience: config.auth0.audience,
+    issuer: "https://" + config.auth0.domain + "/",
     algorithms: ['RS256']
 });
 
 const getProfile = function (req) {
     return new Promise((res, rjt) => {
         https.get({
-            host: process.env.AUTH0_DOMAIN,
+            host: config.auth0.domain,
             path: '/userinfo',
             headers: {
                 'Authorization': req.headers.authorization

@@ -1,11 +1,11 @@
 "use strict";
-require('dotenv').config();
+const config = require('../config');
 const { Pool } = require('pg');
 
 //postgres configuration is read automatically from environmental variable
 // DATABASE_URL=postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
+    connectionString: config.db
 });
 
 module.exports = {
