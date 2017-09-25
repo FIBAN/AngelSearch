@@ -17,9 +17,11 @@
 * ~~Remove possible query parameters from the linkedin id when parsing a link~~
 
 
-* Show users a list of documents available for download
-* Tools for admins to manage these documents
+* ~~Show users a list of documents available for download~~
+* ~~Tools for admins to manage these documents~~
 
 
-* Show users a list of startups cases
-* Tools for admins to manage startup cases
+* ~~Show users a list of startups cases~~
+* ~~Tools for admins to manage startup cases~~
+
+* ~~Accepting invitation with account that matches the email of the angel fails because the auth0 linking is tried to do twice~~

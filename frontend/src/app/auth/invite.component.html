@@ -14,7 +14,15 @@
           <a href="#" class="btn btn-info" (click)="register(); false">Register</a>
         </div>
       </div>
-      <div *ngIf="invitation && invitation.status !== 'pending'" class="card text-white bg-danger">
+      <div *ngIf="invitation && invitation.status === 'accepted'" class="card bg-light">
+        <div class="card-body">
+          <p>
+            This invitation has already been accepted. Proceed to the login page to log in.
+            <a routerLink="/">Click here</a>
+          </p>
+        </div>
+      </div>
+      <div *ngIf="invitation && invitation.status === 'cancelled'" class="card text-white bg-danger">
         <div class="card-body">
           <p>
             This invitation link has expired.

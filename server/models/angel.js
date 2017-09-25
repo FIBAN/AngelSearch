@@ -130,7 +130,21 @@ module.exports.update = (angel) => {
 };
 
 module.exports.linkAuth0Id = (angelId, auth0Id) => {
-    return db.query('INSERT INTO auth0_users (id, angel_id) VALUES ($1, $2) RETURNING *', [auth0Id, angelId]).then(res => res.rows[0]);
+    //Check if linking already exists
+    return db.query('SELECT * from auth0_users WHERE id = $1', [auth0Id]).then(res => {
+        //No prior linking exists
+        if(!res.rows.length) {
+            return db.query('INSERT INTO auth0_users (id, angel_id) VALUES ($1, $2) RETURNING *', [auth0Id, angelId]).then(res => res.rows[0]);
+        }
+        //Correct linking exists
+        else if (res.rows[0].angel_id === angelId) {
+            return Promise.resolve(res.rows[0]);
+        }
+        //Auth0Id is linked to another angel
+        else {
+            return Promise.reject({error: 'Auth0 Id already linked to another Angel'});
+        }
+    });
 };
 
 module.exports.delete = (angelId) => {

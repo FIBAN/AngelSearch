@@ -1,5 +1,5 @@
 "use strict";
-require('../config');
+const config = require('../config');
 
 const AuthenticationClient = require('auth0').AuthenticationClient;
 
