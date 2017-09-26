@@ -23,3 +23,5 @@ console.log(`Starting app using ${config.env} config`);
 app.listen(config.port, () => {
     console.log(`Listening on ${config.port}`);
 });
+
+module.exports = app;

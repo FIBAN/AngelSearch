@@ -1,3 +1,4 @@
+"use strict";
 const expect = require('chai').expect;
 const sinon = require('sinon');
 
@@ -43,9 +44,17 @@ describe("Invitation", function () {
 
         it("should create new invitation", function (done) {
             Invitation.allByAngelId.returns(Promise.resolve([]));
-            db.query.returns(Promise.resolve({rowCount: 1}));
+
+            const expectation = {
+                id: 'dcnWr1xsTVOGKybVHvTZ5w==',
+                angel_id: 'hQyM4YDXQ_qIC2kdFfzVEQ==',
+                status: 'pending'
+            };
+
+            db.query.returns(Promise.resolve({rows: [expectation] }));
+
             Invitation.create('hQyM4YDXQ_qIC2kdFfzVEQ==').then((res) => {
-                expect(res).equal(1);
+                expect(res).equal(expectation);
                 expect(db.query.calledOnce).equal(true);
                 done();
             }).catch(err => done(err));
@@ -65,8 +74,15 @@ describe("Invitation", function () {
                 }
             ];
             Invitation.allByAngelId.returns(Promise.resolve(invitations));
+
+            const cancelledInvitation = {
+                id: 'dcnWr1xsTVOGKybVHvTZ5w==',
+                angel_id: 'hQyM4YDXQ_qIC2kdFfzVEQ==',
+                status: 'cancelled'
+            };
+
             Invitation.markCancelled.returns(Promise.resolve({rowCount: 1}));
-            db.query.returns(Promise.resolve({rowCount: 1}));
+            db.query.returns(Promise.resolve({rows: [cancelledInvitation] }));
             Invitation.create('hQyM4YDXQ_qIC2kdFfzVEQ==').then((res) => {
                 expect(Invitation.markCancelled.withArgs('dcnWr1xsTVOGKybVHvTZ5w==').calledOnce).equal(true);
                 done();

@@ -7,7 +7,7 @@
     "node": "8.2.1"
   },
   "scripts": {
-    "test": "mocha test/**/*.js",
+    "test": "NODE_ENV=test mocha test/**/*.js",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
@@ -28,5 +28,7 @@
     "sqlite3": "^3.1.8",
     "uuid": "^3.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "supertest": "^3.0.0"
+  }
 }

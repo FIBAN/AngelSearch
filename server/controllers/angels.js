@@ -64,8 +64,8 @@ router.put('/:angelId', auth.loggedInAngel, (req, res) => {
     }
     angel.id = req.params.angelId;
 
-    Angel.update(angel).then(() => {
-        res.json({status: 200, message: 'Updated'});
+    Angel.update(angel).then(angel => {
+        res.json(angel);
     }).catch(err => {
         console.error(err);
         res.status(500).json({status: 500, message: err});
