@@ -15,13 +15,14 @@ import { RegistrationNeededComponent } from "./auth/registration-needed.componen
 import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import { BatchInsertComponent } from "./admin/batch-insert.component";
-import {ManageAngelComponent} from "./admin/manage-angel.component";
-import {DocumentsComponent} from "./documents/documents.component";
-import {AdminDocumentsComponent} from "./admin/admin-documents.component";
-import {ManageStartupComponent} from "./admin/manage-startup.component";
-import {AdminStartupsComponent} from "./admin/admin-startups.component";
-import {StartupsComponent} from "./startups/startups.component";
-import {StartupDetailsComponent} from "./startups/startup-details.component";
+import { ManageAngelComponent } from "./admin/manage-angel.component";
+import { DocumentsComponent } from "./documents/documents.component";
+import { AdminDocumentsComponent } from "./admin/admin-documents.component";
+import { ManageStartupComponent } from "./admin/manage-startup.component";
+import { AdminStartupsComponent } from "./admin/admin-startups.component";
+import { StartupsComponent } from "./startups/startups.component";
+import { StartupDetailsComponent } from "./startups/startup-details.component";
+import { SearchHighlightComponent } from "./angels/search-highlight.component";
 
 const appRoutes: Routes = [
   {
@@ -137,5 +138,6 @@ export const routedComponents = [
   RegistrationNeededComponent,
   ErrorComponent,
   EmailVerificationMissingComponent,
-  BatchInsertComponent
+  BatchInsertComponent,
+  SearchHighlightComponent
 ];

@@ -37,12 +37,15 @@
   <tr *ngFor="let angel of angels|angelFilter:filter|angelSorter:sortKeys[sortBy]:reverseSort">
     <!-- Name -->
     <td>
-      <a [routerLink]="['/angels', angel.id]" routerLinkActive="true" class="font-weight-bold text-dark">{{angel.first_name}} {{angel.last_name}}</a>
+      <a [routerLink]="['/angels', angel.id]"
+         routerLinkActive="true"
+         class="font-weight-bold text-dark"
+      ><search-highlight [text]="nameString(angel)" [query]="filter.searchString"></search-highlight></a>
     </td>
 
     <!-- Location -->
     <td>
-      {{locationString(angel.city, angel.country)}}
+      <search-highlight [text]="locationString(angel)" [query]="filter.searchString"></search-highlight>
     </td>
 
     <!-- Industries -->

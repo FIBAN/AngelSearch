@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 
 import { Angel } from './angel';
 import { AngelService } from './angel.service';
@@ -57,13 +57,20 @@ export class AngelsComponent implements OnInit {
     this.filter = filter;
   }
 
-  locationString(city?: string, country?: string): string {
+  locationString(angel: Angel): string {
+    const city = angel.city;
+    const country = angel.country;
+
     if(city && country) {
       return city + ', ' + country;
     }
     else {
       return city || country || '';
     }
+  }
+
+  nameString(angel: Angel): string {
+    return `${angel.first_name} ${angel.last_name}`;
   }
 
   onSort(column: string) {

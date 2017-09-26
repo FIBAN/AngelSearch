@@ -31,5 +31,8 @@ a.linkedin-link:hover {
   color: darken($linkedin-link-color, 15%);
 }
 
+span.highlight {
+  color: map_get($theme-colors, 'primary');
+}
 
 
