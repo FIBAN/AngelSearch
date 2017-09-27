@@ -6,9 +6,9 @@ const app = require('../../server');
 const testDB = require('../test_helpers/db');
 const testAuth0 = require('../test_helpers/auth0');
 
-describe("Angel Search API Integration Tests", function () {
+describe("/api/angels Endpoints", function () {
 
-    var auth0Token;
+    let auth0Token;
 
     // Initialize test database and get an auth0 token for test user
     before(function (done) {
