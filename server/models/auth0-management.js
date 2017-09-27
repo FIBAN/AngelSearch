@@ -19,7 +19,5 @@ module.exports.client = function () {
             token: response.access_token,
             domain: config.auth0.domain
         });
-    }).catch(err => {
-        console.error("didn't get auth0 credentials", err);
-    });
+    }).catch(err => Promise.reject({error: "Couldn't get auth0 credentials", cause: err}));
 };

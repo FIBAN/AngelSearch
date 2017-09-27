@@ -124,7 +124,6 @@ module.exports.update = (angel) => {
         queryParams.push(angel.id);
         query += " WHERE id = $" + queryParams.length;
         query += " RETURNING *";
-        console.log("query:", query, queryParams);
         return db.query(query, queryParams).then(res => res.rows[0]);
     }
 };

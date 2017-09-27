@@ -3,11 +3,15 @@ const express = require('express');
 const router = express.Router();
 const morgan = require('morgan');
 const auth = require('../middleware/auth');
+const config = require('../config');
+const logger = require('../helpers/logger');
 
 morgan.token('x-request-id', (req, res) => { return req.headers['x-request-id']});
 morgan.token('jwt-sub', (req, res) => { return req.user && req.user.sub});
 
-router.use(morgan(':remote-addr :jwt-sub [:date[clf]] (:x-request-id) ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'));
+if(config.env !== 'test') {
+    router.use(morgan(':remote-addr :jwt-sub [:date[clf]] (:x-request-id) ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'));
+}
 
 router.use('/angels', require('./angels'));
 router.use('/invitations', require('./invitations'));
@@ -28,7 +32,7 @@ router.use(function (err, req, res, next) {
         res.status(401).send({ status: 401, message: 'Invalid access token'});
         return
     }
-    console.error(err.stack);
+    logger(req.headers['x-request-id']).error('Uncaught Error', err);
     res.status(500).send({ status: 500, message: 'Internal server error', error: err });
 });
 

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const Document = require('../models/document');
+const logger = require('../helpers/logger');
 
 const absoluteDocumentId = function (req, document)  {
     return req.protocol + '://' + req.get('host') + '/api/documents/' + document.id;
@@ -17,7 +18,7 @@ router.get('/', auth.loggedInAngel, (req, res) => {
         });
         res.json(jsonDocuments);
     }).catch(err => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('List Documents', err);
         res.status(500).json({status: 500, message: err});
     });
 });
@@ -29,10 +30,11 @@ router.post('/', auth.loggedInAdmin, (req, res) => {
     }
 
     Document.create(req.body).then((document) => {
+        logger(req.headers['x-request-id']).log('New Document', document);
         document.href = absoluteDocumentId(req, document);
         res.status(201).json(document);
     }).catch((err) => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('New Document', err);
         res.status(500).json({status: 500, message: err});
     });
 });
@@ -46,7 +48,7 @@ router.get('/:documentId', auth.loggedInAngel, (req, res) => {
             res.json(document);
         }
     }).catch(err => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('Get Document', err);
         res.status(500).json({status: 500, message: err});
     });
 });
@@ -60,10 +62,11 @@ router.put('/:documentId', auth.loggedInAdmin, (req, res) => {
     }
     document.id = req.params.documentId;
 
-    Document.update(document).then(() => {
-        res.json({status: 200, message: 'Updated'});
+    Document.update(document).then((updatedDocument) => {
+        logger(req.headers['x-request-id']).log('Update Document', {changes: document, current: updatedDocument});
+        res.json(updatedDocument);
     }).catch(err => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('Update Document', err);
         res.status(500).json({status: 500, message: err});
     });
 });
@@ -72,7 +75,7 @@ router.delete('/:documentId', auth.loggedInAdmin, (req, res) => {
     Document.delete(req.params.documentId).then(() => {
         res.json({status: 200, message: 'Deleted'});
     }).catch(err => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('Update Document', err);
         res.status(500).json({status: 500, message: err});
     });
 });

@@ -4,6 +4,7 @@ const router = express.Router();
 const Invitation = require('../models/invitation');
 const Angel = require('../models/angel');
 const auth = require('../middleware/auth');
+const logger = require('../helpers/logger');
 
 const absoluteInvitationId = function (req, invite)  {
     return req.protocol + '://' + req.get('host') + '/api/invitations/' + invite.id;
@@ -15,7 +16,7 @@ router.get('/', auth.loggedInAdmin, (req, res) => {
         rows = rows.map(i => (i.href = absoluteInvitationId(req, i)) && i);
         res.json(rows);
     }).catch(err => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('List Invitations', err);
         res.status(500).json({status: 500, message: err});
     });
 
@@ -31,7 +32,7 @@ router.get('/:inviteId', (req, res) => {
             res.json(row);
         }
     }).catch(err => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('Get Invitation', err);
         res.status(500).json({status: 500, message: err});
     });
 
@@ -44,14 +45,14 @@ router.post('/:inviteId/accept', auth.authenticated, (req, res) => {
         } else {
             return Angel.linkAuth0Id(invite.angel_id, req.user.sub)
                 .then(() => Invitation.markAccepted(req.params.inviteId))
-                .then(() => res.json({status: 200, message: 'Success'}))
-                .catch(err => {
-                    console.error(err);
-                    return Promise.reject("Invite couldn't be accepted");
-                });
+                .then((invitation) => {
+                    logger(req.headers['x-request-id']).log('Accept Invitation', invitation);
+                    res.json(invitation)
+                })
+                .catch(err => Promise.reject({error: "Invite couldn't be accepted", cause: err}));
         }
     }).catch(err => {
-        console.error(err);
+        logger(req.headers['x-request-id']).error('Accept Invitation', err);
         res.status(500).json({status: 500, message: err});
     });
 });
