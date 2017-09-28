@@ -19,7 +19,6 @@ export class SearchHighlightComponent implements OnInit {
 
   @Input()
   set query(query: string) {
-    console.log(`query change. old: ${this._query}, new: ${query}`);
     this._query = query;
     if(query  && query.trim() && query.trim().length > 2) {
 
