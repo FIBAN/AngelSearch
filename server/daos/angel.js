@@ -1,6 +1,7 @@
 "use strict";
 const db = require('./db');
 const util = require('../helpers/util');
+const VError = require('verror').VError;
 
 module.exports.all = () => {
     return db.query('SELECT * FROM angels').then(res => res.rows);
@@ -141,7 +142,7 @@ module.exports.linkAuth0Id = (angelId, auth0Id) => {
         }
         //Auth0Id is linked to another angel
         else {
-            return Promise.reject({error: 'Auth0 Id already linked to another Angel'});
+            return Promise.reject(new VError({name: 'AUTH0_LINKING_EXISTS'}, 'Auth0 Id already linked to another Angel'));
         }
     });
 };

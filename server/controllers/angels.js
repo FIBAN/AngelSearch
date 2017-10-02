@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const angelService = require('../services/angel-service');
-const Invitation = require('../daos/invitation');
+const invitationService = require('../services/invitation-service');
 const auth = require('../middleware/auth');
 const logger = require('../helpers/logger');
 const assert = require('assert');
@@ -111,28 +111,41 @@ router.delete('/:angelId', auth.loggedInAdmin, async (req, res) => {
     }
 });
 
-router.get('/:angelId/invitations', auth.loggedInAngel, (req, res) => {
+router.get('/:angelId/invitations', auth.loggedInAngel, async (req, res) => {
     if(req.angel.id !== req.params.angelId && req.user['https://angel-search/role'] !== 'admin') {
         angelAccessDenied(res);
         return;
     }
 
-    Invitation.allByAngelId(req.params.angelId).then((invites) => {
-        res.json(invites);
-    }).catch(err => {
-        logger(req.headers['x-request-id']).error('List Angel Invitations', err);
-        res.status(500).json({status: 500, message: err});
-    });
+    try {
+        await angelService.getAngelById(req.params.angelId);
+        res.json(await invitationService.listAllInvitationsByAngelId(req.params.angelId));
+    } catch (err) {
+        switch (err.name) {
+            case 'ANGEL_NOT_FOUND':
+                res.status(404).json({status: 404, message: err.message});
+                break;
+            default:
+                logger(req.headers['x-request-id']).error('List Angel Invitations', err);
+                res.status(500).json({status: 500, message: err.message});
+        }
+    }
 });
 
-router.post('/:angelId/invitations', auth.loggedInAdmin, (req, res) => {
-    Invitation.create(req.params.angelId).then((invitation) => {
-        logger(req.headers['x-request-id']).log('New Invitation', invitation);
-        res.status(201).json(invitation);
-    }).catch(err => {
-        logger(req.headers['x-request-id']).error('New Invitation', err);
-        res.status(500).json({status: 500, message: err});
-    });
+router.post('/:angelId/invitations', auth.loggedInAdmin, async (req, res) => {
+    try {
+        await angelService.getAngelById(req.params.angelId);
+        res.status(201).json(await invitationService.createNewInvitation(req.params.angelId));
+    } catch (err) {
+        switch (err.name) {
+            case 'ANGEL_NOT_FOUND':
+                res.status(404).json({status: 404, message: err.message});
+                break;
+            default:
+                logger(req.headers['x-request-id']).error('New Invitation', err);
+                res.status(500).json({status: 500, message: err.message});
+        }
+    }
 });
 
 module.exports = router;

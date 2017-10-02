@@ -1,3 +1,4 @@
+"use strict";
 const expect = require('chai').expect;
 const request = require('supertest');
 
@@ -37,6 +38,8 @@ describe("/api/invitations Endpoints", function () {
     describe('#POST /api/invitations/:invitationId/accept', function () {
 
         const inviationId = 'dcnWr1xsTVOGKybVHvTZ5w==';
+        const anotherInvitationId = 'Y13LEFxMTbiHwlgGgUlTrQ==';
+        const nonExistentInvitationId = 'ThisIsNotARealId';
 
         it('should set invitation status to accepted', function (done) {
             request(app)
@@ -46,6 +49,36 @@ describe("/api/invitations Endpoints", function () {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('object');
                     expect(res.body.status).to.equal('accepted');
+                    done();
+                });
+        });
+
+        it('should return 404 if there is no invitation with the given id', function (done) {
+            request(app)
+                .post('/api/invitations/' + nonExistentInvitationId + '/accept')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function(err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
+
+        it('should return 400 if the invitation has been previously accepted or declined', function (done) {
+            request(app)
+                .post('/api/invitations/' + inviationId + '/accept')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function(err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+        });
+
+        it('should return 400 if trying to accept invitation with a auth0 id that is linked to another user', function (done) {
+            request(app)
+                .post('/api/invitations/' + anotherInvitationId + '/accept')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function(err, res) {
+                    expect(res.statusCode).to.equal(400);
                     done();
                 });
         });
@@ -96,6 +129,7 @@ describe("/api/invitations Endpoints", function () {
 
     describe('#GET /api/angels/:angelId/invitations', function () {
         const angelId = 'hQyM4YDXQ_qIC2kdFfzVEQ==';
+        const nonExistentAngelId = 'NotARealAngelId';
 
         it('should list invitations for the angel', function (done) {
             request(app)
@@ -108,10 +142,21 @@ describe("/api/invitations Endpoints", function () {
                     done();
                 });
         });
+
+        it('should return 404 if no angel exists with given angelId', function (done) {
+            request(app)
+                .get('/api/angels/' + nonExistentAngelId + '/invitations')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function(err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
     });
 
     describe('#POST /api/angels/:angelId/invitations', function () {
         const angelId = 'WvaGqpLbRX+UXeLc8KDkNg==';
+        const nonExistentAngelId = 'NotARealAngelId';
         let newInvitationId;
 
         //angel should have one pending invitation
@@ -154,6 +199,16 @@ describe("/api/invitations Endpoints", function () {
                     expect(res.body.filter(i => i.status === 'cancelled').length).to.equal(1);
                     done();
                 });
-        })
+        });
+
+        it('should return 404 if no angel exists with given angelId', function (done) {
+            request(app)
+                .post('/api/angels/' + nonExistentAngelId + '/invitations')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function(err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
     });
 });

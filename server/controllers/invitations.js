@@ -1,60 +1,52 @@
 "use strict";
 const express = require('express');
 const router = express.Router();
-const Invitation = require('../daos/invitation');
-const Angel = require('../daos/angel');
+const invitationService = require('../services/invitation-service');
 const auth = require('../middleware/auth');
 const logger = require('../helpers/logger');
 
-const absoluteInvitationId = function (req, invite)  {
-    return req.protocol + '://' + req.get('host') + '/api/invitations/' + invite.id;
-};
-
-router.get('/', auth.loggedInAdmin, (req, res) => {
-
-    Invitation.all().then(rows => {
-        rows = rows.map(i => (i.href = absoluteInvitationId(req, i)) && i);
-        res.json(rows);
-    }).catch(err => {
+router.get('/', auth.loggedInAdmin, async (req, res) => {
+    try {
+        res.json(await invitationService.listAllInvitations());
+    } catch (err) {
         logger(req.headers['x-request-id']).error('List Invitations', err);
-        res.status(500).json({status: 500, message: err});
-    });
-
+        res.status(500).json({status: 500, message: err.message});
+    }
 });
 
-router.get('/:inviteId', (req, res) => {
-
-    Invitation.get(req.params.inviteId).then(row => {
-        if (!row) {
-            res.status(404).json({status: 404, message: 'Invitation not found'});
-        } else {
-            row.href = absoluteInvitationId(req, row);
-            res.json(row);
+router.get('/:inviteId', async (req, res) => {
+    try {
+        res.json(await invitationService.getInvitationById(req.params.inviteId));
+    } catch (err) {
+        switch (err.name) {
+            case 'INVITATION_NOT_FOUND':
+                res.status(404).json({status: 404, message: err.message});
+                break;
+            default:
+                logger(req.headers['x-request-id']).error('Get Invitation', err);
+                res.status(500).json({status: 500, message: err.message});
         }
-    }).catch(err => {
-        logger(req.headers['x-request-id']).error('Get Invitation', err);
-        res.status(500).json({status: 500, message: err});
-    });
-
+    }
 });
 
-router.post('/:inviteId/accept', auth.authenticated, (req, res) => {
-    Invitation.get(req.params.inviteId).then(invite => {
-        if(!invite || invite.status !== 'pending') {
-            res.status(404).json({status: 404, message: 'No pending invitation found'});
-        } else {
-            return Angel.linkAuth0Id(invite.angel_id, req.user.sub)
-                .then(() => Invitation.markAccepted(req.params.inviteId))
-                .then((invitation) => {
-                    logger(req.headers['x-request-id']).log('Accept Invitation', invitation);
-                    res.json(invitation)
-                })
-                .catch(err => Promise.reject({error: "Invite couldn't be accepted", cause: err}));
+router.post('/:inviteId/accept', auth.authenticated, async (req, res) => {
+    try {
+        const invitation = await invitationService.acceptInvitation(req.params.inviteId, req.user.sub);
+        res.json(invitation);
+    } catch (err) {
+        switch (err.name) {
+            case 'INVITATION_NOT_FOUND':
+                res.status(404).json({status: 404, message: err.message});
+                break;
+            case 'INVITATION_WRONG_STATUS':
+            case 'INVITATION_AUTH0_CONFLICT':
+                res.status(400).json({status: 400, message: err.message});
+                break;
+            default:
+                logger(req.headers['x-request-id']).error('Accept Invitation:', err);
+                res.status(500).json({status: 500, message: err.message});
         }
-    }).catch(err => {
-        logger(req.headers['x-request-id']).error('Accept Invitation', err);
-        res.status(500).json({status: 500, message: err});
-    });
+    }
 });
 
 module.exports = router;
