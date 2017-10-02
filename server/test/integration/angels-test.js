@@ -35,6 +35,11 @@ describe("/api/angels Endpoints", function () {
             });
     });
 
+    // Shared variables
+    const nonExistentAngelId = 'covfefe';
+    const angelOneId = 'hQyM4YDXQ_qIC2kdFfzVEQ==';
+    const angelTwoId = 'WvaGqpLbRX+UXeLc8KDkNg==';
+
     describe('#GET /api/angels', function () {
        it('should get all angels', function (done) {
            request(app)
@@ -50,18 +55,14 @@ describe("/api/angels Endpoints", function () {
     });
 
     describe('#GET /api/angels/:angelId', function () {
-
-        const angelId = 'hQyM4YDXQ_qIC2kdFfzVEQ==';
-        const nonExistentAngelId = 'covfefe';
-
         it('should return single angel', function (done) {
             request(app)
-                .get('/api/angels/' + angelId)
+                .get('/api/angels/' + angelOneId)
                 .set('Authorization', 'Bearer ' + auth0Token)
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('object');
-                    expect(res.body.id).to.equal(angelId);
+                    expect(res.body.id).to.equal(angelOneId);
                     done();
                 });
         });
@@ -79,7 +80,6 @@ describe("/api/angels Endpoints", function () {
 
     describe('#POST /api/angels', function () {
         let newAngelId;
-
         const newAngel = {
             first_name: "Erkki",
             last_name: "Enkeli",
@@ -113,35 +113,85 @@ describe("/api/angels Endpoints", function () {
                     done();
                 });
         });
+
+        it('should return 400 if required parameters are missing', function (done) {
+            const angelWithoutEmail = {first_name: "Erkki", last_name: "Enkeli"};
+
+            request(app)
+                .post('/api/angels')
+                .send(angelWithoutEmail)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function(err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+
+        });
+
+        it('should return 400 if new email conflicts with an existing email', function (done) {
+            const newAngelWithConflictingEmail = {
+                first_name: "Erkki",
+                last_name: "Enkeli",
+                email: 'teppo.testi@example.com'
+            };
+
+            request(app)
+                .post('/api/angels')
+                .send(newAngelWithConflictingEmail)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+        });
     });
 
     describe('#PUT /api/angels/:angelId', function () {
-
-        const angelId = 'hQyM4YDXQ_qIC2kdFfzVEQ==';
-        const newName = {first_name: "Kekko", last_name: "Koe"};
+        const newNameChanges = {first_name: "Kekko", last_name: "Koe"};
 
         it('should allow changing angel name', function (done) {
             request(app)
-                .put('/api/angels/' + angelId)
-                .send(newName)
+                .put('/api/angels/' + angelOneId)
+                .send(newNameChanges)
                 .set('Authorization', 'Bearer ' + auth0Token)
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('object');
-                    expect(res.body.id).to.equal(angelId);
-                    expect(res.body.first_name).to.equal(newName.first_name);
-                    expect(res.body.last_name).to.equal(newName.last_name);
+                    expect(res.body.id).to.equal(angelOneId);
+                    expect(res.body.first_name).to.equal(newNameChanges.first_name);
+                    expect(res.body.last_name).to.equal(newNameChanges.last_name);
+                    done();
+                });
+        });
+
+        it('should return 404 if no angel exists with given id', function (done) {
+            request(app)
+                .put('/api/angels/' + nonExistentAngelId)
+                .send(newNameChanges)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
+
+        it('should return 400 if new email conflicts with an existing email', function (done) {
+            const conflictingEmailChange = {email: 'teppo.testi@example.com'};
+            request(app)
+                .put('/api/angels/' + angelTwoId)
+                .send(conflictingEmailChange)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
                     done();
                 });
         });
     });
 
     describe('#DELETE /api/angels/:angelId', function () {
-        const angelId = 'WvaGqpLbRX+UXeLc8KDkNg==';
-
         it('should delete angel permanently', function (done) {
             request(app)
-                .delete('/api/angels/' + angelId)
+                .delete('/api/angels/' + angelTwoId)
                 .set('Authorization', 'Bearer ' + auth0Token)
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
@@ -151,7 +201,7 @@ describe("/api/angels Endpoints", function () {
 
         it("deleted angel shouldn't exist anymore", function (done) {
             request(app)
-                .get('/api/angels/' + angelId)
+                .get('/api/angels/' + angelTwoId)
                 .set('Authorization', 'Bearer ' + auth0Token)
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(404);
@@ -159,6 +209,14 @@ describe("/api/angels Endpoints", function () {
                 });
         });
 
+        it('should return 404 if no angel exists with given id', function (done) {
+            request(app)
+                .delete('/api/angels/' + nonExistentAngelId)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
     });
-
 });

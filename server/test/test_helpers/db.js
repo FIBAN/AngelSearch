@@ -1,6 +1,6 @@
 "use strict";
 const fs = require('fs');
-const db = require('../../models/db');
+const db = require('../../daos/db');
 
 function runSqlScript(filename) {
     return new Promise((resolve, reject) => {

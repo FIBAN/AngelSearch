@@ -1,8 +1,8 @@
 "use strict";
 const express = require('express');
 const router = express.Router();
-const Invitation = require('../models/invitation');
-const Angel = require('../models/angel');
+const Invitation = require('../daos/invitation');
+const Angel = require('../daos/angel');
 const auth = require('../middleware/auth');
 const logger = require('../helpers/logger');
 

@@ -10,9 +10,7 @@ module.exports = function(requestId) {
             }
         },
         error: function (message, ...args) {
-            if(config.env !== 'test') {
-                console.error(`[ERROR] (${requestId}):`, message, ...args);
-            }
+            console.error(`[ERROR] (${requestId}):`, message, ...args);
         }
     };
 };

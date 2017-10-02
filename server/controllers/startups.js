@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const Startup = require('../models/startup');
+const Startup = require('../daos/startup');
 const logger = require('../helpers/logger');
 
 const absoluteStartupId = function (req, startup)  {

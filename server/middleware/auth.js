@@ -3,7 +3,7 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const https = require('https');
 
-const Angel = require('../models/angel');
+const Angel = require('../daos/angel');
 const config = require('../config');
 
 module.exports.authenticated = jwt({

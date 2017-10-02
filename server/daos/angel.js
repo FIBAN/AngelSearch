@@ -117,7 +117,7 @@ module.exports.update = (angel) => {
     }
 
     if(!queryParams.length) {
-        return Promise.resolve(0);
+        return db.query('SELECT * FROM angels WHERE id = $1', [angel.id]).then(res => res.rows[0]);
     }
     else {
         query += ", updated_at = now()";
