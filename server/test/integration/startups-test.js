@@ -36,7 +36,7 @@ describe("/api/startups Endpoints", function () {
     });
 
     describe('#GET /api/startups', function () {
-        it('should get all angels', function (done) {
+        it('should get all startups', function (done) {
             request(app)
                 .get('/api/startups')
                 .set('Authorization', 'Bearer ' + auth0Token)
@@ -79,7 +79,6 @@ describe("/api/startups Endpoints", function () {
 
     describe('#POST /api/startups', function () {
         let newStartupId;
-        const nonExistentStartupId = 'ThisIdIsNotReal';
 
         const newStartup = {
             lead_angel_id: 'hQyM4YDXQ_qIC2kdFfzVEQ==',
