@@ -112,6 +112,21 @@ describe("/api/documents Endpoints", function () {
                     done();
                 });
         });
+
+        it('should return 400 if document type is unsupported', function (done) {
+            const invalidDocument = {
+                name: 'Invalid file',
+                type: 'banana'
+            };
+            request(app)
+                .post('/api/documents')
+                .send(invalidDocument)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+        });
     });
 
     describe('#PUT /api/documents/:documentId', function () {

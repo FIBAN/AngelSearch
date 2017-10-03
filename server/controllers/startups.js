@@ -4,6 +4,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const startupService = require('../services/startup-service');
 const logger = require('../helpers/logger');
+const validator = require('../helpers/validator');
 
 router.get('/', auth.loggedInAngel, async (req, res) => {
     try {
@@ -15,6 +16,27 @@ router.get('/', auth.loggedInAngel, async (req, res) => {
 });
 
 router.post('/', auth.loggedInAdmin, async (req, res) => {
+    try {
+        const body = req.body;
+        validator.assertNonEmptyString(body.lead_angel_id, 'lead_angel_id');
+        validator.assertNonEmptyString(body.company_name, 'company_name');
+        validator.assertNonEmptyString(body.oneliner, 'oneliner');
+        validator.assertNonEmptyString(body.oneliner, 'industry');
+        validator.assertNonEmptyString(body.website, 'website');
+        validator.assertNonEmptyString(body.city, 'city');
+        validator.assertNonEmptyString(body.country, 'country');
+        validator.assertNonEmptyString(body.entrepreneur_name, 'entrepreneur_name');
+        validator.assertNonEmptyString(body.entrepreneur_email, 'entrepreneur_email');
+        validator.assertNonEmptyString(body.entrepreneur_phone, 'entrepreneur_phone');
+        validator.assertNonEmptyString(body.round_size_and_open_tickets, 'round_size_and_open_tickets');
+        validator.assertNonEmptyString(body.valuation, 'valuation');
+        validator.assertNonEmptyString(body.committed_percentage, 'committed_percentage');
+        validator.assertNonEmptyString(body.pitch_deck_link, 'pitch_deck_link');
+    } catch (err) {
+        res.status(400).json({status: 400, message: err.message});
+        return
+    }
+
     try {
         res.status(201).json(await startupService.createStartup(req.body));
     } catch (err) {

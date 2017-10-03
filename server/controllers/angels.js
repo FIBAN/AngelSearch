@@ -5,7 +5,7 @@ const angelService = require('../services/angel-service');
 const invitationService = require('../services/invitation-service');
 const auth = require('../middleware/auth');
 const logger = require('../helpers/logger');
-const assert = require('assert');
+const validator = require('../helpers/validator');
 
 const angelAccessDenied = function (res) {
     res.status(403).json({status: 403, message: "Forbidden"});
@@ -24,12 +24,9 @@ router.get('/', auth.loggedInAngel, async (req, res) => {
 router.post('/', auth.loggedInAdmin, async (req, res) => {
     try {
         const body = req.body;
-        assert.equal(typeof (body.email), 'string', 'parameter "email" must be string');
-        assert.ok(body.email, 'parameter "email" can\'t be empty');
-        assert.equal(typeof (body.first_name), 'string', 'parameter "first_name" must be string');
-        assert.ok(body.first_name, 'parameter "first_name" can\'t be empty');
-        assert.equal(typeof (body.last_name), 'string', 'parameter "last_name" must be string');
-        assert.ok(body.last_name, 'parameter "last_name" can\'t be empty');
+        validator.assertNonEmptyString(body.email, 'email');
+        validator.assertNonEmptyString(body.first_name, 'first_name');
+        validator.assertNonEmptyString(body.last_name, 'last_name');
     } catch (err) {
         res.status(400).json({status: 400, message: err.message});
         return

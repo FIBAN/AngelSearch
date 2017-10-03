@@ -4,6 +4,9 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const documentService = require('../services/document-service');
 const logger = require('../helpers/logger');
+const validator = require('../helpers/validator');
+
+const SUPPORTED_DOCUMENT_TYPES = ['file'];
 
 router.get('/', auth.loggedInAngel, async (req, res) => {
     try {
@@ -15,9 +18,14 @@ router.get('/', auth.loggedInAngel, async (req, res) => {
 });
 
 router.post('/', auth.loggedInAdmin, async (req, res) => {
-    if(req.body.type !== 'file') {
-        res.status(501).json({status: 501, message: 'Support for other document types than "file" not implemented.'});
-        return;
+    try {
+        const body = req.body;
+        validator.assertNonEmptyString(body.name, 'name');
+        validator.assertParamType(body.type, 'string', 'type');
+        validator.assertIsOneOfValidValues(body.type, SUPPORTED_DOCUMENT_TYPES, 'type');
+    } catch (err) {
+        res.status(400).json({status: 400, message: err.message});
+        return
     }
 
     try {

@@ -91,7 +91,7 @@ describe("/api/startups Endpoints", function () {
             entrepreneur_name: 'John Doe',
             entrepreneur_email: 'john@example.com',
             entrepreneur_phone: '123456789',
-            round_size_and_open_tickets: '',
+            round_size_and_open_tickets: '20 million',
             valuation: '1 billion dollars',
             committed_percentage: '50',
             pitch_deck_link: 'http://example.com/pitchdeck'
@@ -126,6 +126,26 @@ describe("/api/startups Endpoints", function () {
         });
 
         it('should return 400 if no angel exists with given lead angel id', function(done) {
+            const startupLackingFields = {
+                lead_angel_id: 'hQyM4YDXQ_qIC2kdFfzVEQ==',
+                company_name: 'Lacking Corp',
+                oneliner: 'Who do something today that can be done tomorrow',
+                industry: 'Meh',
+                website: 'http://example.com',
+                city: 'Helsinki',
+                country: 'Finland'
+            };
+            request(app)
+                .post('/api/startups')
+                .send(startupLackingFields)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+        });
+
+        it('should return 400 if one or more required parameters are missing', function(done) {
             const startupWithInvalidAngelId = Object.assign({}, newStartup);
             startupWithInvalidAngelId.lead_angel_id = 'NotRealAngelId';
             request(app)
