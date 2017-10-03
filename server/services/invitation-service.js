@@ -5,7 +5,7 @@ const VError = require('verror').VError;
 
 const invitationNotFoundError = (inviteId) => new VError({
         name: 'INVITATION_NOT_FOUND',
-        info: {angelId: inviteId}
+        info: {inviteId: inviteId}
     }, `no invitation found with id "${inviteId}"`
 );
 

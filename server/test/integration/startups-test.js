@@ -52,6 +52,7 @@ describe("/api/startups Endpoints", function () {
     describe('#GET /api/startups/:startupId', function () {
 
         const startupId = 'twBXSOINRJakVoSgINyGKw==';
+        const nonExistentStartupId = 'ThisIdIsNotReal';
 
         it('should return single startup', function (done) {
             request(app)
@@ -64,10 +65,21 @@ describe("/api/startups Endpoints", function () {
                     done();
                 });
         });
+
+        it('should return 404 if no startup exists with given id', function(done) {
+            request(app)
+                .get('/api/startups/' + nonExistentStartupId)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
     });
 
     describe('#POST /api/startups', function () {
         let newStartupId;
+        const nonExistentStartupId = 'ThisIdIsNotReal';
 
         const newStartup = {
             lead_angel_id: 'hQyM4YDXQ_qIC2kdFfzVEQ==',
@@ -113,11 +125,25 @@ describe("/api/startups Endpoints", function () {
                     done();
                 });
         });
+
+        it('should return 400 if no angel exists with given lead angel id', function(done) {
+            const startupWithInvalidAngelId = Object.assign({}, newStartup);
+            startupWithInvalidAngelId.lead_angel_id = 'NotRealAngelId';
+            request(app)
+                .post('/api/startups')
+                .send(startupWithInvalidAngelId)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+        });
     });
 
     describe('#PUT /api/startups/:startupId', function () {
 
         const startupId = 'twBXSOINRJakVoSgINyGKw==';
+        const nonExistentStartupId = 'ThisIdIsNotReal';
         const newData = {entrepreneur_name: "Donald Trump", entrepreneur_email: "trump@example.com"};
 
         it('should allow changing entrepreneur info', function (done) {
@@ -134,10 +160,34 @@ describe("/api/startups Endpoints", function () {
                     done();
                 });
         });
+
+        it('should return 404 if no startup exists with given id', function(done) {
+            request(app)
+                .put('/api/startups/' + nonExistentStartupId)
+                .send(newData)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
+
+        it('should return 400 if no angel exists with given lead angel id', function(done) {
+            const leadAngelUpdate = {lead_angel_id: 'ThisIsNotARealAngelId'};
+            request(app)
+                .put('/api/startups/' + startupId)
+                .send(leadAngelUpdate)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+        });
     });
 
     describe('#DELETE /api/startups/:startupId', function () {
         const startupId = 'twBXSOINRJakVoSgINyGKw==';
+        const nonExistentStartupId = 'ThisIdIsNotReal';
 
         it('should delete startup permanently', function (done) {
             request(app)
@@ -152,6 +202,16 @@ describe("/api/startups Endpoints", function () {
         it("deleted startup shouldn't exist anymore", function (done) {
             request(app)
                 .get('/api/startups/' + startupId)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
+
+        it('should return 404 if no startup exists with given id', function(done) {
+            request(app)
+                .delete('/api/startups/' + nonExistentStartupId)
                 .set('Authorization', 'Bearer ' + auth0Token)
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(404);
