@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 
-import { Angel } from '../angels/angel';
-import { AngelService } from '../angels/angel.service';
+import { Angel } from '../../angels/angel';
+import { AngelService } from '../../angels/angel.service';
 
 import 'rxjs/add/operator/switchMap';
 import {AdminService} from "./admin.service";

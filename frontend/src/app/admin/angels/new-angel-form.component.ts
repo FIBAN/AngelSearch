@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 
-import { Angel }    from '../angels/angel';
+import { Angel }    from '../../angels/angel';
 
 @Component({
   selector: 'new-angel-form',

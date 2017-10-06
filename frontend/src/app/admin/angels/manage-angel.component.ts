@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
-import { Angel } from '../angels/angel';
-import { AngelService } from '../angels/angel.service';
-import { Utils } from "../utils/parsers";
+import { Angel } from '../../angels/angel';
+import { AngelService } from '../../angels/angel.service';
+import { Utils } from "../../utils/parsers";
 
 import 'rxjs/add/operator/switchMap';
 import {ActivatedRoute, ParamMap} from "@angular/router";

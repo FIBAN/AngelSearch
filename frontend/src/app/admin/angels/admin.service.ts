@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class AdminService {

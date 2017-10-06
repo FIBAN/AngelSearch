@@ -6,23 +6,24 @@ import { CallbackComponent } from './auth/callback.component';
 import { AngelsComponent } from './angels/angels.component';
 import { AngelDetailsComponent } from "./angels/angel-details.component";
 import { ProfileComponent } from "./profile/profile.component"
-import { AdminComponent } from "./admin/admin.component";
-import { AdminAngelListComponent } from "./admin/admin-angel-list.component";
+import { AdminComponent } from "./admin/angels/admin.component";
+import { AdminAngelListComponent } from "./admin/angels/admin-angel-list.component";
 import { LandingComponent } from "./landing.component";
 import { InviteComponent } from "./auth/invite.component";
 import { RegisterComponent } from "./auth/register.component";
 import { RegistrationNeededComponent } from "./auth/registration-needed.component";
 import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
-import { BatchInsertComponent } from "./admin/batch-insert.component";
-import { ManageAngelComponent } from "./admin/manage-angel.component";
+import { BatchInsertComponent } from "./admin/angels/batch-insert.component";
+import { ManageAngelComponent } from "./admin/angels/manage-angel.component";
 import { DocumentsComponent } from "./documents/documents.component";
-import { AdminDocumentsComponent } from "./admin/admin-documents.component";
-import { ManageStartupComponent } from "./admin/manage-startup.component";
-import { AdminStartupsComponent } from "./admin/admin-startups.component";
+import { AdminDocumentsComponent } from "./admin/documents/admin-documents.component";
+import { ManageStartupComponent } from "./admin/startups/manage-startup.component";
+import { AdminStartupsComponent } from "./admin/startups/admin-startups.component";
 import { StartupsComponent } from "./startups/startups.component";
 import { StartupDetailsComponent } from "./startups/startup-details.component";
 import { SearchHighlightComponent } from "./angels/search-highlight.component";
+import {ManageDocumentComponent} from "./admin/documents/manage-document.component";
 
 const appRoutes: Routes = [
   {
@@ -81,6 +82,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard, AdminAuthGuard]
   },
   {
+    path: 'admin/documents/:documentId',
+    component: ManageDocumentComponent,
+    canActivate: [AuthGuard, AdminAuthGuard]
+  },
+  {
     path: 'admin/startups',
     component: AdminStartupsComponent,
     canActivate: [AuthGuard, AdminAuthGuard]
@@ -130,6 +136,7 @@ export const routedComponents = [
   ManageAngelComponent,
   AdminAngelListComponent,
   AdminDocumentsComponent,
+  ManageDocumentComponent,
   AdminStartupsComponent,
   ManageStartupComponent,
   LandingComponent,

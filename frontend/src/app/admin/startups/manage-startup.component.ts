@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router, Routes} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {AngelService} from "../angels/angel.service";
-import {StartupService} from "../startups/startup.service";
-import {Startup} from "../startups/startup";
-import {Angel} from "../angels/angel";
+import {AngelService} from "../../angels/angel.service";
+import {StartupService} from "../../startups/startup.service";
+import {Startup} from "../../startups/startup";
+import {Angel} from "../../angels/angel";
 
 @Component({
   selector: 'admin-manage-startup',

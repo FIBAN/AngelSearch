@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import { Angel } from '../angels/angel';
+import { Angel } from '../../angels/angel';
 import 'rxjs/add/operator/switchMap';
 
 @Component({

@@ -5,6 +5,7 @@ export class Document {
     public name: string,
     public type: string,
     public download_url: string,
+    public parent?: string,
     public created_at?: string,
     public updated_at?: string
   ) {};

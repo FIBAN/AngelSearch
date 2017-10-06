@@ -1,11 +1,11 @@
 import { Component, OnInit} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
-import {Startup} from "../startups/startup";
-import {StartupService} from "../startups/startup.service";
+import {Startup} from "../../startups/startup";
+import {StartupService} from "../../startups/startup.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Angel} from "../angels/angel";
-import {AngelService} from "../angels/angel.service";
+import {Angel} from "../../angels/angel";
+import {AngelService} from "../../angels/angel.service";
 
 @Component({
   selector: 'admin-startups',

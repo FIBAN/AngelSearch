@@ -1,8 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
-import {Document} from "../documents/document";
-import {DocumentService} from "../documents/document.service";
+import {Document} from "../../documents/document";
+import {DocumentService} from "../../documents/document.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -22,12 +22,12 @@ import {FormBuilder, FormGroup} from "@angular/forms";
             <th></th>
           </thead>
           <tbody>
-            <tr *ngFor="let document of documents">
+            <tr *ngFor="let document of documents|childOfDocument">
               <!-- Id -->
               <td><span class="monospace small">{{document.id}}</span></td>
     
               <!-- Name -->
-              <td>{{document.name}}</td>
+              <td><a [routerLink]="['/admin/documents', document.id]">{{document.name}}</a></td>
     
               <!-- Download URL-->
               <td>{{document.download_url}}</td>
@@ -36,7 +36,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
               <td>{{document.created_at | date:'medium'}}</td>
               
               <!-- Actions -->
-              <td><button class="btn btn-danger" (click)="deleteDocument(document.id)">Delete</button></td>
+              <td><a [routerLink]="['/admin/documents', document.id]" class="btn btn-info">Edit</a></td>
             </tr>
           </tbody>
         </table>

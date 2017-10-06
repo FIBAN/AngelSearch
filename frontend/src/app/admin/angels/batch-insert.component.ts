@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as Papa from 'papaparse';
 
-import { Angel } from '../angels/angel';
+import { Angel } from '../../angels/angel';
 import 'rxjs/add/operator/switchMap';
-import {AngelService} from "../angels/angel.service";
-import { Utils } from "../utils/parsers";
+import {AngelService} from "../../angels/angel.service";
+import { Utils } from "../../utils/parsers";
 
 @Component({
   selector: 'admin-batch-insert',
