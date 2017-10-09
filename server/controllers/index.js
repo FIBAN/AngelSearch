@@ -28,12 +28,26 @@ router.use(function(req, res, next) {
 });
 
 router.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401).send({ status: 401, message: 'Invalid access token'});
-        return
+    switch (err.name) {
+        case 'UnauthorizedError':
+            res.status(401).send({ status: 401, message: 'Invalid access token'});
+            return;
+        case 'DUPLICATE_ANGEL_EMAIL':
+        case 'INVITATION_WRONG_STATUS':
+        case 'INVITATION_AUTH0_CONFLICT':
+        case 'STARTUP_INVALID_LEAD_ANGEL':
+            res.status(400).send({ status: 400, message: err.message });
+            return;
+        case 'ANGEL_NOT_FOUND':
+        case 'DOCUMENT_NOT_FOUND':
+        case 'INVITATION_NOT_FOUND':
+        case 'STARTUP_NOT_FOUND':
+            res.status(404).send({ status: 404, message: err.message });
+            return;
+        default:
+            logger(req.headers['x-request-id']).error('Uncaught Error', err);
+            res.status(500).send({ status: 500, message: 'Internal server error' });
     }
-    logger(req.headers['x-request-id']).error('Uncaught Error', err);
-    res.status(500).send({ status: 500, message: 'Internal server error', error: err });
 });
 
 module.exports = router;
