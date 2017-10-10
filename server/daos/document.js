@@ -20,14 +20,16 @@ module.exports.create = (document) => {
         'id, ' +
         'name, ' +
         'type, ' +
-        'download_url ' +
-        ') VALUES ($1, $2, $3, $4) ' +
+        'download_url, ' +
+        'parent ' +
+        ') VALUES ($1, $2, $3, $4, $5) ' +
         'RETURNING *',
         [
             util.randomUUID(),
             document.name,
             document.type,
-            document.download_url
+            document.download_url,
+            document.parent
         ]
     ).then(res => res.rows[0]);
 };
@@ -44,6 +46,11 @@ module.exports.update = (document) => {
         if(queryParams.length) query += ", ";
         queryParams.push(document.download_url);
         query += " download_url = $" + queryParams.length;
+    }
+    if(document.parent) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(document.parent);
+        query += " parent = $" + queryParams.length;
     }
 
     if(!queryParams.length) {
