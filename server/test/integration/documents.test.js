@@ -43,7 +43,7 @@ describe("/api/documents Endpoints", function () {
                 .end(function(err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('array');
-                    expect(res.body.length).to.equal(2);
+                    expect(res.body.length).to.equal(5);
                     done();
                 });
         });
@@ -86,6 +86,11 @@ describe("/api/documents Endpoints", function () {
             download_url: 'http://example.com/new.txt'
         };
 
+        const newFolder = {
+            name: 'New folder',
+            type: 'folder'
+        };
+
         it('should create new document', function (done) {
             request(app)
                 .post('/api/documents')
@@ -109,6 +114,20 @@ describe("/api/documents Endpoints", function () {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('object');
                     expect(res.body.id).to.equal(newDocumentId);
+                    done();
+                });
+        });
+
+        it('should support creating folders', function (done) {
+            request(app)
+                .post('/api/documents')
+                .send(newFolder)
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function(err, res) {
+                    expect(res.statusCode).to.equal(201);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body.name).to.equal(newFolder.name);
+                    expect(res.body.type).to.equal(newFolder.type);
                     done();
                 });
         });
@@ -196,5 +215,43 @@ describe("/api/documents Endpoints", function () {
         });
 
     });
+
+    describe('#GET /api/documents/:documentId/children', function () {
+        const folderId = 'HABVgZl+RMqLnC9WeL5+Sg==';
+        const nonFolderDocumentId = 'WN8_u2lKQ4Gfic8axp8q2g==';
+        const nonExistentDocumentId = 'ThisIdIsNotReal';
+
+        it('should list documents inside folder', function (done) {
+            request(app)
+                .get('/api/documents/' + folderId + '/children')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.body).to.be.an('array');
+                    expect(res.body.length).to.equal(2);
+                    done();
+                })
+        });
+
+        it('should return 404 if no document exists with given id', function(done) {
+            request(app)
+                .get('/api/documents/' + nonExistentDocumentId + '/children')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(404);
+                    done();
+                });
+        });
+
+        it('should return 400 if document is not a folder', function(done) {
+            request(app)
+                .get('/api/documents/' + nonFolderDocumentId + '/children')
+                .set('Authorization', 'Bearer ' + auth0Token)
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    done();
+                });
+        });
+    })
 
 });

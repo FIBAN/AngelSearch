@@ -36,6 +36,7 @@ router.use(function (err, req, res, next) {
         case 'INVITATION_WRONG_STATUS':
         case 'INVITATION_AUTH0_CONFLICT':
         case 'STARTUP_INVALID_LEAD_ANGEL':
+        case 'DOCUMENT_INVALID_TYPE':
             res.status(400).send({ status: 400, message: err.message });
             return;
         case 'ANGEL_NOT_FOUND':

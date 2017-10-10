@@ -9,6 +9,12 @@ const documentNotFoundError = (documentId) => new VError({
     }, `no document found with id "${documentId}"`
 );
 
+const documentWithInvalidTypeError = (documentId, expectedType, actualType) => new VError({
+        name: 'DOCUMENT_INVALID_TYPE',
+        info: {documentId: documentId, expectedType: expectedType, actualType: actualType}
+    }, `expected document "${documentId}" to be "${expectedType}" instead of "${actualType}"`
+);
+
 module.exports.listAllDocuments = async () => {
     try {
         return await Document.all();
@@ -18,6 +24,7 @@ module.exports.listAllDocuments = async () => {
 };
 
 module.exports.listAllDocumentsWithParent = async (parentId) => {
+    await validateThatFolderExists(parentId);
     try {
         return await Document.allWithParent(parentId);
     } catch (err) {
@@ -37,6 +44,9 @@ module.exports.getDocumentById = async (documentId) => {
 };
 
 module.exports.createDocument = async (document) => {
+    if(document && document.parent) {
+        await validateThatFolderExists(document.parent);
+    }
     try {
         return await Document.create(document);
     } catch (err) {
@@ -46,6 +56,10 @@ module.exports.createDocument = async (document) => {
 
 module.exports.updateDocument = async (changes) => {
     assert.equal(typeof (changes.id), 'string', 'document id must be defined');
+
+    if(changes && changes.parent) {
+        await validateThatFolderExists(changes.parent);
+    }
 
     let updatedDocument;
     try {
@@ -66,3 +80,14 @@ module.exports.deleteDocument = async (documentId) => {
     }
     if(!rowsDeleted) throw documentNotFoundError(documentId);
 };
+
+async function validateThatFolderExists(folderId) {
+    let parentDocument;
+    try {
+        parentDocument = await Document.get(folderId);
+    } catch (err) {
+        throw new VError(err, 'failed to get folder');
+    }
+    if(!parentDocument) throw documentNotFoundError(folderId);
+    if(parentDocument.type !== 'folder') throw documentWithInvalidTypeError(folderId, 'folder', parentDocument.type);
+}

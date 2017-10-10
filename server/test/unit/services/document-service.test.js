@@ -70,6 +70,17 @@ describe('services/document-service.js', () => {
 
     describe('listAllDocumentsWithParent', () => {
 
+        let stub;
+
+        before(() => {
+            const parentDocument = testDocuments.find(d => d.id === 'three');
+            stub = sinon.stub(fakeDocumentDao, 'get').withArgs('three').resolves(parentDocument);
+        });
+
+        after(() => {
+            fakeDocumentDao.get.restore();
+        });
+
         it('should return all documents with parent', async () => {
             const documentsWithParent = testDocuments.filter(d => d.parent === 'three');
             const mockExpectation = mockDocumentDao.expects('allWithParent').withArgs('three').resolves(documentsWithParent).once();

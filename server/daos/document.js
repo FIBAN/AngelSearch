@@ -6,7 +6,9 @@ module.exports.all = () => {
     return db.query('SELECT * FROM documents').then(res => res.rows);
 };
 
-module.exports.allWithParent = (parentId) => {};
+module.exports.allWithParent = (parentId) => {
+    return db.query('SELECT * FROM documents WHERE parent = $1', [parentId]).then(res => res.rows);
+};
 
 module.exports.get = (documentId) => {
     return db.query('SELECT * FROM documents WHERE id = $1', [documentId]).then(res => res.rows[0]);

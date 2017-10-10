@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const documentService = require('../services/document-service');
 const validator = require('../helpers/validator');
 
-const SUPPORTED_DOCUMENT_TYPES = ['file'];
+const SUPPORTED_DOCUMENT_TYPES = ['file', 'folder'];
 
 router.get('/', auth.loggedInAngel, async (req, res, next) => {
     try {
@@ -61,6 +61,14 @@ router.delete('/:documentId', auth.loggedInAdmin, async (req, res, next) => {
     try {
         await documentService.deleteDocument(req.params.documentId);
         res.json({status: 200, message: 'Deleted'});
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/:documentId/children', auth.loggedInAngel, async (req, res, next) => {
+    try {
+        res.json(await documentService.listAllDocumentsWithParent(req.params.documentId));
     } catch (err) {
         next(err);
     }

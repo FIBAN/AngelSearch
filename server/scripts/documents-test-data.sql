@@ -28,6 +28,24 @@ insert into documents (
     'file',
     'https://example.com/secret.txt',
     null
+), (
+    'HABVgZl+RMqLnC9WeL5+Sg==',
+    'Good stuff',
+    'folder',
+    null,
+    null
+), (
+    'BfpOto0YSnmRPjRLnU4ijw==',
+    'Best file ever',
+    'file',
+    'https://example.com/best.txt',
+    'HABVgZl+RMqLnC9WeL5+Sg=='
+), (
+    'f8UWKgX2RuqRuy_tSZGe0A==',
+    'Ice cream',
+    'file',
+    'https://example.com/icecream.pdf',
+    'HABVgZl+RMqLnC9WeL5+Sg=='
 );
 
 
