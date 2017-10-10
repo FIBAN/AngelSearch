@@ -17,6 +17,14 @@ module.exports.listAllDocuments = async () => {
     }
 };
 
+module.exports.listAllDocumentsWithParent = async (parentId) => {
+    try {
+        return await Document.allWithParent(parentId);
+    } catch (err) {
+        throw new VError(err, 'failed to get documents for parent');
+    }
+};
+
 module.exports.getDocumentById = async (documentId) => {
     let document;
     try {

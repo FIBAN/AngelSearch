@@ -2,9 +2,9 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
 
-describe("Invitation", function () {
-    const Invitation = require('../../daos/invitation');
-    const db = require('../../daos/db');
+describe("daos/invitation.js", function () {
+    const Invitation = require('../../../daos/invitation');
+    const db = require('../../../daos/db');
 
     beforeEach(() => sinon.stub(db, 'query'));
 
