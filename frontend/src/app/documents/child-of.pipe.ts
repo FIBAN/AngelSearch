@@ -5,6 +5,11 @@ import {Document} from "./document";
 export class ChildOfPipe implements PipeTransform {
 
   transform(data: Document[], parentId: string): Document[] {
-    return data.filter(d => d.parent == parentId);
+    if(data) {
+      return data.filter(d => d.parent == parentId);
+    }
+    else {
+      return [];
+    }
   }
 }

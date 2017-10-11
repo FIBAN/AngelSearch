@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {DocumentService} from "../../documents/document.service";
 import {Document} from "../../documents/document";
 
+type FolderChoice = {id: string, path: string};
+
 @Component({
   selector: 'admin-manage-document',
   template: `
@@ -45,9 +47,20 @@ import {Document} from "../../documents/document";
             </tr>
 
             <!-- Download URL -->
-            <tr>
+            <tr *ngIf="document.type === 'file'">
               <td>Download URL</td>
               <td><input class="form-control" formControlName="download_url"></td>
+            </tr>
+            
+            <!-- Parent -->
+            <tr>
+              <td>Parent</td>
+              <td>
+                <select class="form-control" formControlName="parent">
+                  <option value="">Root</option>
+                  <option *ngFor="let folderChoice of folderChoices" value="{{folderChoice.id}}">{{folderChoice.path}}</option>
+                </select>
+              </td>
             </tr>
             </tbody>
           </table>
@@ -67,6 +80,8 @@ export class ManageDocumentComponent implements OnInit {
 
   documentForm: FormGroup;
 
+  folderChoices: FolderChoice[];
+
   constructor(
     private documentService: DocumentService,
     private route: ActivatedRoute,
@@ -80,12 +95,52 @@ export class ManageDocumentComponent implements OnInit {
       .subscribe((document: Document) => {
         this.document = document;
 
+        this.documentService.getFolders().then(folders => {
+          if(document.type === 'folder') {
+            this.updateFolderChoices(folders, document.id);
+          } else {
+            this.updateFolderChoices(folders, null);
+          }
+        });
+
         this.documentForm = this.fb.group({
           'name': document.name,
           'download_url': document.download_url,
-          'parent': document.parent
-        })
+          'parent': document.parent || ""
+        });
       });
+
+
+  }
+
+  updateFolderChoices(folders: Document[], ignoreFolderId: string|null) {
+    const choices = folders
+      .filter(f => f.parent === null)
+      .filter(f => !this.ignoreIdMatchesFolder(ignoreFolderId, f))
+      .map(f => ({id: f.id, path: f.name}));
+
+    for (const choice of choices) {
+      Array.prototype.push.apply(choices, this.getSubChoicesOfParentChoice(choice, folders, ignoreFolderId));
+    }
+
+    this.folderChoices = choices;
+  }
+
+  getSubChoicesOfParentChoice(parentChoice: FolderChoice, folders: Document[], ignoreFolderId: string|null): FolderChoice[] {
+      const choices = folders
+        .filter(f => f.parent === parentChoice.id)
+        .filter(f => !this.ignoreIdMatchesFolder(ignoreFolderId, f))
+        .map(f => ({id: f.id, path: `${parentChoice.path} / ${f.name}`}));
+
+      for (const choice of choices) {
+        Array.prototype.push.apply(choices, this.getSubChoicesOfParentChoice(choice, folders, ignoreFolderId));
+      }
+
+      return choices;
+  }
+
+  ignoreIdMatchesFolder(ignoreId: string|null, folder: Document): boolean {
+      return ignoreId && folder.id === ignoreId;
   }
 
   saveChanges(): void {

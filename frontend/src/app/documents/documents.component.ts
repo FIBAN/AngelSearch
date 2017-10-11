@@ -16,7 +16,8 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentService.getDocuments().then((documents) => {
-      this.documents = documents;
+      //TODO: Display folders to user
+      this.documents = documents.filter(d => d.type == 'file');
     })
   }
 

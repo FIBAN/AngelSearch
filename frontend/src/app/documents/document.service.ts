@@ -22,6 +22,11 @@ export class DocumentService {
       .catch(this.handleError);
   }
 
+  getFolders() {
+    return this.getDocuments()
+      .then(allDocuments => allDocuments.filter(d => d.type === 'folder'))
+  }
+
   getDocument(documentId: string) {
     return this.authHttp
       .get(this.documentDetailsUrl(documentId))
