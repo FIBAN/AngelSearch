@@ -110,8 +110,6 @@ export class AdminDocumentsComponent implements OnInit {
       download_url: "",
       type: "file"
     });
-
-    this.openFolder(null);
   }
 
   openFolder(folder: Document|null) {

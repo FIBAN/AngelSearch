@@ -1,0 +1,16 @@
+@import "../../../styles";
+
+.document-icon {
+  font-size: 2em;
+}
+
+.document-row, .folder-row {
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
+.document-row:not(.last) {
+  border-bottom: solid 1px $gray-200;
+}
+
+

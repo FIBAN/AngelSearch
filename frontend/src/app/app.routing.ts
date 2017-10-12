@@ -24,6 +24,9 @@ import { StartupsComponent } from "./startups/startups.component";
 import { StartupDetailsComponent } from "./startups/startup-details.component";
 import { SearchHighlightComponent } from "./angels/search-highlight.component";
 import {ManageDocumentComponent} from "./admin/documents/manage-document.component";
+import {DocumentsListComponent} from "./documents/documents-list/documents-list.component";
+import {DocumentsListRowItemComponent} from "./documents/documents-list/documents-list-row-item.component";
+import {DocumentsListFolderComponent} from "./documents/documents-list/documents-list-folder.component";
 
 const appRoutes: Routes = [
   {
@@ -129,6 +132,9 @@ export const routedComponents = [
   AngelsComponent,
   AngelDetailsComponent,
   DocumentsComponent,
+  DocumentsListComponent,
+  DocumentsListRowItemComponent,
+  DocumentsListFolderComponent,
   StartupsComponent,
   StartupDetailsComponent,
   ProfileComponent,

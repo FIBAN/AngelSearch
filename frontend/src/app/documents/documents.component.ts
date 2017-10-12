@@ -4,8 +4,7 @@ import {Document} from "./document";
 
 @Component({
   selector: 'documents',
-  templateUrl: 'documents.component.html',
-  styleUrls: ['documents.component.css']
+  templateUrl: 'documents.component.html'
 })
 export class DocumentsComponent implements OnInit {
 
@@ -16,8 +15,7 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentService.getDocuments().then((documents) => {
-      //TODO: Display folders to user
-      this.documents = documents.filter(d => d.type == 'file');
+      this.documents = documents;
     })
   }
 
