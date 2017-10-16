@@ -5,7 +5,6 @@ import { AdminAuthGuard } from './auth/admin-auth-guard.service';
 import { CallbackComponent } from './auth/callback.component';
 import { AngelsComponent } from './angels/angels.component';
 import { AngelDetailsComponent } from "./angels/angel-details.component";
-import { ProfileComponent } from "./profile/profile.component"
 import { AdminComponent } from "./admin/angels/admin.component";
 import { AdminAngelListComponent } from "./admin/angels/admin-angel-list.component";
 import { LandingComponent } from "./landing.component";
@@ -20,15 +19,14 @@ import { DocumentsComponent } from "./documents/documents.component";
 import { AdminDocumentsComponent } from "./admin/documents/admin-documents.component";
 import { ManageStartupComponent } from "./admin/startups/manage-startup.component";
 import { AdminStartupsComponent } from "./admin/startups/admin-startups.component";
-import { StartupsComponent } from "./startups/startups.component";
-import { StartupDetailsComponent } from "./startups/startup-details.component";
 import { SearchHighlightComponent } from "./angels/search-highlight.component";
 import {ManageDocumentComponent} from "./admin/documents/manage-document.component";
 import {DocumentsListComponent} from "./documents/documents-list/documents-list.component";
 import {DocumentsListRowItemComponent} from "./documents/documents-list/documents-list-row-item.component";
 import {DocumentsListFolderComponent} from "./documents/documents-list/documents-list-folder.component";
+import {NgModule} from "@angular/core";
 
-const appRoutes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: LandingComponent,
@@ -47,21 +45,6 @@ const appRoutes: Routes = [
   {
     path: 'documents',
     component: DocumentsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'startups',
-    component: StartupsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'startups/:startupId',
-    component: StartupDetailsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -125,32 +108,8 @@ const appRoutes: Routes = [
   }
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
-
-export const routedComponents = [
-  CallbackComponent,
-  AngelsComponent,
-  AngelDetailsComponent,
-  DocumentsComponent,
-  DocumentsListComponent,
-  DocumentsListRowItemComponent,
-  DocumentsListFolderComponent,
-  StartupsComponent,
-  StartupDetailsComponent,
-  ProfileComponent,
-  AdminComponent,
-  ManageAngelComponent,
-  AdminAngelListComponent,
-  AdminDocumentsComponent,
-  ManageDocumentComponent,
-  AdminStartupsComponent,
-  ManageStartupComponent,
-  LandingComponent,
-  InviteComponent,
-  RegisterComponent,
-  RegistrationNeededComponent,
-  ErrorComponent,
-  EmailVerificationMissingComponent,
-  BatchInsertComponent,
-  SearchHighlightComponent
-];
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
