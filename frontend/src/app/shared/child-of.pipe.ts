@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Document} from "./document";
+import {Document} from "../documents/document";
 
 @Pipe({name: 'childOfDocument'})
 export class ChildOfPipe implements PipeTransform {

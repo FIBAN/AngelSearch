@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Angel} from "./angel";
+import {Angel} from "../angels/angel";
 import {isNullOrUndefined} from "util";
 
 @Pipe({name: 'angelSorter'})
