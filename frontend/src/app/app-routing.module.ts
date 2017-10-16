@@ -6,7 +6,6 @@ import { CallbackComponent } from './auth/callback.component';
 import { AngelsComponent } from './angels/angels.component';
 import { AngelDetailsComponent } from "./angels/angel-details.component";
 import { AdminComponent } from "./admin/angels/admin.component";
-import { AdminAngelListComponent } from "./admin/angels/admin-angel-list.component";
 import { LandingComponent } from "./landing.component";
 import { InviteComponent } from "./auth/invite.component";
 import { RegisterComponent } from "./auth/register.component";
@@ -15,15 +14,10 @@ import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import { BatchInsertComponent } from "./admin/angels/batch-insert.component";
 import { ManageAngelComponent } from "./admin/angels/manage-angel.component";
-import { DocumentsComponent } from "./documents/documents.component";
 import { AdminDocumentsComponent } from "./admin/documents/admin-documents.component";
 import { ManageStartupComponent } from "./admin/startups/manage-startup.component";
 import { AdminStartupsComponent } from "./admin/startups/admin-startups.component";
-import { SearchHighlightComponent } from "./angels/search-highlight.component";
 import {ManageDocumentComponent} from "./admin/documents/manage-document.component";
-import {DocumentsListComponent} from "./documents/documents-list/documents-list.component";
-import {DocumentsListRowItemComponent} from "./documents/documents-list/documents-list-row-item.component";
-import {DocumentsListFolderComponent} from "./documents/documents-list/documents-list-folder.component";
 import {NgModule} from "@angular/core";
 
 export const routes: Routes = [
@@ -40,11 +34,6 @@ export const routes: Routes = [
   {
     path: 'angels/:angelId',
     component: AngelDetailsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'documents',
-    component: DocumentsComponent,
     canActivate: [AuthGuard]
   },
   {

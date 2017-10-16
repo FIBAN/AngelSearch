@@ -25,7 +25,6 @@ import { AngelFilterControlsComponent } from "./angels/angel-filter-controls.com
 import { AdminAuthGuard } from "./auth/admin-auth-guard.service";
 import { DocumentService } from "./documents/document.service";
 import { StartupService } from "./startups/startup.service";
-import { ChildOfPipe } from "./documents/child-of.pipe";
 import { StartupModule } from "./startups/startup.module";
 import {ProfileModule} from "./profile/profile.module";
 import {AppRoutingModule} from "./app-routing.module";
@@ -42,15 +41,13 @@ import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import { BatchInsertComponent } from "./admin/angels/batch-insert.component";
 import { ManageAngelComponent } from "./admin/angels/manage-angel.component";
-import { DocumentsComponent } from "./documents/documents.component";
 import { AdminDocumentsComponent } from "./admin/documents/admin-documents.component";
 import { ManageStartupComponent } from "./admin/startups/manage-startup.component";
 import { AdminStartupsComponent } from "./admin/startups/admin-startups.component";
 import { SearchHighlightComponent } from "./angels/search-highlight.component";
 import {ManageDocumentComponent} from "./admin/documents/manage-document.component";
-import {DocumentsListComponent} from "./documents/documents-list/documents-list.component";
-import {DocumentsListRowItemComponent} from "./documents/documents-list/documents-list-row-item.component";
-import {DocumentsListFolderComponent} from "./documents/documents-list/documents-list-folder.component";
+import {DocumentModule} from "./documents/document.module";
+import {ChildOfPipe} from "./documents/child-of.pipe";
 
 @NgModule({
   imports: [
@@ -63,7 +60,8 @@ import {DocumentsListFolderComponent} from "./documents/documents-list/documents
     NgbModule.forRoot(),
     Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
     StartupModule,
-    ProfileModule
+    ProfileModule,
+    DocumentModule
   ],
   declarations: [
     AppComponent,
@@ -77,10 +75,6 @@ import {DocumentsListFolderComponent} from "./documents/documents-list/documents
     CallbackComponent,
     AngelsComponent,
     AngelDetailsComponent,
-    DocumentsComponent,
-    DocumentsListComponent,
-    DocumentsListRowItemComponent,
-    DocumentsListFolderComponent,
     AdminComponent,
     ManageAngelComponent,
     AdminAngelListComponent,
