@@ -15,13 +15,8 @@ import { AngelService } from './angels/angel.service';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 
-import { AngelFilterPipe } from './angels/angel-filter.pipe';
-import { AngelSorterPipe } from './angels/angel-sorter.pipe';
-import { KeysPipe } from "./angels/keys.pipe";
 import { AdminService } from "./admin/angels/admin.service";
-import { AngelInfoComponent } from "./angels/angel-info.component";
 import { NewAngelFormComponent } from "./admin/angels/new-angel-form.component";
-import { AngelFilterControlsComponent } from "./angels/angel-filter-controls.component";
 import { AdminAuthGuard } from "./auth/admin-auth-guard.service";
 import { DocumentService } from "./documents/document.service";
 import { StartupService } from "./startups/startup.service";
@@ -29,8 +24,6 @@ import { StartupModule } from "./startups/startup.module";
 import {ProfileModule} from "./profile/profile.module";
 import {AppRoutingModule} from "./app-routing.module";
 import { CallbackComponent } from './auth/callback.component';
-import { AngelsComponent } from './angels/angels.component';
-import { AngelDetailsComponent } from "./angels/angel-details.component";
 import { AdminComponent } from "./admin/angels/admin.component";
 import { AdminAngelListComponent } from "./admin/angels/admin-angel-list.component";
 import { LandingComponent } from "./landing.component";
@@ -44,10 +37,10 @@ import { ManageAngelComponent } from "./admin/angels/manage-angel.component";
 import { AdminDocumentsComponent } from "./admin/documents/admin-documents.component";
 import { ManageStartupComponent } from "./admin/startups/manage-startup.component";
 import { AdminStartupsComponent } from "./admin/startups/admin-startups.component";
-import { SearchHighlightComponent } from "./angels/search-highlight.component";
 import {ManageDocumentComponent} from "./admin/documents/manage-document.component";
 import {DocumentModule} from "./documents/document.module";
 import {ChildOfPipe} from "./documents/child-of.pipe";
+import {AngelModule} from "./angels/angel.module";
 
 @NgModule({
   imports: [
@@ -61,20 +54,14 @@ import {ChildOfPipe} from "./documents/child-of.pipe";
     Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
     StartupModule,
     ProfileModule,
-    DocumentModule
+    DocumentModule,
+    AngelModule
   ],
   declarations: [
     AppComponent,
-    AngelInfoComponent,
     NewAngelFormComponent,
-    AngelFilterControlsComponent,
-    AngelFilterPipe,
-    AngelSorterPipe,
     ChildOfPipe,
-    KeysPipe,
     CallbackComponent,
-    AngelsComponent,
-    AngelDetailsComponent,
     AdminComponent,
     ManageAngelComponent,
     AdminAngelListComponent,
@@ -88,8 +75,7 @@ import {ChildOfPipe} from "./documents/child-of.pipe";
     RegistrationNeededComponent,
     ErrorComponent,
     EmailVerificationMissingComponent,
-    BatchInsertComponent,
-    SearchHighlightComponent
+    BatchInsertComponent
   ],
   providers: [
     AngelService,

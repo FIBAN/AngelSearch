@@ -27,16 +27,6 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'angels',
-    component: AngelsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'angels/:angelId',
-    component: AngelDetailsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuard, AdminAuthGuard]
