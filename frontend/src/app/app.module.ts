@@ -18,8 +18,8 @@ import { AdminAuthGuard } from "./auth/admin-auth-guard.service";
 import { DocumentService } from "./documents/document.service";
 import { StartupService } from "./startups/startup.service";
 import { StartupModule } from "./startups/startup.module";
-import {ProfileModule} from "./profile/profile.module";
-import {AppRoutingModule} from "./app-routing.module";
+import { ProfileModule } from "./profile/profile.module";
+import { AppRoutingModule } from "./app-routing.module";
 import { CallbackComponent } from './auth/callback.component';
 import { LandingComponent } from "./landing.component";
 import { InviteComponent } from "./auth/invite.component";
@@ -29,12 +29,10 @@ import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import {DocumentModule} from "./documents/document.module";
 import {AngelModule} from "./angels/angel.module";
-import {AdminModule} from "./admin/admin.module";
 
 @NgModule({
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpModule,
     AuthModule,
     NgbModule.forRoot(),
@@ -43,7 +41,7 @@ import {AdminModule} from "./admin/admin.module";
     ProfileModule,
     DocumentModule,
     AngelModule,
-    AdminModule
+    AppRoutingModule,
   ],
   declarations: [
     AppComponent,

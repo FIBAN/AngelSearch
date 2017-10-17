@@ -13,13 +13,13 @@ import {ManageStartupComponent} from "./startups/manage-startup.component";
 
 @NgModule({
   imports: [RouterModule.forChild([
-    { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-    { path: 'admin/edit-angel/:angelId', component: ManageAngelComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-    { path: 'admin/batch', component: BatchInsertComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-    { path: 'admin/documents', component: AdminDocumentsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-    { path: 'admin/documents/:documentId', component: ManageDocumentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-    { path: 'admin/startups', component: AdminStartupsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-    { path: 'admin/startups/:startupId', component: ManageStartupComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: '', component: AdminComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'edit-angel/:angelId', component: ManageAngelComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'batch', component: BatchInsertComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'documents', component: AdminDocumentsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'documents/:documentId', component: ManageDocumentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'startups', component: AdminStartupsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'startups/:startupId', component: ManageStartupComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   ])],
   exports: [RouterModule]
 })

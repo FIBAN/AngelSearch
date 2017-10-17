@@ -16,6 +16,10 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'admin',
+    loadChildren: 'app/admin/admin.module#AdminModule'
+  },
+  {
     path: 'invite',
     component: InviteComponent
   },
