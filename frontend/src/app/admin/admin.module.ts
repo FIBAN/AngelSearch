@@ -1,6 +1,6 @@
 import { NgModule }           from '@angular/core';
 import {AdminRoutingModule} from "./admin-routing.module";
-import {AdminComponent} from "./angels/admin.component";
+import {AdminAngelsComponent} from "./angels/admin-angels.component";
 import {AdminAngelListComponent} from "./angels/admin-angel-list.component";
 import {BatchInsertComponent} from "./angels/batch-insert.component";
 import {ManageAngelComponent} from "./angels/manage-angel.component";
@@ -14,7 +14,7 @@ import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
   imports:      [ SharedModule, AdminRoutingModule ],
-  declarations: [ AdminComponent, AdminAngelListComponent, BatchInsertComponent, ManageAngelComponent, NewAngelFormComponent,
+  declarations: [ AdminAngelsComponent, AdminAngelListComponent, BatchInsertComponent, ManageAngelComponent, NewAngelFormComponent,
   AdminDocumentsComponent, ManageDocumentComponent, AdminStartupsComponent, ManageStartupComponent ],
   providers:    [ AdminService ]
 })

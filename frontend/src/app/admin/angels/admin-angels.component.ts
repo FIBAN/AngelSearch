@@ -20,11 +20,11 @@ import {AdminService} from "./admin.service";
     ></admin-angel-list>
 
     <h4>Add an angel</h4>
-    <a routerLink="/admin/batch" routerLinkActive="true">Add multiple angels</a>
+    <a routerLink="/admin/angels/add/batch" routerLinkActive="true">Add multiple angels</a>
     <new-angel-form (onSubmit)="onAngelCreate($event)"></new-angel-form>
   `
 })
-export class AdminComponent implements OnInit {
+export class AdminAngelsComponent implements OnInit {
   angels: Angel[];
   users: any[];
   invitations: any[];
