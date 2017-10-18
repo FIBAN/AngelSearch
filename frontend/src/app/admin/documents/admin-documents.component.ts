@@ -8,8 +8,6 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 @Component({
   selector: 'admin',
   template: `
-    <h3 class="text-center">Admin tools</h3>
-
     <h4>Documents</h4>
     <div class="row" *ngIf="currentPath.length">
       <div class="col">

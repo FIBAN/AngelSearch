@@ -11,10 +11,11 @@ import {AdminStartupsComponent} from "./startups/admin-startups.component";
 import {ManageStartupComponent} from "./startups/manage-startup.component";
 import {AdminService} from "./angels/admin.service";
 import {SharedModule} from "../shared/shared.module";
+import {AdminComponent} from "./admin.component";
 
 @NgModule({
   imports:      [ SharedModule, AdminRoutingModule ],
-  declarations: [ AdminAngelsComponent, AdminAngelListComponent, BatchInsertComponent, ManageAngelComponent, NewAngelFormComponent,
+  declarations: [ AdminComponent, AdminAngelsComponent, AdminAngelListComponent, BatchInsertComponent, ManageAngelComponent, NewAngelFormComponent,
   AdminDocumentsComponent, ManageDocumentComponent, AdminStartupsComponent, ManageStartupComponent ],
   providers:    [ AdminService ]
 })

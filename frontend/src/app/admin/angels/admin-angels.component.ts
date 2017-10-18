@@ -9,8 +9,6 @@ import {AdminService} from "./admin.service";
 @Component({
   selector: 'admin',
   template: `    
-    <h3 class="text-center">Admin tools</h3>
-
     <h4>Angels</h4>
     <admin-angel-list 
       [angels]="angels" 
