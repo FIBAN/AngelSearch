@@ -4,8 +4,8 @@
     <th>Id</th>
     <th>Name</th>
     <th>Email</th>
-    <th>Phone</th>
-    <th>Details</th>
+    <th>Last Login</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -14,34 +14,8 @@
       <td class="monospace small">{{angel.id}}</td>
       <td>{{angel.first_name}} {{angel.last_name}}</td>
       <td>{{angel.email}}</td>
-      <td>{{angel.phone}}</td>
-      <td><a href="#" (click)="selectAngel(i); false;">Show</a></td>
-    </tr>
-    <tr *ngIf="selectedAngels[i]" [class.odd]="odd" class="details-row">
-      <td colspan="5">
-        <div class="panel panel-primary">
-          <div class="panel-body">
-            <dl>
-              <dt>Invitations</dt>
-              <dd>
-                <div class="col-lg-8">
-                  <table class="table table-sm mb-0 invitations-table">
-                    <tbody>
-                      <tr *ngFor="let invite of invitationsByAngel(angel)" class="invitation-row">
-                        <td class="small text-info monospace">{{inviteUrl(invite.id)}}</td>
-                        <td>{{invite.status}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <button class="btn btn-primary btn-sm" (click)="sendInvite(angel)">New Invitation</button>
-              </dd>
-              <dt>Edit Angel</dt>
-              <dd><a [routerLink]="['/admin/angels/edit', angel.id]">Edit</a></dd>
-            </dl>
-          </div>
-        </div>
-      </td>
+      <td>XXXX</td>
+      <td><a [routerLink]="['edit', angel.id]">View</a></td>
     </tr>
   </ng-container>
   </tbody>

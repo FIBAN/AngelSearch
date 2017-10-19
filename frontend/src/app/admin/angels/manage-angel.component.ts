@@ -7,6 +7,7 @@ import { Utils } from "../../utils/parsers";
 import 'rxjs/add/operator/switchMap';
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import { FormBuilder, FormGroup} from "@angular/forms";
+import {AngelAdminService} from "./angel-admin.service";
 
 @Component({
   selector: 'admin-manage-angel',
@@ -22,37 +23,61 @@ export class ManageAngelComponent implements OnInit {
 
   industries: string[] = [];
 
+  invitations: any[]
+
+  message = "";
+
   constructor(
     private angelService: AngelService,
+    private angelAdminService: AngelAdminService,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ){}
 
-  createAngelForm(a: Angel): void {
-      this.angelForm = this.fb.group(
-        {
-        first_name: a.first_name,
-        last_name: a.last_name,
-        city: a.city,
-        country: a.country,
-        email: a.email,
-        phone: a.phone,
-        network: a.network,
-        linkedin: a.linkedin,
-        bio: a.bio,
-        investment_level: a.investment_level
-      });
+  resetForm(a: Angel): void {
+    this.angelForm = this.fb.group(
+      {
+      first_name: a.first_name,
+      last_name: a.last_name,
+      city: a.city,
+      country: a.country,
+      email: a.email,
+      phone: a.phone,
+      network: a.network,
+      linkedin: a.linkedin,
+      bio: a.bio,
+      investment_level: a.investment_level
+    });
+
+    this.industries = a.industries || [];
   }
 
   ngOnInit(): void {
+    this.angelService.getInvitations().then((invitations: any[]) => this.invitations = invitations);
     this.route.paramMap
       .switchMap((params: ParamMap) => this.angelService.getAngel(params.get('angelId')))
       .subscribe((angel: Angel) => {
         this.angel = angel;
-        this.createAngelForm(angel);
-        this.industries = angel.industries || [];
+        this.resetForm(angel);
       });
   }
+
+  invitationsByAngel(angel) {
+    return this.invitations && this.invitations.filter(i => i.angel_id === angel.id);
+  }
+
+  inviteUrl(inviteId: string) {
+    return location.protocol + '//' + location.host + '/invite?i=' + inviteId;
+  }
+
+  sendInvite(angel) {
+    this.onSendInvite(angel);
+  }
+
+  onSendInvite(angel) {
+    this.angelService.createInvite(angel.id).then(() => this.ngOnInit());
+  }
+
 
   removeIndustry(industry): void {
     const idx = this.industries.indexOf(industry);
@@ -86,9 +111,21 @@ export class ManageAngelComponent implements OnInit {
       }
       this.angel.industries = this.industries;
       this.angelService.updateAngel(this.angel)
-        .then(() => {
-          location.reload();
+        .then((updatedAngel) => {
+          this.angel = updatedAngel;
+          this.resetForm(updatedAngel);
+          this.showMessage("Changes saved");
         });
+  }
+
+  discardChanges(): void {
+      this.resetForm(this.angel);
+      this.showMessage("Changes discarded");
+  }
+
+  showMessage(message) {
+      this.message = message;
+      setTimeout(() => this.message = "", 3000);
   }
 
 }

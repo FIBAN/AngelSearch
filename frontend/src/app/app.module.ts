@@ -13,7 +13,7 @@ import { AngelService } from './angels/angel.service';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 
-import { AdminService } from "./admin/angels/admin.service";
+import { AngelAdminService } from "./admin/angels/angel-admin.service";
 import { AdminAuthGuard } from "./auth/admin-auth-guard.service";
 import { DocumentService } from "./documents/document.service";
 import { StartupService } from "./startups/startup.service";
@@ -29,6 +29,8 @@ import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import {DocumentModule} from "./documents/document.module";
 import {AngelModule} from "./angels/angel.module";
+import {TestComponent} from "./test.component";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   imports: [
@@ -37,6 +39,7 @@ import {AngelModule} from "./angels/angel.module";
     AuthModule,
     NgbModule.forRoot(),
     Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
+    SharedModule,
     StartupModule,
     ProfileModule,
     DocumentModule,
@@ -51,12 +54,13 @@ import {AngelModule} from "./angels/angel.module";
     RegisterComponent,
     RegistrationNeededComponent,
     ErrorComponent,
-    EmailVerificationMissingComponent
+    EmailVerificationMissingComponent,
+    TestComponent
   ],
   providers: [
     AngelService,
     AuthService,
-    AdminService,
+    AngelAdminService,
     DocumentService,
     StartupService,
     AuthGuard,

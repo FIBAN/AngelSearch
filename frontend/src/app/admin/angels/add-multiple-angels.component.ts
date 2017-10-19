@@ -8,11 +8,11 @@ import { Utils } from "../../utils/parsers";
 
 @Component({
   selector: 'admin-batch-insert',
-  templateUrl: 'batch-insert.component.html',
+  templateUrl: 'add-multiple-angels.component.html',
   styles: [
   ]
 })
-export class BatchInsertComponent implements OnInit {
+export class AddMultipleAngelsComponent implements OnInit {
 
   angels: Angel[];
 

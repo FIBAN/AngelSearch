@@ -8,6 +8,7 @@ import { RegistrationNeededComponent } from "./auth/registration-needed.componen
 import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import {NgModule} from "@angular/core";
+import {TestComponent} from "./test.component";
 
 export const routes: Routes = [
   {
@@ -42,11 +43,12 @@ export const routes: Routes = [
   {
     path: 'error',
     component: ErrorComponent
-  }
+  },
+  {path: 'test', component: TestComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

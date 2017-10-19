@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import {environment} from "../../../environments/environment";
 
 @Injectable()
-export class AdminService {
+export class AngelAdminService {
   // Define the routes we are going to interact with
   private usersUrl = environment.backend + '/admin/users';
 

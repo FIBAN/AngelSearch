@@ -20,26 +20,8 @@ export class AdminAngelListComponent implements OnInit {
 
   @Input() onSendInvite: (angel) => void;
 
-  selectedAngels = {};
-
   constructor() {}
 
   ngOnInit(): void {}
-
-  invitationsByAngel(angel) {
-    return this.invitations && this.invitations.filter(i => i.angel_id === angel.id);
-  }
-
-  inviteUrl(inviteId: string) {
-    return location.protocol + '//' + location.host + '/invite?i=' + inviteId;
-  }
-
-  sendInvite(angel) {
-    this.onSendInvite(angel);
-  }
-
-  selectAngel(index) {
-    this.selectedAngels[index] = !this.selectedAngels[index];
-  }
 
 }

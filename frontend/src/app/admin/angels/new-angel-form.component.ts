@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 
 import { Angel }    from '../../angels/angel';
 
 @Component({
   selector: 'new-angel-form',
-  templateUrl: './new-angel-form.component.html',
+  templateUrl: 'new-angel-form.component.html',
   styles: [
     '.ng-valid[required], .ng-valid.required { border-left: 5px solid #42A948; /* green */}',
     '.ng-invalid:not(form) { border-left: 5px solid #a94442; /* red */}'
@@ -20,3 +20,4 @@ export class NewAngelFormComponent {
   }
 
 }
+

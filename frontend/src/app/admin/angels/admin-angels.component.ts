@@ -4,22 +4,28 @@ import { Angel } from '../../angels/angel';
 import { AngelService } from '../../angels/angel.service';
 
 import 'rxjs/add/operator/switchMap';
-import {AdminService} from "./admin.service";
+import {AngelAdminService} from "./angel-admin.service";
 
 @Component({
-  selector: 'admin',
-  template: `    
-    <h4>Angels</h4>
-    <admin-angel-list 
-      [angels]="angels" 
-      [users]="users" 
-      [invitations]="invitations" 
-      [onSendInvite]="onSendInvite.bind(this)"
-    ></admin-angel-list>
-
-    <h4>Add an angel</h4>
-    <a routerLink="/admin/angels/add/batch" routerLinkActive="true">Add multiple angels</a>
-    <new-angel-form (onSubmit)="onAngelCreate($event)"></new-angel-form>
+  template: ` 
+    <div class="row">
+      <div class="col">
+        <h4>Angels</h4>
+      </div>
+      <div class="col text-right">
+          <a routerLink="add" class="btn btn-primary mb-2">Add Angel</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <admin-angel-list 
+          [angels]="angels" 
+          [users]="users" 
+          [invitations]="invitations" 
+          [onSendInvite]="onSendInvite.bind(this)"
+        ></admin-angel-list>
+      </div>
+    </div>
   `
 })
 export class AdminAngelsComponent implements OnInit {
@@ -29,7 +35,7 @@ export class AdminAngelsComponent implements OnInit {
 
   constructor(
     private angelService: AngelService,
-    private adminService: AdminService) {
+    private adminService: AngelAdminService) {
   }
 
   ngOnInit(): void {
@@ -40,11 +46,6 @@ export class AdminAngelsComponent implements OnInit {
 
   onSendInvite(angel) {
     this.angelService.createInvite(angel.id).then(() => this.ngOnInit());
-  }
-
-  onAngelCreate(angel: Angel) {
-    this.angelService.createAngel(angel)
-      .then(() => location.reload())
   }
 
 }

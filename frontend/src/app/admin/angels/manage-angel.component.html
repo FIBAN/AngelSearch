@@ -1,106 +1,138 @@
+<div>
+  <a class="btn btn-outline-secondary text-dark" routerLink=".."><i class="fa fa-angle-left" aria-hidden="true"></i> Back</a>
+</div>
+
 <h3 class="text-center">{{angel?.first_name}} {{angel?.last_name}}</h3>
 
-<form *ngIf="angelForm" [formGroup]="angelForm" (keydown.enter)="$event.preventDefault()">
-  <table class="table">
-    <tbody>
-      <!-- ID -->
-      <tr>
-        <td>Id</td>
-        <td>{{angel?.id}}</td>
-      </tr>
+<div class="card mb-2">
+  <div class="card-header">Details</div>
+  <div class="card-body">
+    <form *ngIf="angelForm" [formGroup]="angelForm" (keydown.enter)="$event.preventDefault()">
+      <table class="table">
+        <tbody>
+          <!-- ID -->
+          <tr>
+            <td>Id</td>
+            <td>{{angel?.id}}</td>
+          </tr>
 
-      <!-- Created -->
-      <tr>
-        <td>Created</td>
-        <td>{{angel?.created_at | date:'medium'}}</td>
-      </tr>
+          <!-- Created -->
+          <tr>
+            <td>Created</td>
+            <td>{{angel?.created_at | date:'medium'}}</td>
+          </tr>
 
-      <!-- Last Updated -->
-      <tr>
-        <td>Last Updated</td>
-        <td>{{angel?.updated_at | date:'medium'}}</td>
-      </tr>
+          <!-- Last Updated -->
+          <tr>
+            <td>Last Updated</td>
+            <td>{{angel?.updated_at | date:'medium'}}</td>
+          </tr>
 
-      <!-- First Name -->
-      <tr>
-        <td>First Name</td>
-        <td><input class="form-control" formControlName="first_name"></td>
-      </tr>
+          <!-- First Name -->
+          <tr>
+            <td>First Name</td>
+            <td><input class="form-control" formControlName="first_name"></td>
+          </tr>
 
-      <!-- Last Name -->
-      <tr>
-        <td>Last Name</td>
-        <td><input class="form-control" formControlName="last_name"></td>
-      </tr>
+          <!-- Last Name -->
+          <tr>
+            <td>Last Name</td>
+            <td><input class="form-control" formControlName="last_name"></td>
+          </tr>
 
-      <!-- Email -->
-      <tr>
-        <td>Email</td>
-        <td><input class="form-control" formControlName="email"></td>
-      </tr>
+          <!-- Email -->
+          <tr>
+            <td>Email</td>
+            <td><input class="form-control" formControlName="email"></td>
+          </tr>
 
-      <!-- Phone -->
-      <tr>
-        <td>Phone</td>
-        <td><input class="form-control" formControlName="phone"></td>
-      </tr>
+          <!-- Phone -->
+          <tr>
+            <td>Phone</td>
+            <td><input class="form-control" formControlName="phone"></td>
+          </tr>
 
-      <!-- City -->
-      <tr>
-        <td>City</td>
-        <td><input class="form-control" formControlName="city"></td>
-      </tr>
+          <!-- City -->
+          <tr>
+            <td>City</td>
+            <td><input class="form-control" formControlName="city"></td>
+          </tr>
 
-      <!-- Country -->
-      <tr>
-        <td>Country</td>
-        <td><input class="form-control" formControlName="country"></td>
-      </tr>
+          <!-- Country -->
+          <tr>
+            <td>Country</td>
+            <td><input class="form-control" formControlName="country"></td>
+          </tr>
 
-      <!-- Network -->
-      <tr>
-        <td>Network</td>
-        <td><input class="form-control" formControlName="network"></td>
-      </tr>
+          <!-- Network -->
+          <tr>
+            <td>Network</td>
+            <td><input class="form-control" formControlName="network"></td>
+          </tr>
 
-      <!-- LinkedIn -->
-      <tr>
-        <td>LinkedIn</td>
-        <td><input class="form-control" formControlName="linkedin"></td>
-      </tr>
+          <!-- LinkedIn -->
+          <tr>
+            <td>LinkedIn</td>
+            <td><input class="form-control" formControlName="linkedin"></td>
+          </tr>
 
-      <!-- Investments -->
-      <tr>
-        <td>Investments</td>
-        <td>
-          <select class="form-control" formControlName="investment_level">
-            <option *ngFor="let il of investmentLevels; let i = index" value="{{i}}">{{il}}</option>
-          </select>
-        </td>
-      </tr>
+          <!-- Investments -->
+          <tr>
+            <td>Investments</td>
+            <td>
+              <select class="form-control" formControlName="investment_level">
+                <option *ngFor="let il of investmentLevels; let i = index" value="{{i}}">{{il}}</option>
+              </select>
+            </td>
+          </tr>
 
-      <!-- Industries -->
-      <tr>
-        <td>Industries</td>
-        <td>
-          <ul class="list-unstyled angelIndustriesList">
-            <li *ngFor="let i of industries">{{i}} <a class="edit-button" (click)="removeIndustry(i)"><i class="fa fa-times text-danger" aria-hidden="true"></i></a></li>
-            <li>
-              <input #newIndustries class="form-control" (keyup.enter)="addNewIndustries()" name="newIndustry" placeholder="Add an industry">
-              <a class="edit-button" (click)="addNewIndustries()"><i class="fa fa-check text-success" aria-hidden="true"></i></a>
-            </li>
-          </ul>
-        </td>
-      </tr>
+          <!-- Industries -->
+          <tr>
+            <td>Industries</td>
+            <td>
+              <ul class="list-unstyled angelIndustriesList">
+                <li *ngFor="let i of industries">{{i}} <a class="edit-button" (click)="removeIndustry(i)"><i class="fa fa-times text-danger" aria-hidden="true"></i></a></li>
+                <li>
+                  <input #newIndustries class="form-control" (keyup.enter)="addNewIndustries()" name="newIndustry" placeholder="Add an industry">
+                  <a class="edit-button" (click)="addNewIndustries()"><i class="fa fa-check text-success" aria-hidden="true"></i></a>
+                </li>
+              </ul>
+            </td>
+          </tr>
 
-      <!-- Bio -->
-      <tr>
-        <td>Bio</td>
-        <td><textarea class="form-control" formControlName="bio"></textarea></td>
-      </tr>
-    </tbody>
-  </table>
-  <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
-  <a routerLink="/admin/angels" class="btn btn-secondary" >Discard Changes</a>
-</form>
+          <!-- Bio -->
+          <tr>
+            <td>Bio</td>
+            <td><textarea class="form-control" formControlName="bio"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="message">{{message}}</p>
+      <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
+      <button class="btn btn-secondary" (click)="discardChanges()">Discard Changes</button>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">Invitations</div>
+  <div class="card-body">
+    <table class="table table-sm mb-0 invitations-table">
+      <thead>
+        <th>Url</th>
+        <th>Created</th>
+        <th>Status</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invite of invitationsByAngel(angel)" class="invitation-row">
+          <td class="small text-info monospace">{{inviteUrl(invite.id)}}</td>
+          <td>{{invite.created_at | date:'short'}}</td>
+          <td>{{invite.status}} <span *ngIf="invite.status !== 'pending'">{{invite.updated_at | date:'short'}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary btn-sm" (click)="sendInvite(angel)">New Invitation</button>
+  </div>
+</div>
+
 
