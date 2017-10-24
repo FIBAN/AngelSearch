@@ -7,7 +7,6 @@ import {AngelService} from "../../angels/angel.service";
 import { Utils } from "../../utils/parsers";
 
 @Component({
-  selector: 'admin-batch-insert',
   templateUrl: 'add-multiple-angels.component.html',
   styles: [
   ]

@@ -9,7 +9,6 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 import { FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'admin-manage-angel',
   templateUrl: 'manage-angel.component.html'
 })
 export class ManageAngelComponent implements OnInit {

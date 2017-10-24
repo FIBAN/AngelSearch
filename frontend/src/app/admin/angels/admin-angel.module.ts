@@ -1,5 +1,4 @@
 import { NgModule }           from '@angular/core';
-import {SharedModule} from "../../shared/shared.module";
 import {AdminAngelsComponent} from "./admin-angels.component";
 import {AdminAngelListComponent} from "./admin-angel-list.component";
 import {AddAngelComponent} from "./add-angel.component";
@@ -8,10 +7,10 @@ import {ManageAngelComponent} from "./manage-angel.component";
 import {NewAngelFormComponent} from "app/admin/angels/new-angel-form.component";
 import {AngelAdminService} from "./angel-admin.service";
 import {AdminAngelRoutingModule} from "./admin-angel-routing.module";
-
+import {AdminSharedModule} from "../shared/admin-shared.module";
 
 @NgModule({
-  imports:      [ SharedModule, AdminAngelRoutingModule ],
+  imports:      [ AdminSharedModule, AdminAngelRoutingModule ],
   declarations: [
     AdminAngelsComponent,
     AdminAngelListComponent,

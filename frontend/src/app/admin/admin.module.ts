@@ -4,11 +4,11 @@ import {AdminDocumentsComponent} from "./documents/admin-documents.component";
 import {ManageDocumentComponent} from "./documents/manage-document.component";
 import {AdminStartupsComponent} from "./startups/admin-startups.component";
 import {ManageStartupComponent} from "./startups/manage-startup.component";
-import {SharedModule} from "../shared/shared.module";
 import {AdminComponent} from "./admin.component";
+import {AdminSharedModule} from "./shared/admin-shared.module";
 
 @NgModule({
-  imports:      [ SharedModule, AdminRoutingModule ],
+  imports:      [ AdminSharedModule, AdminRoutingModule ],
   declarations: [
     AdminComponent,
     AdminDocumentsComponent,
