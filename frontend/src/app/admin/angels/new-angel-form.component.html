@@ -1,33 +1,60 @@
-<form (ngSubmit)="submit()" #angelForm="ngForm">
+<form [formGroup]="angelForm" (ngSubmit)="submit()" (keydown.enter)="$event.preventDefault()">
   <div class="form-group">
     <label for="fname">First name</label>
-    <input type="text" class="form-control" id="fname" required [(ngModel)]="model.first_name" name="fname">
+    <input type="text" class="form-control" id="fname" formControlName="first_name" required>
   </div>
 
   <div class="form-group">
     <label for="lname">Last name</label>
-    <input type="text" class="form-control" id="lname" required [(ngModel)]="model.last_name" name="lname">
+    <input type="text" class="form-control" id="lname" formControlName="last_name" required>
   </div>
 
   <div class="form-group">
     <label for="email">Email</label>
-    <input type="text" class="form-control" id="email" required [(ngModel)]="model.email" name="email">
+    <input type="text" class="form-control" id="email" formControlName="email" required>
   </div>
 
   <div class="form-group">
     <label for="phone">Phone number</label>
-    <input type="text" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone">
+    <input type="text" class="form-control" id="phone" formControlName="phone">
   </div>
 
   <div class="form-group">
     <label for="city">City</label>
-    <input type="text" class="form-control" id="city" [(ngModel)]="model.city " name="city">
+    <input type="text" class="form-control" id="city" formControlName="city">
   </div>
 
   <div class="form-group">
     <label for="country">Country</label>
-    <input type="text" class="form-control" id="country" [(ngModel)]="model.country" name="country">
+    <input type="text" class="form-control" id="country" formControlName="country">
   </div>
 
-  <button type="submit" class="btn btn-success" [disabled]="!angelForm.form.valid">Submit</button>
+  <div class="form-group">
+    <label for="network">Network</label>
+    <input type="text" class="form-control" id="network" formControlName="network">
+  </div>
+
+  <div class="form-group">
+    <label for="linkedin">LinkedIn</label>
+    <input type="text" class="form-control" id="linkedin" formControlName="linkedin">
+  </div>
+
+  <div class="form-group">
+    <label for="investment_level">Investments</label>
+    <select class="form-control" id="investment_level" formControlName="investment_level">
+      <option *ngFor="let il of investmentLevels; let i = index" value="{{i}}">{{il}}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Industries</label>
+    <editable-industry-list [industries]="industries" (onChange)="updateIndustries($event)"></editable-industry-list>
+  </div>
+
+  <div class="form-group">
+    <label for="bio">Bio</label>
+    <textarea class="form-control" id="bio" formControlName="bio"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="!angelForm.valid">Submit</button>
 </form>

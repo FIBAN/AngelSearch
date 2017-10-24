@@ -7,7 +7,6 @@ import { Utils } from "../../utils/parsers";
 import 'rxjs/add/operator/switchMap';
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import { FormBuilder, FormGroup} from "@angular/forms";
-import {AngelAdminService} from "./angel-admin.service";
 
 @Component({
   selector: 'admin-manage-angel',
@@ -23,13 +22,12 @@ export class ManageAngelComponent implements OnInit {
 
   industries: string[] = [];
 
-  invitations: any[]
+  invitations: any[];
 
   message = "";
 
   constructor(
     private angelService: AngelService,
-    private angelAdminService: AngelAdminService,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ){}
@@ -49,7 +47,7 @@ export class ManageAngelComponent implements OnInit {
       investment_level: a.investment_level
     });
 
-    this.industries = a.industries || [];
+    this.industries = a.industries && a.industries.slice(0) || [];
   }
 
   ngOnInit(): void {
@@ -63,7 +61,7 @@ export class ManageAngelComponent implements OnInit {
   }
 
   invitationsByAngel(angel) {
-    return this.invitations && this.invitations.filter(i => i.angel_id === angel.id);
+    return angel && this.invitations && this.invitations.filter(i => i.angel_id === angel.id);
   }
 
   inviteUrl(inviteId: string) {
@@ -78,30 +76,11 @@ export class ManageAngelComponent implements OnInit {
     this.angelService.createInvite(angel.id).then(() => this.ngOnInit());
   }
 
-
-  removeIndustry(industry): void {
-    const idx = this.industries.indexOf(industry);
-    if(idx !== -1) {
-      this.industries.splice(idx, 1);
-    }
-  }
-
-  addNewIndustries(): void {
-    const industries = this.newIndustries.nativeElement.value;
-    if (industries) {
-      for (let industry of industries.split(',')) {
-        industry = industry.trim();
-        const idx = this.industries.indexOf(industry);
-        if (industry && idx === -1) {
-          this.industries.push(industry);
-        }
-      }
-      this.newIndustries.nativeElement.value = '';
-    }
+  updateIndustries(newIndustries) {
+    this.industries = newIndustries;
   }
 
   saveChanges(): void {
-      this.addNewIndustries();
       const formData = this.angelForm.getRawValue();
       formData.linkedin = Utils.parseLinkedInId(formData.linkedin);
       for(let k in formData) {

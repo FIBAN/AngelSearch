@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 
 import { Angel } from '../../angels/angel';
 import { AngelService } from '../../angels/angel.service';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   template: `
@@ -18,12 +18,13 @@ export class AddAngelComponent {
 
   constructor(
     private angelService: AngelService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
   }
 
   onAngelCreate(angel: Angel) {
     this.angelService.createAngel(angel)
-      .then(() => this.router.navigate(['..']))
+      .then(() => this.router.navigate(['..'], {relativeTo: this.route}))
   }
 
 }

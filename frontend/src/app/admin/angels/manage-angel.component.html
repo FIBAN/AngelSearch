@@ -90,13 +90,7 @@
           <tr>
             <td>Industries</td>
             <td>
-              <ul class="list-unstyled angelIndustriesList">
-                <li *ngFor="let i of industries">{{i}} <a class="edit-button" (click)="removeIndustry(i)"><i class="fa fa-times text-danger" aria-hidden="true"></i></a></li>
-                <li>
-                  <input #newIndustries class="form-control" (keyup.enter)="addNewIndustries()" name="newIndustry" placeholder="Add an industry">
-                  <a class="edit-button" (click)="addNewIndustries()"><i class="fa fa-check text-success" aria-hidden="true"></i></a>
-                </li>
-              </ul>
+              <editable-industry-list [industries]="industries" (onChange)="updateIndustries($event)"></editable-industry-list>
             </td>
           </tr>
 
