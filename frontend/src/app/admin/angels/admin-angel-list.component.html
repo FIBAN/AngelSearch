@@ -14,7 +14,7 @@
       <td class="monospace small">{{angel.id}}</td>
       <td>{{angel.first_name}} {{angel.last_name}}</td>
       <td>{{angel.email}}</td>
-      <td>XXXX</td>
+      <td>{{lastLoginForAngel(angel) | date:'short'}}</td>
       <td><a [routerLink]="['edit', angel.id]">View</a></td>
     </tr>
   </ng-container>

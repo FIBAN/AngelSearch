@@ -20,9 +20,7 @@ import {AngelAdminService} from "./angel-admin.service";
       <div class="col">
         <admin-angel-list 
           [angels]="angels" 
-          [users]="users" 
-          [invitations]="invitations" 
-          [onSendInvite]="onSendInvite.bind(this)"
+          [users]="users"
         ></admin-angel-list>
       </div>
     </div>
@@ -31,7 +29,6 @@ import {AngelAdminService} from "./angel-admin.service";
 export class AdminAngelsComponent implements OnInit {
   angels: Angel[];
   users: any[];
-  invitations: any[];
 
   constructor(
     private angelService: AngelService,
@@ -41,11 +38,6 @@ export class AdminAngelsComponent implements OnInit {
   ngOnInit(): void {
     this.angelService.getAngels().then((angels: Angel[]) => this.angels = angels);
     this.adminService.getUsers().then((users: any[]) => this.users = users);
-    this.angelService.getInvitations().then((invitations: any[]) => this.invitations = invitations);
-  }
-
-  onSendInvite(angel) {
-    this.angelService.createInvite(angel.id).then(() => this.ngOnInit());
   }
 
 }

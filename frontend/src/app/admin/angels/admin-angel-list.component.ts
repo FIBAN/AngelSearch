@@ -16,12 +16,27 @@ import 'rxjs/add/operator/switchMap';
 export class AdminAngelListComponent implements OnInit {
   @Input() angels: Angel[];
   @Input() users: any[];
-  @Input() invitations: any[];
-
-  @Input() onSendInvite: (angel) => void;
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  lastLoginForAngel(angel: Angel): string {
+    if(this.users) {
+      return this.findLastLogin(this.users, angel.id);
+    } else {
+      return "";
+    }
+  }
+
+  private findLastLogin(users, angelId): string {
+    const accountLoginsSorted = users
+      .filter(u => u.angel_id === angelId)
+      .map(u => u.last_login)
+      .sort()
+      .reverse();
+
+    return (accountLoginsSorted && accountLoginsSorted.length) ? accountLoginsSorted[0] : "";
+  }
 
 }
