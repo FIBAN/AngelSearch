@@ -6,7 +6,6 @@ import {DocumentService} from "../../documents/document.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'admin',
   template: `
     <h4>Documents</h4>
     <div class="row" *ngIf="currentPath.length">

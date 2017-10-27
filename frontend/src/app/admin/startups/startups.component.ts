@@ -8,8 +8,7 @@ import {Angel} from "../../angels/angel";
 import {AngelService} from "../../angels/angel.service";
 
 @Component({
-  selector: 'admin-startups',
-  templateUrl: 'admin-startups.component.html',
+  templateUrl: 'startups.component.html',
   styles: [
     '.ng-valid[required], .ng-valid.required { border-left: 5px solid #42A948; /* green */}',
     '.ng-invalid:not(form) { border-left: 5px solid #a94442; /* red */}'

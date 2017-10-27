@@ -1,6 +1,6 @@
 import { NgModule }            from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AdminAngelsComponent} from "./admin-angels.component";
+import {AdminAngelsComponent} from "./angels.component";
 import {AuthGuard} from "../../auth/auth-guard.service";
 import {AddMultipleAngelsComponent} from "./add-multiple-angels.component";
 import {AdminAuthGuard} from "../../auth/admin-auth-guard.service";

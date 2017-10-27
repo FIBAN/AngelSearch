@@ -5,7 +5,7 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'admin-angel-list',
-  templateUrl: 'admin-angel-list.component.html',
+  templateUrl: 'angel-list.component.html',
   styles: [
     'tr.odd { background-color: #f2f2f2; }',
     'tr.details-row td { border-top: none }',

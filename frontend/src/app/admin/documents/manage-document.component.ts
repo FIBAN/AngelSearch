@@ -7,7 +7,6 @@ import {Document} from "../../documents/document";
 type FolderChoice = {id: string, path: string};
 
 @Component({
-  selector: 'admin-manage-document',
   template: `
     <h3 class="text-center">{{document?.name}}</h3>
 

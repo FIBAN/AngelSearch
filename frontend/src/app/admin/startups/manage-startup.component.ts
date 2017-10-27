@@ -7,7 +7,6 @@ import {Startup} from "../../startups/startup";
 import {Angel} from "../../angels/angel";
 
 @Component({
-  selector: 'admin-manage-startup',
   template: `
     <h3 class="text-center">{{startup?.company_name}}</h3>
     
