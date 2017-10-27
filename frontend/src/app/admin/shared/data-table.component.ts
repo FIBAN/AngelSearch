@@ -3,9 +3,9 @@ import {Component, Input, TemplateRef} from '@angular/core';
 type Column = {name: string, key: string, cellTemplate: TemplateRef<any> | null}
 
 @Component({
-  selector: 'rich-table',
+  selector: 'data-table',
   template: `
-    <table class="table">
+    <table class="table table-striped table-sm table-responsive">
       <thead>
         <th *ngFor="let column of columns">{{column.name}}</th>
       </thead>
@@ -24,11 +24,11 @@ type Column = {name: string, key: string, cellTemplate: TemplateRef<any> | null}
     </table>
   `
 })
-export class RichTableComponent {
+export class DataTableComponent {
   private _columns: Column[];
   private _rows: any[];
 
-  tableData: RichTableCellContext[][];
+  tableData: DataTableCellContext[][];
 
   @Input() set columns(cols: Column[]) {
     console.log('new cols');
@@ -45,7 +45,7 @@ export class RichTableComponent {
 
   constructor() {}
 
-  updateTableData() {
+  private updateTableData() {
     if(this._rows && this._columns) {
       const data = [];
       for(let row of this._rows) {
@@ -59,8 +59,8 @@ export class RichTableComponent {
     }
   }
 
-  cellContext(row: any, column: Column): RichTableCellContext {
-    const context = new RichTableCellContext();
+  private cellContext(row: any, column: Column): DataTableCellContext {
+    const context = new DataTableCellContext();
     context.$implicit = row[column.key];
     context.row = row;
     context.column = column;
@@ -68,7 +68,7 @@ export class RichTableComponent {
   }
 }
 
-export class RichTableCellContext {
+export class DataTableCellContext {
   public $implicit: any = null;
   public row: any = null;
   public column: Column = null;

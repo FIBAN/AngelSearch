@@ -29,7 +29,6 @@ import { ErrorComponent } from "./error.component";
 import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
 import {DocumentModule} from "./documents/document.module";
 import {AngelModule} from "./angels/angel.module";
-import {TestComponent} from "./test.component";
 import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
@@ -54,8 +53,7 @@ import {SharedModule} from "./shared/shared.module";
     RegisterComponent,
     RegistrationNeededComponent,
     ErrorComponent,
-    EmailVerificationMissingComponent,
-    TestComponent
+    EmailVerificationMissingComponent
   ],
   providers: [
     AngelService,

@@ -1,23 +1,18 @@
-<table class="table table-sm">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Last Login</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let angel of angels; let i=index; let odd=odd">
-    <tr [class.odd]="odd">
-      <td class="monospace small">{{angel.id}}</td>
-      <td>{{angel.first_name}} {{angel.last_name}}</td>
-      <td>{{angel.email}}</td>
-      <td *ngIf="lastLoginForAngel(angel) as lastlogin; else neverActivated">{{lastlogin | date:'shortDate'}}</td>
-      <ng-template #neverActivated><td>Never</td></ng-template>
-      <td><a [routerLink]="['edit', angel.id]">View</a></td>
-    </tr>
-  </ng-container>
-  </tbody>
-</table>
+<data-table [columns]="columns" [rows]="angels"></data-table>
+
+<ng-template #idCell let-id>
+  <span class="monospace small">{{id}}</span>
+</ng-template>
+
+<ng-template #nameCell let-angel="row">
+  <span>{{angel.first_name}} {{angel.last_name}}</span>
+</ng-template>
+
+<ng-template #lastLoginCell let-angel="row">
+  <span *ngIf="lastLoginForAngel(angel) as lastlogin; else neverActivated">{{lastlogin | date:'shortDate'}}</span>
+  <ng-template #neverActivated><span>Never</span></ng-template>
+</ng-template>
+
+<ng-template #detailsCell let-angel="row">
+  <a [routerLink]="['edit', angel.id]">View</a>
+</ng-template>
