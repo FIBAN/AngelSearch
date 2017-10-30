@@ -26,7 +26,7 @@ import {AngelAdminService} from "./angel-admin.service";
     </div>
   `
 })
-export class AdminAngelsComponent implements OnInit {
+export class AngelsComponent implements OnInit {
   angels: Angel[];
   users: any[];
 

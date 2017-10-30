@@ -5,9 +5,10 @@ import {AuthGuard} from "../auth/auth-guard.service";
 import {AdminAuthGuard} from "../auth/admin-auth-guard.service";
 import {AdminDocumentsComponent} from "./documents/documents.component";
 import {ManageDocumentComponent} from "./documents/manage-document.component";
-import {AdminStartupsComponent} from "./startups/startups.component";
+import {StartupsComponent} from "./startups/startups.component";
 import {ManageStartupComponent} from "./startups/manage-startup.component";
 import {AdminComponent} from "./admin.component";
+import {AddStartupComponent} from "./startups/add-startup.component";
 
 export const routes: Routes = [
   {
@@ -18,8 +19,10 @@ export const routes: Routes = [
       { path: 'angels', loadChildren: 'app/admin/angels/admin-angel.module#AdminAngelModule' },
       { path: 'documents', component: AdminDocumentsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'documents/:documentId', component: ManageDocumentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-      { path: 'startups', component: AdminStartupsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-      { path: 'startups/:startupId', component: ManageStartupComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'startups', component: StartupsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'startups/edit', pathMatch: 'full', redirectTo: 'startups' },
+      { path: 'startups/edit/:startupId', component: ManageStartupComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'startups/add', component: AddStartupComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ]
   },
 ];

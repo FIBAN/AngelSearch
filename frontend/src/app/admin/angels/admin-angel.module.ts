@@ -1,6 +1,6 @@
 import { NgModule }           from '@angular/core';
-import {AdminAngelsComponent} from "./angels.component";
-import {AdminAngelListComponent} from "./angel-list.component";
+import {AngelsComponent} from "./angels.component";
+import {AngelListComponent} from "./angel-list.component";
 import {AddAngelComponent} from "./add-angel.component";
 import {AddMultipleAngelsComponent} from "./add-multiple-angels.component";
 import {ManageAngelComponent} from "./manage-angel.component";
@@ -12,8 +12,8 @@ import {AdminSharedModule} from "../shared/admin-shared.module";
 @NgModule({
   imports:      [ AdminSharedModule, AdminAngelRoutingModule ],
   declarations: [
-    AdminAngelsComponent,
-    AdminAngelListComponent,
+    AngelsComponent,
+    AngelListComponent,
     AddAngelComponent,
     AddMultipleAngelsComponent,
     ManageAngelComponent,

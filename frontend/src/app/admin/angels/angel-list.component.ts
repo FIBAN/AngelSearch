@@ -8,7 +8,7 @@ import {DataTableCellContext} from "../shared/data-table.component";
   selector: 'admin-angel-list',
   templateUrl: 'angel-list.component.html'
 })
-export class AdminAngelListComponent implements OnInit {
+export class AngelListComponent implements OnInit {
   @Input() angels: Angel[];
   @Input() users: any[];
 

@@ -45,7 +45,6 @@ export class NewAngelFormComponent implements OnInit {
   }
 
   updateIndustries(newIndustries) {
-    console.log(newIndustries);
     this.industries = newIndustries;
   }
 
