@@ -1,0 +1,24 @@
+<back-button></back-button>
+<h3 class="text-center">New Document</h3>
+
+<form [formGroup]="documentForm" (ngSubmit)="submit()" (keydown.enter)="$event.preventDefault()">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" required formControlName="name">
+  </div>
+
+  <div class="form-group">
+    <label for="type">Type</label>
+    <select type="text" class="form-control" id="type" formControlName="type" (change)="documentTypeChanged($event)">
+      <option value="file">File</option>
+      <option value="folder">Folder</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="download_url">Download URL</label>
+    <input type="text" class="form-control" id="download_url" formControlName="download_url">
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="!documentForm.valid">Submit</button>
+</form>

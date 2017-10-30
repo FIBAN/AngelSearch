@@ -64,7 +64,7 @@ type FolderChoice = {id: string, path: string};
             </tbody>
           </table>
           <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
-          <a routerLink="/admin/documents" class="btn btn-secondary">Discard Changes</a>
+          <a href="#" (click)="navigateBack(); false" class="btn btn-secondary">Discard Changes</a>
           <button class="btn btn-danger pull-right" (click)="deleteDocument()">Delete Document</button>
         </form>
       </div>
@@ -150,16 +150,18 @@ export class ManageDocumentComponent implements OnInit {
       }
     }
     this.documentService.updateDocument(this.document)
-      .then(() => {
-        this.router.navigate(['/admin/documents'])
-      });
+      .then(() => this.navigateBack());
   }
 
   deleteDocument(): void {
     this.documentService.deleteDocument(this.document.id)
-      .then(() =>
-        this.router.navigate(['/admin/documents'])
-      );
+      .then(() => this.navigateBack());
+  }
+
+  private navigateBack(): void {
+    const navigationExtras = {};
+    if(this.document.parent) navigationExtras['queryParams'] = {parent: this.document.parent};
+    this.router.navigate(['/admin/documents'], navigationExtras)
   }
 
 }

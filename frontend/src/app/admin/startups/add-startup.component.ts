@@ -14,7 +14,6 @@ import {ActivatedRoute, Router} from "@angular/router";
   ]
 })
 export class AddStartupComponent implements OnInit {
-  startups: Startup[];
   angels: Angel[];
 
   startupForm: FormGroup;
@@ -29,7 +28,6 @@ export class AddStartupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startupService.getStartups().then((startups) => this.startups = startups);
     this.angelService.getAngels().then((angels) => this.angels = angels);
 
     this.startupForm = this.fb.group({
