@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -11,10 +11,12 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class BackButtonComponent {
 
+  @Input() navigationExtras;
+
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   navigateBack() {
     console.log('route', this.route.snapshot);
-    this.router.navigate(['..'], {relativeTo: this.route})
+    this.router.navigate(['..'], {relativeTo: this.route, ...this.navigationExtras})
   }
 }

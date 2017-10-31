@@ -1,0 +1,121 @@
+<back-button></back-button>
+<h3 class="text-center">{{startup?.company_name}}</h3>
+<div class="card mb-2">
+  <div class="card-header">Details</div>
+  <div class="card-body">
+    <form *ngIf="startupForm" [formGroup]="startupForm">
+      <table class="table">
+        <tbody>
+        <!-- ID -->
+        <tr>
+          <td>Id</td>
+          <td>{{startup?.id}}</td>
+        </tr>
+
+        <!-- Created -->
+        <tr>
+          <td>Created</td>
+          <td>{{startup?.created_at | date:'medium'}}</td>
+        </tr>
+
+        <!-- Last Updated -->
+        <tr>
+          <td>Last Updated</td>
+          <td>{{startup?.updated_at | date:'medium'}}</td>
+        </tr>
+
+        <!-- Lead Angel -->
+        <tr>
+          <td>Lead Angel</td>
+          <td>
+            <select class="form-control" formControlName="lead_angel_id">
+              <option *ngFor="let angel of angels | angelSorter:['first_name', 'last_name']" value="{{angel.id}}">{{angel.first_name}} {{angel.last_name}}</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- Company Name -->
+        <tr>
+          <td>Company Name</td>
+          <td><input class="form-control" formControlName="company_name"></td>
+        </tr>
+
+        <!-- Oneliner -->
+        <tr>
+          <td>Oneline</td>
+          <td><input class="form-control" formControlName="oneliner"></td>
+        </tr>
+
+        <!-- Industry -->
+        <tr>
+          <td>Industry</td>
+          <td><input class="form-control" formControlName="industry"></td>
+        </tr>
+
+        <!-- Website-->
+        <tr>
+          <td>Website</td>
+          <td><input class="form-control" formControlName="website"></td>
+        </tr>
+
+        <!-- City-->
+        <tr>
+          <td>City</td>
+          <td><input class="form-control" formControlName="city"></td>
+        </tr>
+
+        <!-- Country-->
+        <tr>
+          <td>Country</td>
+          <td><input class="form-control" formControlName="country"></td>
+        </tr>
+
+        <!-- Entrepreneur Name -->
+        <tr>
+          <td>Entrepreneur Name</td>
+          <td><input class="form-control" formControlName="entrepreneur_name"></td>
+        </tr>
+
+        <!-- Entrepreneur Email -->
+        <tr>
+          <td>Entrepreneur Email</td>
+          <td><input class="form-control" formControlName="entrepreneur_email"></td>
+        </tr>
+
+        <!-- Entrepreneur Phone-->
+        <tr>
+          <td>Entrepreneur Phone</td>
+          <td><input class="form-control" formControlName="entrepreneur_phone"></td>
+        </tr>
+
+        <!-- Round size and Open tickets -->
+        <tr>
+          <td>Round size and Open tickets</td>
+          <td><input class="form-control" formControlName="round_size_and_open_tickets"></td>
+        </tr>
+
+        <!-- Valuation -->
+        <tr>
+          <td>Valuation</td>
+          <td><input class="form-control" formControlName="valuation"></td>
+        </tr>
+
+        <!-- Already committed -->
+        <tr>
+          <td>Already committed (%)</td>
+          <td><input class="form-control" formControlName="committed_percentage"></td>
+        </tr>
+
+        <!-- Pitch Deck Link -->
+        <tr>
+          <td>Pitch Deck Link</td>
+          <td><input class="form-control" formControlName="pitch_deck_link"></td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
+      <a routerLink="/admin/startups" class="btn btn-secondary" >Discard Changes</a>
+      <button class="btn btn-danger pull-right" (click)="deleteStartup()">Delete Startup</button>
+    </form>
+  </div>
+</div>

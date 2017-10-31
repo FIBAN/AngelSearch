@@ -1,0 +1,61 @@
+<back-button [navigationExtras]="{queryParams: {parent: document?.parent}}"></back-button>
+<h3 class="text-center">{{document?.name}}</h3>
+<div class="row">
+  <div class="col">
+    <form *ngIf="documentForm" [formGroup]="documentForm">
+      <table class="table">
+        <tbody>
+        <!-- ID -->
+        <tr>
+          <td>Id</td>
+          <td>{{document?.id}}</td>
+        </tr>
+
+        <!-- Type -->
+        <tr>
+          <td>Type</td>
+          <td>{{document?.type}}</td>
+        </tr>
+
+        <!-- Created -->
+        <tr>
+          <td>Created</td>
+          <td>{{document?.created_at | date:'medium'}}</td>
+        </tr>
+
+        <!-- Last Updated -->
+        <tr>
+          <td>Last Updated</td>
+          <td>{{document?.updated_at | date:'medium'}}</td>
+        </tr>
+
+        <!-- Name -->
+        <tr>
+          <td>Name</td>
+          <td><input class="form-control" formControlName="name"></td>
+        </tr>
+
+        <!-- Download URL -->
+        <tr *ngIf="document.type === 'file'">
+          <td>Download URL</td>
+          <td><input class="form-control" formControlName="download_url"></td>
+        </tr>
+
+        <!-- Parent -->
+        <tr>
+          <td>Parent</td>
+          <td>
+            <select class="form-control" formControlName="parent">
+              <option value="">Root</option>
+              <option *ngFor="let folderChoice of folderChoices" value="{{folderChoice.id}}">{{folderChoice.path}}</option>
+            </select>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
+      <a href="#" (click)="navigateBack(); false" class="btn btn-secondary">Discard Changes</a>
+      <button class="btn btn-danger pull-right" (click)="deleteDocument()">Delete Document</button>
+    </form>
+  </div>
+</div>
