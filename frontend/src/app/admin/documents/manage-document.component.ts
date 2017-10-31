@@ -3,6 +3,7 @@ import {ActivatedRoute, ParamMap, Router, Routes} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DocumentService} from "../../documents/document.service";
 import {Document} from "../../documents/document";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 type FolderChoice = {id: string, path: string};
 
@@ -23,7 +24,8 @@ export class ManageDocumentComponent implements OnInit {
     private documentService: DocumentService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NgbModal
   ){}
 
   ngOnInit(): void {
@@ -89,6 +91,12 @@ export class ManageDocumentComponent implements OnInit {
     }
     this.documentService.updateDocument(this.document)
       .then(() => this.navigateBack());
+  }
+
+  showDeleteModal(content) {
+      this.modalService.open(content).result.then(result => {
+        if(result) this.deleteDocument();
+      });
   }
 
   deleteDocument(): void {

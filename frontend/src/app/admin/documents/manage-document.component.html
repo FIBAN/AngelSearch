@@ -55,7 +55,15 @@
       </table>
       <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
       <a href="#" (click)="navigateBack(); false" class="btn btn-secondary">Discard Changes</a>
-      <button class="btn btn-danger pull-right" (click)="deleteDocument()">Delete Document</button>
+      <button class="btn btn-danger pull-right" (click)="confirmDeleteModal.open()">Delete Document</button>
     </form>
   </div>
 </div>
+
+<confirm-modal #confirmDeleteModal
+               [body]="deleteModalBody"
+               [buttons]="[{text: 'Cancel', type: 'secondary'}, {text: 'Delete', type: 'danger', handler: deleteDocument.bind(this)}]"
+></confirm-modal>
+<ng-template #deleteModalBody>
+  <p>Do you want to delete document: <span class="font-weight-bold">{{document.name}}</span>?</p>
+</ng-template>

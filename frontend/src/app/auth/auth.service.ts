@@ -105,11 +105,11 @@ export class AuthService {
               const savedRedirect = localStorage.getItem("redirectAfterLogin");
               resolve(savedRedirect ? savedRedirect : '/angels');
             })
-            .catch(err => reject({context: context, error: err}));
+            .catch(err => reject({context: {...context, result: authResult}, error: err}));
         } else if (err) {
-          reject({context: context, error: err});
+          reject({context: {...context, result: authResult}, error: err});
         } else {
-          reject({context: context, error: "Unknown error"})
+          reject({context: {...context, result: authResult}, error: "Unknown error"})
         }
       });
     });

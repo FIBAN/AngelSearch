@@ -9,7 +9,7 @@ import {AngelFilter} from "./angel-filter";
     <div class="card mb-3">
       <div class="card-header">Filters</div>
       <div class="card-body">
-        <form [formGroup]="filtersForm" novalidate>
+        <form [formGroup]="filtersForm" (keydown.enter)="$event.preventDefault()" novalidate>
           <div class="form-row align-items-center">
             <div class="col-lg-3 col-12 mb-lg-0 mb-2">
               <label for="searchString" class="sr-only">Search</label>
