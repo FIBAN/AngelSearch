@@ -14,7 +14,7 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@an
 })
 export class EditableIndustryListComponent {
 
-  private displayedIndustries: string[];
+  displayedIndustries: string[];
 
   @Input() set industries(industries: string[]) {
     this.displayedIndustries = industries.slice(0);
