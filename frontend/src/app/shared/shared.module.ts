@@ -5,6 +5,7 @@ import {ChildOfPipe} from "./child-of.pipe";
 import {AngelSorterPipe} from "./angel-sorter.pipe";
 import {EditableIndustryListComponent} from "./editable-industry-list.component";
 import {LinkedinProfileLinkComponent} from "./linkedin-profile-link.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   imports:      [ CommonModule ],
@@ -15,6 +16,7 @@ import {LinkedinProfileLinkComponent} from "./linkedin-profile-link.component";
     EditableIndustryListComponent,
     LinkedinProfileLinkComponent,
     CommonModule,
+    NgbModule,
     FormsModule,
     ReactiveFormsModule
   ]

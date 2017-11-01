@@ -50,9 +50,11 @@
 
     <!-- Industries -->
     <td class="d-none d-lg-table-cell industry-column">
-      <div *ngIf="angel.industries" [class.many-industries]="angel?.industries.length > 3">
-        <span *ngFor="let industry of angel.industries.slice(0, 3)" class="badge badge-dark industry-badge">{{industry}}</span>
-      </div>
+      <div *ngFor="let industry of angel?.industries.slice(0, 3)" class="badge badge-dark industry-badge">{{industry}}</div>
+      <div *ngIf="angel?.industries.length > 3" class="badge badge-dark industry-badge" [ngbTooltip]="tipContent">. . .</div>
+      <ng-template #tipContent>
+          <div *ngFor="let industry of angel?.industries.slice(3); last as isLast">{{industry}}</div>
+      </ng-template>
     </td>
 
     <!-- Investments -->
