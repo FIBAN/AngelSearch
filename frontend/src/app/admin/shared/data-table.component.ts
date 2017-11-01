@@ -5,7 +5,7 @@ type Column = {name: string, key: string, cellTemplate: TemplateRef<any> | null}
 @Component({
   selector: 'data-table',
   template: `
-    <table class="table table-striped table-sm table-responsive">
+    <table class="table table-striped table-sm">
       <thead>
         <th *ngFor="let column of columns">{{column.name}}</th>
       </thead>
