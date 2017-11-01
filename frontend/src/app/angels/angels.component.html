@@ -62,7 +62,7 @@
 
     <!-- LinkedIn -->
     <td class="d-none d-md-table-cell">
-      <a *ngIf="angel.linkedin" target="_blank" href="https://www.linkedin.com/in/{{angel.linkedin}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
+      <linkedin-profile-link *ngIf="angel.linkedin" [profileId]="angel.linkedin"></linkedin-profile-link>
     </td>
   </tr>
   <tr *ngIf="!angels || !angels.length">

@@ -7,10 +7,10 @@
 
   <div class="col-lg-4">
     <div class="card">
-      <div class="card-header">Actions</div>
+      <div class="card-header">Contact</div>
       <div class="card-body">
         <a href="mailto:{{angel.email}}" class="btn btn-success mr-1"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
-        <a href="tel:{{angel.phone}}" class="btn btn-info"><i class="fa fa-phone" aria-hidden="true"></i> Call</a>
+        <a *ngIf="angel.phone" href="tel:{{angel.phone}}" class="btn btn-info"><i class="fa fa-phone" aria-hidden="true"></i> Call</a>
       </div>
     </div>
   </div>

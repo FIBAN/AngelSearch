@@ -21,7 +21,7 @@ import { Angel } from './angel';
     </div>
 
     <ng-template #linkedInTmpl>
-      <a *ngIf="angel.linkedin" target="_blank" href="https://www.linkedin.com/in/{{angel.linkedin}}/" class="linkedin-link"><i class="fa fa-linkedin-square" aria-hidden="true"></i> profile</a>
+      <linkedin-profile-link *ngIf="angel.linkedin" [profileId]="angel.linkedin"></linkedin-profile-link>
     </ng-template>
     <ng-template #investmentLevelTmpl>
       {{investmentLevelStr(angel.investment_level)}}
