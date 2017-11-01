@@ -1,10 +1,10 @@
 import { Component, OnInit} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
-import {Document} from "../../documents/document";
-import {DocumentService} from "../../documents/document.service";
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import {Document} from '../../documents/document';
+import {DocumentService} from '../../documents/document.service';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   template: `

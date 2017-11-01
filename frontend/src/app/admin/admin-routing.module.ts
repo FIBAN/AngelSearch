@@ -1,15 +1,15 @@
-import { NgModule }            from '@angular/core';
+import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {AuthGuard} from "../auth/auth-guard.service";
-import {AdminAuthGuard} from "../auth/admin-auth-guard.service";
-import {DocumentsComponent} from "./documents/documents.component";
-import {ManageDocumentComponent} from "./documents/manage-document.component";
-import {StartupsComponent} from "./startups/startups.component";
-import {ManageStartupComponent} from "./startups/manage-startup.component";
-import {AdminComponent} from "./admin.component";
-import {AddStartupComponent} from "./startups/add-startup.component";
-import {AddDocumentComponent} from "./documents/add-document.component";
+import {AuthGuard} from '../auth/auth-guard.service';
+import {AdminAuthGuard} from '../auth/admin-auth-guard.service';
+import {DocumentsComponent} from './documents/documents.component';
+import {ManageDocumentComponent} from './documents/manage-document.component';
+import {StartupsComponent} from './startups/startups.component';
+import {ManageStartupComponent} from './startups/manage-startup.component';
+import {AdminComponent} from './admin.component';
+import {AddStartupComponent} from './startups/add-startup.component';
+import {AddDocumentComponent} from './documents/add-document.component';
 
 export const routes: Routes = [
   {

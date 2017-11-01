@@ -4,9 +4,9 @@ import { AngelService } from '../angels/angel.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
-import {Startup} from "./startup";
-import {StartupService} from "./startup.service";
-import {Angel} from "../angels/angel";
+import {Startup} from './startup';
+import {StartupService} from './startup.service';
+import {Angel} from '../angels/angel';
 
 @Component({
   selector: 'startup-details',

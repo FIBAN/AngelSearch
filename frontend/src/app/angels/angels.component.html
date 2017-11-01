@@ -40,12 +40,12 @@
       <a [routerLink]="['/angels', angel.id]"
          routerLinkActive="true"
          class="font-weight-bold text-dark"
-      ><search-highlight [text]="nameString(angel)" [query]="filter.searchString"></search-highlight></a>
+      ><angel-search-highlight [text]="nameString(angel)" [query]="filter.searchString"></angel-search-highlight></a>
     </td>
 
     <!-- Location -->
     <td>
-      <search-highlight [text]="locationString(angel)" [query]="filter.searchString"></search-highlight>
+      <angel-search-highlight [text]="locationString(angel)" [query]="filter.searchString"></angel-search-highlight>
     </td>
 
     <!-- Industries -->
@@ -64,7 +64,7 @@
 
     <!-- LinkedIn -->
     <td class="d-none d-md-table-cell">
-      <linkedin-profile-link *ngIf="angel.linkedin" [profileId]="angel.linkedin"></linkedin-profile-link>
+      <nban-linkedin-profile-link *ngIf="angel.linkedin" [profileId]="angel.linkedin"></nban-linkedin-profile-link>
     </td>
   </tr>
   <tr *ngIf="!angels || !angels.length">

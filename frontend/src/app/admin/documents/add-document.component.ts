@@ -1,9 +1,9 @@
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {DocumentService} from "../../documents/document.service";
-import {Document} from "../../documents/document";
-import {Observable} from "rxjs/Observable";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {DocumentService} from '../../documents/document.service';
+import {Document} from '../../documents/document';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   templateUrl: 'add-document.component.html',
@@ -27,10 +27,10 @@ export class AddDocumentComponent implements OnInit {
 
   ngOnInit(): void {
 
-      this.documentForm= this.fb.group({
-        name: "",
-        download_url: "",
-        type: "file"
+      this.documentForm = this.fb.group({
+        name: '',
+        download_url: '',
+        type: 'file'
       });
 
       this.route.queryParamMap
@@ -43,8 +43,8 @@ export class AddDocumentComponent implements OnInit {
   documentTypeChanged(event) {
     console.log('change event', event);
     const downloadUrlInput = this.documentForm.get('download_url');
-    if(event.target.value === 'folder') {
-      downloadUrlInput.setValue("");
+    if (event.target.value === 'folder') {
+      downloadUrlInput.setValue('');
       downloadUrlInput.disable();
     }
     else {
@@ -54,13 +54,15 @@ export class AddDocumentComponent implements OnInit {
 
   submit(): void {
     this.documentService.createDocument(this.documentFromForm())
-      .then(() => this.router.navigate(['..'], {queryParams: {parent: this.currentFolderId},relativeTo: this.route}));
+      .then(() => this.router.navigate(['..'], {queryParams: {parent: this.currentFolderId}, relativeTo: this.route}));
   }
 
   private documentFromForm(): Document {
     const rawDocument = this.documentForm.getRawValue();
-    if(this.currentFolderId) rawDocument.parent = this.currentFolderId;
-    if(rawDocument.type === 'folder') {
+    if (this.currentFolderId) {
+      rawDocument.parent = this.currentFolderId;
+    }
+    if (rawDocument.type === 'folder') {
       rawDocument.download_url = undefined;
     }
     return rawDocument as Document;

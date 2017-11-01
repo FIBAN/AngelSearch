@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 
 @Component({
-  template: `    
+  template: `
     <div class="row">
       <div class="col col-lg-2">
         <h3>Manage</h3>

@@ -1,9 +1,9 @@
-import { NgModule }            from '@angular/core';
-import { RouterModule }        from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import {AuthGuard} from "../auth/auth-guard.service";
-import {AngelDetailsComponent} from "./angel-details.component";
-import {AngelsComponent} from "./angels.component";
+import {AuthGuard} from '../auth/auth-guard.service';
+import {AngelDetailsComponent} from './angel-details.component';
+import {AngelsComponent} from './angels.component';
 
 @NgModule({
   imports: [RouterModule.forChild([

@@ -1,7 +1,7 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'linkedin-profile-link',
+  selector: 'nban-linkedin-profile-link',
   template: `
     <a target="_blank" href="https://www.linkedin.com/in/{{profileId}}/" class="linkedin-link">
       <i class="fa fa-linkedin-square" aria-hidden="true"></i> profile

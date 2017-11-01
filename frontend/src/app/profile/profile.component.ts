@@ -2,7 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 
 import { Angel } from '../angels/angel';
 import { AngelService } from '../angels/angel.service';
-import { Utils } from "../utils/parsers";
+import { Utils } from '../utils/parsers';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -41,7 +41,8 @@ export class ProfileComponent implements OnInit {
       {name: 'Country', key: 'country', editable: true},
       {name: 'Network', key: 'network', editable: true},
       {name: 'LinkedIn', key: 'linkedin', editable: true},
-      {name: 'Investments', key: 'investment_level', editable: true, viewTemplate: this.investmentLevelViewTmpl, editTemplate: this.investmentLevelEditTmpl},
+      {name: 'Investments', key: 'investment_level', editable: true,
+        viewTemplate: this.investmentLevelViewTmpl, editTemplate: this.investmentLevelEditTmpl},
       {name: 'Industries', key: 'industries', editable: true, viewTemplate: this.industriesViewTmpl, editTemplate: this.industriesEditTmpl},
       {name: 'Bio', key: 'bio', editable: true},
     ];
@@ -51,16 +52,18 @@ export class ProfileComponent implements OnInit {
 
   loadProfile(): Promise<void> {
     this.edits = {};
-    this.activeEdit = "";
+    this.activeEdit = '';
     return this.angelService.getMyAngel().then(angel => {
       this.angel = angel;
-      for(let k in angel){
-        if(angel.hasOwnProperty(k)) this.edits[k] = angel[k];
+      for (const k in angel) {
+        if (angel.hasOwnProperty(k)) {
+          this.edits[k] = angel[k];
+        }
       }
-      //deep copy industries array
+      // deep copy industries array
       this.edits.industries = [];
-      if(angel.industries) {
-        for (let i of angel.industries) {
+      if (angel.industries) {
+        for (const i of angel.industries) {
           this.edits.industries.push(i);
         }
       }
@@ -72,26 +75,26 @@ export class ProfileComponent implements OnInit {
   }
 
   stopEdit(): void {
-    this.activeEdit = "";
+    this.activeEdit = '';
   }
 
   saveEdit(key): void {
-    if(key === 'linkedin') {
+    if (key === 'linkedin') {
       this.edits.linkedin = Utils.parseLinkedInId(this.edits.linkedin);
     }
-    let toBeSavedEdits = {id: this.angel.id};
+    const toBeSavedEdits = {id: this.angel.id};
     toBeSavedEdits[key] = this.edits[key];
-    this.activeEdit = "";
+    this.activeEdit = '';
     this.saving = key;
     this.angelService.updateAngel(toBeSavedEdits as Angel)
       .then(() => this.loadProfile())
-      .then(() => this.saving = "")
+      .then(() => this.saving = '')
       .catch(() => location.reload());
   }
 
   removeIndustry(industry): void {
     const idx = this.edits.industries.indexOf(industry);
-    if(idx !== -1) {
+    if (idx !== -1) {
       this.edits.industries.splice(idx, 1);
     }
   }
@@ -106,7 +109,7 @@ export class ProfileComponent implements OnInit {
         }
       }
     }
-    this.newIndustry = "";
+    this.newIndustry = '';
   }
 
 }

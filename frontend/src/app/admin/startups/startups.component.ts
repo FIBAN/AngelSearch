@@ -1,8 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
-import {Startup} from "../../startups/startup";
-import {StartupService} from "../../startups/startup.service";
+import {Startup} from '../../startups/startup';
+import {StartupService} from '../../startups/startup.service';
 
 @Component({
   template: `

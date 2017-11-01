@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
-import {DataTableCellContext} from "../shared/data-table.component";
+import {DataTableCellContext} from '../shared/data-table.component';
 
 @Component({
   selector: 'admin-document-list',
   template: `
-    <data-table [columns]="columns" [rows]="documents|childOfDocument:currentFolderId"></data-table>
+    <nban-data-table [columns]="columns" [rows]="documents|childOfDocument:currentFolderId"></nban-data-table>
 
     <ng-template #idCell let-id>
       <span class="monospace small">{{id}}</span>

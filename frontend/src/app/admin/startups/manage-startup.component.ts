@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router, Routes} from "@angular/router";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {AngelService} from "../../angels/angel.service";
-import {StartupService} from "../../startups/startup.service";
-import {Startup} from "../../startups/startup";
-import {Angel} from "../../angels/angel";
+import {ActivatedRoute, ParamMap, Router, Routes} from '@angular/router';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {AngelService} from '../../angels/angel.service';
+import {StartupService} from '../../startups/startup.service';
+import {Startup} from '../../startups/startup';
+import {Angel} from '../../angels/angel';
 
 @Component({
   templateUrl: 'manage-startup.component.html',
@@ -25,7 +25,7 @@ export class ManageStartupComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
-  ){}
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap
@@ -56,8 +56,8 @@ export class ManageStartupComponent implements OnInit {
 
   saveChanges(): void {
     const formData = this.startupForm.getRawValue();
-    for(let k in formData) {
-      if(formData.hasOwnProperty(k)) {
+    for (const k in formData) {
+      if (formData.hasOwnProperty(k)) {
         this.startup[k] = formData[k];
       }
     }

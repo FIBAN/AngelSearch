@@ -1,12 +1,17 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'editable-industry-list',
+  selector: 'nban-editable-industry-list',
   template: `
     <ul class="list-unstyled">
-      <li *ngFor="let industry of displayedIndustries">{{industry}} <a class="edit-button" (click)="removeIndustry(industry)"><i class="fa fa-times text-danger" aria-hidden="true"></i></a></li>
+      <li *ngFor="let industry of displayedIndustries">
+        {{industry}} <a class="edit-button" (click)="removeIndustry(industry)"
+      ><i class="fa fa-times text-danger" aria-hidden="true"></i></a>
+      </li>
       <li class="form-inline">
-        <input #newIndustry class="form-control mb-2 mr-sm-2 mb-sm-0" (keyup.enter)="addIndustry(newIndustry.value)" placeholder="Add an industry">
+        <input #newIndustry class="form-control mb-2 mr-sm-2 mb-sm-0"
+               (keyup.enter)="addIndustry(newIndustry.value)" placeholder="Add an industry"
+        >
         <button class="btn btn-success" (click)="addIndustry(newIndustry.value)">Add</button>
       </li>
     </ul>
@@ -37,7 +42,7 @@ export class EditableIndustryListComponent {
         }
       }
       this.onChange.next(this.displayedIndustries);
-      this.newIndustryInput.nativeElement.value = "";
+      this.newIndustryInput.nativeElement.value = '';
     }
   }
 

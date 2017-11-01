@@ -1,10 +1,10 @@
-import {Component, OnInit} from "@angular/core";
-import {Startup} from "../../startups/startup";
-import {Angel} from "../../angels/angel";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {StartupService} from "../../startups/startup.service";
-import {AngelService} from "../../angels/angel.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Startup} from '../../startups/startup';
+import {Angel} from '../../angels/angel';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {StartupService} from '../../startups/startup.service';
+import {AngelService} from '../../angels/angel.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   templateUrl: 'add-startup.component.html',

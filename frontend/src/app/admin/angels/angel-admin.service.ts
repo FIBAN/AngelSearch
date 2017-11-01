@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class AngelAdminService {
@@ -15,7 +15,7 @@ export class AngelAdminService {
     return this.authHttp
       .get(this.usersUrl)
       .toPromise()
-      .then(response=>response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
 

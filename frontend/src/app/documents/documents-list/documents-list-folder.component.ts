@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Document} from "../document";
+import {Document} from '../document';
 
 @Component({
-  selector: 'documents-list-folder',
-  template: `    
+  selector: 'document-list-folder',
+  template: `
     <div class="document-row row" [class.last]="last">
       <div class="col-12">
         <div class="folder-row row">
@@ -23,8 +23,10 @@ import {Document} from "../document";
           <div class="col pl-5">
             <ul class="list-unstyled">
               <li *ngFor="let document of childDocuments; let i = index">
-                  <documents-list-folder *ngIf="document.type === 'folder'" [documents]="documents" [folder]="document" [last]="i === childDocuments.length - 1"></documents-list-folder>
-                  <documents-list-row-item *ngIf="document.type === 'file'" [document]="document" [last]="i === childDocuments.length - 1"></documents-list-row-item>
+                <document-list-folder *ngIf="document.type === 'folder'" [documents]="documents" [folder]="document"
+                                      [last]="i === childDocuments.length - 1"></document-list-folder>
+                <document-list-row-item *ngIf="document.type === 'file'" [document]="document"
+                                        [last]="i === childDocuments.length - 1"></document-list-row-item>
               </li>
               <li *ngIf="childDocuments.length == 0">
                 <div class="document-row row last">
@@ -48,10 +50,10 @@ export class DocumentsListFolderComponent implements OnChanges {
   expanded = false;
   childDocuments: Document[];
 
-  constructor(){}
+  constructor() {}
 
   ngOnChanges() {
-    if(this.folder.id && this.documents) {
+    if (this.folder.id && this.documents) {
       this.childDocuments = this.documents
         .filter(d => d.parent === this.folder.id)
         .sort(Document.compareTypeAndName);

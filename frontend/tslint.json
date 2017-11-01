@@ -70,7 +70,6 @@
       true,
       "check-open-brace",
       "check-catch",
-      "check-else",
       "check-whitespace"
     ],
     "prefer-const": true,
@@ -110,13 +109,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      ["nban", "angel", "startup", "admin", "document"],
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      ["nban", "angel", "startup", "admin", "document"],
       "kebab-case"
     ],
     "use-input-property-decorator": true,

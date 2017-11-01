@@ -1,18 +1,18 @@
 import {Component} from '@angular/core';
 
 import { AuthService } from './auth/auth.service';
-import { NavigationEnd, Router } from "@angular/router";
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'angel-search',
   templateUrl: 'app.component.html',
   styleUrls : ['app.component.scss']
 })
-export class AppComponent{
+export class AppComponent {
   authenticated: boolean;
   authorized: boolean;
   isAdmin: boolean;
-  hideLogin: boolean = false;
+  hideLogin = false;
 
   isNavbarCollapsed = true;
 
@@ -22,7 +22,7 @@ export class AppComponent{
   ) {
 
     router.events.subscribe((event) => {
-      if(event instanceof NavigationEnd) {
+      if (event instanceof NavigationEnd) {
         this.hideLogin = event.url.startsWith('/invite');
       }
     });

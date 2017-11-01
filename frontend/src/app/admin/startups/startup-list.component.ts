@@ -2,12 +2,12 @@ import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 
 import { Angel } from '../../angels/angel';
 import 'rxjs/add/operator/switchMap';
-import {DataTableCellContext} from "../shared/data-table.component";
+import {DataTableCellContext} from '../shared/data-table.component';
 
 @Component({
   selector: 'admin-startup-list',
   template: `
-    <data-table [columns]="columns" [rows]="startups"></data-table>
+    <nban-data-table [columns]="columns" [rows]="startups"></nban-data-table>
 
     <ng-template #idCell let-id>
       <span class="monospace small">{{id}}</span>

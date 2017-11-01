@@ -1,9 +1,15 @@
 import {Component, Input, TemplateRef} from '@angular/core';
 
-type Column = {name: string, key: string, cellTemplate: TemplateRef<any> | null}
+interface Column {name: string, key: string, cellTemplate: TemplateRef<any> | null}
+
+export class DataTableCellContext {
+  public $implicit: any = null;
+  public row: any = null;
+  public column: Column = null;
+}
 
 @Component({
-  selector: 'data-table',
+  selector: 'nban-data-table',
   template: `
     <table class="table table-striped table-sm">
       <thead>
@@ -12,8 +18,8 @@ type Column = {name: string, key: string, cellTemplate: TemplateRef<any> | null}
       <tbody>
         <tr *ngFor="let row of tableData">
           <td *ngFor="let cell of row">
-            <ng-container 
-              *ngIf="cell.column.cellTemplate; else defaultCell" 
+            <ng-container
+              *ngIf="cell.column.cellTemplate; else defaultCell"
               [ngTemplateOutlet]="cell.column.cellTemplate"
               [ngTemplateOutletContext]="cell"
             ></ng-container>
@@ -46,11 +52,11 @@ export class DataTableComponent {
   constructor() {}
 
   private updateTableData() {
-    if(this._rows && this._columns) {
+    if (this._rows && this._columns) {
       const data = [];
-      for(let row of this._rows) {
+      for (const row of this._rows) {
         const rowCells = [];
-        for (let column of this._columns) {
+        for (const column of this._columns) {
           rowCells.push(this.cellContext(row, column));
         }
         data.push(rowCells)
@@ -66,10 +72,4 @@ export class DataTableComponent {
     context.column = column;
     return context;
   }
-}
-
-export class DataTableCellContext {
-  public $implicit: any = null;
-  public row: any = null;
-  public column: Column = null;
 }

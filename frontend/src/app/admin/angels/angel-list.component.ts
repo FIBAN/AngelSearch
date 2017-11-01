@@ -2,7 +2,7 @@ import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 
 import { Angel } from '../../angels/angel';
 import 'rxjs/add/operator/switchMap';
-import {DataTableCellContext} from "../shared/data-table.component";
+import {DataTableCellContext} from '../shared/data-table.component';
 
 @Component({
   selector: 'admin-angel-list',
@@ -32,10 +32,10 @@ export class AngelListComponent implements OnInit {
   }
 
   lastLoginForAngel(angel: Angel): string {
-    if(this.users) {
+    if (this.users) {
       return this.findLastLogin(this.users, angel.id);
     } else {
-      return "";
+      return '';
     }
   }
 
@@ -46,7 +46,7 @@ export class AngelListComponent implements OnInit {
       .sort()
       .reverse();
 
-    return (accountLoginsSorted && accountLoginsSorted.length) ? accountLoginsSorted[0] : "";
+    return (accountLoginsSorted && accountLoginsSorted.length) ? accountLoginsSorted[0] : '';
   }
 
 }

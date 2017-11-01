@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
-import { environment} from "../../environments/environment"
+import { environment} from '../../environments/environment'
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,10 +11,10 @@ import { Angel } from './angel';
 export class AngelService {
   // Define the routes we are going to interact with
   private angelsUrl = environment.backend + '/angels';
-  private angelDetailsUrl(angelId: string) { return this.angelsUrl + '/' + angelId; }
   private meUrl = environment.backend + '/me';
-  private angelInviteUrl(angelId: string) { return this.angelDetailsUrl(angelId) + '/invitations'}
   private invitationsUrl = environment.backend + '/invitations';
+  private angelDetailsUrl(angelId: string) { return this.angelsUrl + '/' + angelId; }
+  private angelInviteUrl(angelId: string) { return this.angelDetailsUrl(angelId) + '/invitations'}
   private invitationDetailsUrl(inviteId: string) { return this.invitationsUrl + '/' + inviteId; }
   private invitationAcceptUrl(inviteId: string) { return this.invitationsUrl + '/' + inviteId + '/accept'; }
 
@@ -24,7 +24,7 @@ export class AngelService {
     return this.authHttp
       .get(this.angelsUrl)
       .toPromise()
-      .then(response=>response.json() as Angel[])
+      .then(response => response.json() as Angel[])
       .catch(this.handleError);
   }
 
@@ -33,7 +33,7 @@ export class AngelService {
     return this.authHttp
       .get(this.angelDetailsUrl(angelId))
       .toPromise()
-      .then(response=>response.json() as Angel)
+      .then(response => response.json() as Angel)
       .catch(this.handleError);
   }
 
@@ -41,7 +41,7 @@ export class AngelService {
     return this.authHttp
       .get(this.meUrl)
       .toPromise()
-      .then(response=>response.json() as Angel)
+      .then(response => response.json() as Angel)
       .catch(this.handleError);
   }
 
@@ -49,7 +49,7 @@ export class AngelService {
     return this.authHttp
       .put(this.angelDetailsUrl(angel.id), angel)
       .toPromise()
-      .then(response=>response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
 

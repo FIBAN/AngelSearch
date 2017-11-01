@@ -1,9 +1,9 @@
-import { NgModule }            from '@angular/core';
-import { RouterModule }        from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import { StartupsComponent }    from './startups.component';
-import {AuthGuard} from "../auth/auth-guard.service";
-import {StartupDetailsComponent} from "./startup-details.component";
+import { StartupsComponent } from './startups.component';
+import {AuthGuard} from '../auth/auth-guard.service';
+import {StartupDetailsComponent} from './startup-details.component';
 
 @NgModule({
   imports: [RouterModule.forChild([

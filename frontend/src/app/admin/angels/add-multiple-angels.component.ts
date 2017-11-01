@@ -3,8 +3,8 @@ import * as Papa from 'papaparse';
 
 import { Angel } from '../../angels/angel';
 import 'rxjs/add/operator/switchMap';
-import {AngelService} from "../../angels/angel.service";
-import { Utils } from "../../utils/parsers";
+import {AngelService} from '../../angels/angel.service';
+import { Utils } from '../../utils/parsers';
 
 @Component({
   templateUrl: 'add-multiple-angels.component.html',
@@ -15,9 +15,9 @@ export class AddMultipleAngelsComponent implements OnInit {
 
   angels: Angel[];
 
-  processing: boolean = false;
+  processing = false;
 
-  complete: boolean = false;
+  complete = false;
 
   error: string;
 
@@ -27,7 +27,7 @@ export class AddMultipleAngelsComponent implements OnInit {
 
   changeListener($event): void {
     this.complete = false;
-    this.error = "";
+    this.error = '';
     this.readThis($event.target);
   }
 
@@ -39,9 +39,9 @@ export class AddMultipleAngelsComponent implements OnInit {
     Papa.parse(file, {
       header: true,
       complete: (results) => {
-        if(results.errors.length) {
+        if (results.errors.length) {
           console.error(results.errors);
-          this.error = "CSV parse error";
+          this.error = 'CSV parse error';
         } else {
           this.angels = this.parseAngels(results.data);
         }
@@ -52,10 +52,10 @@ export class AddMultipleAngelsComponent implements OnInit {
 
   parseAngels(data: any[]): Angel[] {
     const results: Angel[] = [];
-    if(data) {
+    if (data) {
       for (const row of data) {
         const angel = new Angel(
-          "",
+          '',
           row.first_name,
           row.last_name,
           row.email,
@@ -76,11 +76,11 @@ export class AddMultipleAngelsComponent implements OnInit {
 
   parseIndustries(input: string): string[] {
     const results: string[] = [];
-    if(input) {
+    if (input) {
       const industries = input.split(',');
       for (let industry of industries) {
         industry = industry.trim();
-        if(results.indexOf(industry) === -1) {
+        if (results.indexOf(industry) === -1) {
           results.push(industry);
         }
       }
@@ -89,11 +89,11 @@ export class AddMultipleAngelsComponent implements OnInit {
   }
 
   investmentLevelString(investmentLevel: number): string {
-    if(investmentLevel || investmentLevel === 0) {
+    if (investmentLevel || investmentLevel === 0) {
       return Angel.INVESTMENT_LEVELS[investmentLevel];
     }
     else {
-      return "";
+      return '';
     }
   }
 
@@ -111,7 +111,7 @@ export class AddMultipleAngelsComponent implements OnInit {
       })
       .catch((err) => {
         console.error(err);
-        this.error = "Error while saving angels to the database. Managed to save " + savedCount + " out of " + this.angels.length + " angels";
+        this.error = `Error while saving angels to the database. Managed to save ${savedCount} out of ${this.angels.length} angels`;
         this.processing = false;
       })
   }

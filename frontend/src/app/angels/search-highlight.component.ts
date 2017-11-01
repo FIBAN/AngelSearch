@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'search-highlight',
+  selector: 'angel-search-highlight',
   template: `
     <span *ngFor="let part of parts" [class.highlight]="part.highlight">{{part.content}}</span>
   `
@@ -20,7 +20,7 @@ export class SearchHighlightComponent implements OnInit {
   @Input()
   set query(query: string) {
     this._query = query;
-    if(query  && query.trim() && query.trim().length > 2) {
+    if (query  && query.trim() && query.trim().length > 2) {
 
       const origQuery = query.trim();
       const origText = this.text;

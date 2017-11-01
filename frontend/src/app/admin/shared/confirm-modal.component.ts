@@ -1,8 +1,8 @@
-import {Component, Input, TemplateRef, ViewChild} from "@angular/core";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'confirm-modal',
+  selector: 'nban-confirm-modal',
   template: `
     <ng-template #modal let-c="close" let-d="dismiss">
       <div class="modal-header">
@@ -46,11 +46,11 @@ export class ConfirmModalComponent {
   }
 
   isBodyTemplate(): boolean {
-    return typeof this.body === 'object'; //should be good enough guess
+    return typeof this.body === 'object'; // should be good enough guess
   }
 
   handleClick(dismiss, close, handler) {
-    if(handler) {
+    if (handler) {
       close(handler)
     }
     else {
@@ -59,4 +59,4 @@ export class ConfirmModalComponent {
   }
 }
 
-type ModalButton = {text: string, type: 'secondary'|'danger'|'success', handler?: () => void}
+interface ModalButton {text: string, type: 'secondary'|'danger'|'success', handler?: () => void}

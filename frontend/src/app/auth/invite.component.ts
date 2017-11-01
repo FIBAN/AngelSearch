@@ -27,7 +27,7 @@ export class InviteComponent implements OnInit {
     }
     this.route.queryParamMap
       .switchMap((params: ParamMap) =>
-        this.angelService.getInvitation(params.get("i")))
+        this.angelService.getInvitation(params.get('i')))
       .subscribe((invitation: any) => this.invitation = invitation);
   }
 

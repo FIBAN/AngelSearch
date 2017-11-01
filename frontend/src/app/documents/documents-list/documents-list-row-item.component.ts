@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {Document} from "../document";
+import {Document} from '../document';
 
 @Component({
-  selector: 'documents-list-row-item',
-  template: `    
+  selector: 'document-list-row-item',
+  template: `
     <div class="document-row row" [class.last]="last">
       <div class=" col-1">
         <i class="fa fa-file-o document-icon" aria-hidden="true"></i>
@@ -24,6 +24,6 @@ export class DocumentsListRowItemComponent {
   @Input() document: Document;
   @Input() last: boolean;
 
-  constructor(){}
+  constructor() {}
 
 }

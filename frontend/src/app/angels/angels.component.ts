@@ -4,7 +4,6 @@ import { Angel } from './angel';
 import { AngelService } from './angel.service';
 
 @Component({
-  selector: 'angels',
   templateUrl: 'angels.component.html',
   styleUrls: ['angels.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -14,8 +13,8 @@ export class AngelsComponent implements OnInit {
 
   filter: any = {};
 
-  sortBy: string = 'name';
-  reverseSort: boolean = false;
+  sortBy = 'name';
+  reverseSort = false;
 
   countries = [];
   cities = [];
@@ -40,14 +39,14 @@ export class AngelsComponent implements OnInit {
       .then(angels => {
         this.angels = angels;
         this.countries = angels.map(a => a.country)
-          .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
+          .filter((v, i, a) => v && a.indexOf(v) === i) // discard null values and duplicates
           .sort();
         this.cities = angels.map(a => a.city)
-          .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
+          .filter((v, i, a) => v && a.indexOf(v) === i) // discard null values and duplicates
           .sort();
         this.industries = angels.map(a => a.industries || [])
-          .reduce((x,y) => x.concat(y), [])
-          .filter((v, i, a) => v && a.indexOf(v) === i) //discard null values and duplicates
+          .reduce((x, y) => x.concat(y), [])
+          .filter((v, i, a) => v && a.indexOf(v) === i) // discard null values and duplicates
           .sort();
       });
 
@@ -61,7 +60,7 @@ export class AngelsComponent implements OnInit {
     const city = angel.city;
     const country = angel.country;
 
-    if(city && country) {
+    if (city && country) {
       return city + ', ' + country;
     }
     else {
@@ -74,7 +73,7 @@ export class AngelsComponent implements OnInit {
   }
 
   onSort(column: string) {
-    if(this.sortBy != column) {
+    if (this.sortBy !== column) {
       this.sortBy = column;
       this.reverseSort = false;
     }

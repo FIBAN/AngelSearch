@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { AuthService } from './auth.service';
-import {Observable} from "rxjs/Rx";
+import {Observable} from 'rxjs/Rx';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
           this.router.navigate(['sorry']);
           return false;
         case AuthService.AUTH_STATUS.EMAIL_NOT_VERIFIED:
-          console.log("email not verified");
+          console.log('email not verified');
           this.router.navigate(['email-verification']);
           return false;
         case AuthService.AUTH_STATUS.LOGGED_IN:

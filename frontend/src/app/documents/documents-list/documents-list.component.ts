@@ -1,13 +1,15 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Document} from "../document";
+import {Document} from '../document';
 
 @Component({
-  selector: 'documents-list',
+  selector: 'document-list',
   template: `
     <ul class="list-unstyled">
       <li *ngFor="let document of rootDocuments; let i = index">
-        <documents-list-folder *ngIf="document.type === 'folder'" [documents]="documents" [folder]="document" [last]="i === rootDocuments.length - 1"></documents-list-folder>
-        <documents-list-row-item *ngIf="document.type === 'file'" [document]="document" [last]="i === rootDocuments.length - 1"></documents-list-row-item>
+        <document-list-folder *ngIf="document.type === 'folder'" [documents]="documents" [folder]="document"
+                              [last]="i === rootDocuments.length - 1"></document-list-folder>
+        <document-list-row-item *ngIf="document.type === 'file'" [document]="document"
+                                [last]="i === rootDocuments.length - 1"></document-list-row-item>
       </li>
     </ul>
   `,
@@ -18,10 +20,10 @@ export class DocumentsListComponent implements OnChanges {
   @Input() documents: Document[];
   rootDocuments: Document[];
 
-  constructor(){}
+  constructor() {}
 
   ngOnChanges() {
-    if(this.documents) {
+    if (this.documents) {
       this.rootDocuments = this.documents.filter(d => d.parent === null).sort(Document.compareTypeAndName);
     }
   }

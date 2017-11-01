@@ -4,7 +4,7 @@ import { Angel } from './angel';
 
 @Component({
   selector: 'angel-info',
-  template: `    
+  template: `
     <div class="card">
       <div class="card-header">Details</div>
       <table class="table">
@@ -21,7 +21,7 @@ import { Angel } from './angel';
     </div>
 
     <ng-template #linkedInTmpl>
-      <linkedin-profile-link *ngIf="angel.linkedin" [profileId]="angel.linkedin"></linkedin-profile-link>
+      <nban-linkedin-profile-link *ngIf="angel.linkedin" [profileId]="angel.linkedin"></nban-linkedin-profile-link>
     </ng-template>
     <ng-template #investmentLevelTmpl>
       {{investmentLevelStr(angel.investment_level)}}
@@ -31,7 +31,7 @@ import { Angel } from './angel';
         <li *ngFor="let industry of angel.industries">{{industry}}</li>
       </ul>
     </ng-template>
-    
+
   `,
   styles: [
     'span.propLabel {font-weight: bold;}',

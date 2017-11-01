@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
-import {AuthService} from "./auth.service";
-import {Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import {Observer} from "rxjs/Rx";
-import {Subscription} from "rxjs/Subscription";
+import {AuthService} from './auth.service';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
-  selector: 'email-verification',
   template: `
     <h3>Your email is not verified</h3>
-    <p>You should have received a verification request to your email. It might possibly be in your spam folder. A verified email address is required to use this service.</p>
+    <p>You should have received a verification request to your email.
+      It might possibly be in your spam folder.
+      A verified email address is required to use this service.</p>
   `
 })
-export class EmailVerificationMissingComponent implements OnInit {
+export class EmailVerificationMissingComponent implements OnInit, OnDestroy {
 
   checkEmailSub: Subscription;
 

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router, Routes} from "@angular/router";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {DocumentService} from "../../documents/document.service";
-import {Document} from "../../documents/document";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ActivatedRoute, ParamMap, Router, Routes} from '@angular/router';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {DocumentService} from '../../documents/document.service';
+import {Document} from '../../documents/document';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-type FolderChoice = {id: string, path: string};
+interface FolderChoice {id: string, path: string}
 
 @Component({
   templateUrl: 'manage-document.component.html',
@@ -26,7 +26,7 @@ export class ManageDocumentComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private modalService: NgbModal
-  ){}
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap
@@ -35,7 +35,7 @@ export class ManageDocumentComponent implements OnInit {
         this.document = document;
 
         this.documentService.getFolders().then(folders => {
-          if(document.type === 'folder') {
+          if (document.type === 'folder') {
             this.updateFolderChoices(folders, document.id);
           } else {
             this.updateFolderChoices(folders, null);
@@ -45,7 +45,7 @@ export class ManageDocumentComponent implements OnInit {
         this.documentForm = this.fb.group({
           'name': document.name,
           'download_url': document.download_url,
-          'parent': document.parent || ""
+          'parent': document.parent || ''
         });
       });
 
@@ -84,8 +84,8 @@ export class ManageDocumentComponent implements OnInit {
 
   saveChanges(): void {
     const formData = this.documentForm.getRawValue();
-    for(let k in formData) {
-      if(formData.hasOwnProperty(k)) {
+    for (const k in formData) {
+      if (formData.hasOwnProperty(k)) {
         this.document[k] = formData[k];
       }
     }
@@ -95,7 +95,9 @@ export class ManageDocumentComponent implements OnInit {
 
   showDeleteModal(content) {
       this.modalService.open(content).result.then(result => {
-        if(result) this.deleteDocument();
+        if (result) {
+          this.deleteDocument();
+        }
       });
   }
 
@@ -106,7 +108,9 @@ export class ManageDocumentComponent implements OnInit {
 
   private navigateBack(): void {
     const navigationExtras = {};
-    if(this.document.parent) navigationExtras['queryParams'] = {parent: this.document.parent};
+    if (this.document.parent) {
+      navigationExtras['queryParams'] = {parent: this.document.parent};
+    }
     this.router.navigate(['/admin/documents'], navigationExtras)
   }
 

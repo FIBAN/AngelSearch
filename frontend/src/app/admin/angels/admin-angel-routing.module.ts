@@ -1,11 +1,11 @@
-import { NgModule }            from '@angular/core';
+import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AngelsComponent} from "./angels.component";
-import {AuthGuard} from "../../auth/auth-guard.service";
-import {AddMultipleAngelsComponent} from "./add-multiple-angels.component";
-import {AdminAuthGuard} from "../../auth/admin-auth-guard.service";
-import {AddAngelComponent} from "./add-angel.component";
-import {ManageAngelComponent} from "./manage-angel.component";
+import {AngelsComponent} from './angels.component';
+import {AuthGuard} from '../../auth/auth-guard.service';
+import {AddMultipleAngelsComponent} from './add-multiple-angels.component';
+import {AdminAuthGuard} from '../../auth/admin-auth-guard.service';
+import {AddAngelComponent} from './add-angel.component';
+import {ManageAngelComponent} from './manage-angel.component';
 
 
 export const routes: Routes = [

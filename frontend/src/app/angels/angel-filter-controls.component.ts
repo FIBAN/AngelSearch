@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
-import {FormControl, FormGroup} from "@angular/forms";
-import {AngelFilter} from "./angel-filter";
+import {FormControl, FormGroup} from '@angular/forms';
+import {AngelFilter} from './angel-filter';
 
 @Component({
   selector: 'angel-filter-controls',
@@ -20,21 +20,21 @@ import {AngelFilter} from "./angel-filter";
               <select class="form-control" id="country" formControlName="country">
                 <option selected value="">Country</option>
                 <option *ngFor="let c of countries" value="{{c.toLowerCase()}}">{{c}}</option>
-              </select>          
+              </select>
             </div>
             <div class="col-lg-2 col-12 mb-lg-0 mb-2">
               <label for="city" class="sr-only">City</label>
               <select class="form-control" id="city" formControlName="city">
                 <option selected value="">City</option>
                 <option *ngFor="let c of cities" value="{{c.toLowerCase()}}">{{c}}</option>
-              </select>            
+              </select>
             </div>
             <div class="col-lg-2 col-12 mb-lg-0 mb-2">
               <label for="industry" class="sr-only">Industry</label>
               <select class="form-control" id="industry" formControlName="industry">
                 <option selected value="">Industry</option>
                 <option *ngFor="let i of industries" value="{{i.toLowerCase()}}">{{i}}</option>
-              </select>            
+              </select>
             </div>
             <div class="col-lg-3 col-12 mb-lg-0 mb-2">
               <button class="btn btn-secondary" id="filterClearBtn" (click)="clearFilter()">Clear Filters</button>
@@ -46,7 +46,7 @@ import {AngelFilter} from "./angel-filter";
   `,
   styles: []
 })
-export class AngelFilterControlsComponent implements OnInit {
+export class AngelFilterControlsComponent implements OnInit, OnDestroy {
   @Output() filterChanged = new EventEmitter();
 
   @Input() countries: string[];
@@ -62,10 +62,10 @@ export class AngelFilterControlsComponent implements OnInit {
   filtersFormSub;
 
   formDefaults = {
-    searchString: "",
-    country: "",
-    city: "",
-    industry: ""
+    searchString: '',
+    country: '',
+    city: '',
+    industry: ''
   };
 
   constructor() {}

@@ -1,10 +1,10 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
-import { Angel }    from '../../angels/angel';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { Angel } from '../../angels/angel';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'new-angel-form',
+  selector: 'angel-form',
   templateUrl: 'new-angel-form.component.html',
   styles: [
     '.ng-valid[required], .ng-valid.required { border-left: 5px solid #42A948; /* green */}',

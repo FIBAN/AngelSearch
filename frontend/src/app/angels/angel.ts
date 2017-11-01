@@ -1,10 +1,10 @@
 export class Angel {
 
   static INVESTMENT_LEVELS = [
-    "1",
-    "2 - 5",
-    "6 - 10",
-    "Over 10"
+    '1',
+    '2 - 5',
+    '6 - 10',
+    'Over 10'
   ];
 
   constructor(

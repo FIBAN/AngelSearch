@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {AngelService} from "../angels/angel.service";
-import {AuthService} from "./auth.service";
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {AngelService} from '../angels/angel.service';
+import {AuthService} from './auth.service';
 
 @Component({
   template: ``
@@ -18,12 +18,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParamMap
       .switchMap((params: ParamMap) => {
-          if (params.has("i")) {
-            return this.angelService.acceptInvitation(params.get("i"))
+          if (params.has('i')) {
+            return this.angelService.acceptInvitation(params.get('i'))
               .then(() => this.authService.refreshAuthStatus())
               .then(() => this.router.navigate(['/']))
               .catch((err) => {
-                console.error("Registration failed. Error:", err);
+                console.error('Registration failed. Error:', err);
                 this.router.navigate(['/error'])
               });
           }

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By }              from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 
-import { KeysPipe } from "./keys.pipe";
+import { KeysPipe } from './keys.pipe';
 
 import { AngelInfoComponent } from './angel-info.component';
 
@@ -24,24 +24,24 @@ describe('Angel info', () => {
   it('should display panel title', () => {
     const de = fixture.debugElement.query(By.css('.panel-heading'));
     const el = de.nativeElement;
-    expect(el.textContent).toContain("Details");
+    expect(el.textContent).toContain('Details');
   });
 
   it('should display angel properties', () => {
     comp.angel = {
-      id: "qwerty",
-      first_name: "Test",
-      last_name: "Testerson",
-      email: "test@test.test",
-      phone: "1234567890",
-      city: "TestCity",
-      country: "Testland",
-      bio: "Tester"
+      id: 'qwerty',
+      first_name: 'Test',
+      last_name: 'Testerson',
+      email: 'test@test.test',
+      phone: '1234567890',
+      city: 'TestCity',
+      country: 'Testland',
+      bio: 'Tester'
     };
     fixture.detectChanges();
     const de = fixture.debugElement.queryAll(By.css('.propLabel'));
     const el = de.map(d => d.nativeElement);
-    expect(el.map(e => e.textContent)).toContain("first_name");
+    expect(el.map(e => e.textContent)).toContain('first_name');
   });
 
 });

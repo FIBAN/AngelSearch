@@ -1,20 +1,10 @@
 export class Document {
 
-  constructor(
-    public id: string,
-    public name: string,
-    public type: string,
-    public download_url: string,
-    public parent?: string,
-    public created_at?: string,
-    public updated_at?: string
-  ) {};
-
   static compareTypeAndName(d1: Document, d2: Document) {
-    if(Document.compareFalsiness(d1, d2) !== 0){
+    if (Document.compareFalsiness(d1, d2) !== 0) {
       return Document.compareFalsiness(d1, d2);
     }
-    else if(Document.compareType(d1, d2) !== 0) {
+    else if (Document.compareType(d1, d2) !== 0) {
       return Document.compareType(d1, d2);
     }
     else {
@@ -28,11 +18,11 @@ export class Document {
       'file': 1,
     };
 
-    if(Document.compareFalsiness(d1, d2) !== 0){
+    if (Document.compareFalsiness(d1, d2) !== 0) {
       return Document.compareFalsiness(d1, d2);
     }
     else {
-      if(typeValues[d1.type] < typeValues[d2.type]) {
+      if (typeValues[d1.type] < typeValues[d2.type]) {
         return -1;
       }
       else if (typeValues[d1.type] > typeValues[d2.type]) {
@@ -45,11 +35,11 @@ export class Document {
   }
 
   static compareName(d1: Document, d2: Document) {
-    if(Document.compareFalsiness(d1, d2) !== 0){
+    if (Document.compareFalsiness(d1, d2) !== 0) {
       return Document.compareFalsiness(d1, d2);
     }
     else {
-      if(d1.name < d2.name) {
+      if (d1.name < d2.name) {
         return -1;
       }
       else if (d1.name > d2.name) {
@@ -62,7 +52,7 @@ export class Document {
   }
 
   private static compareFalsiness(d1: Document, d2: Document) {
-    if(!d1 && !d2) {
+    if (!d1 && !d2) {
       return 0;
     }
     else if (!d1) {
@@ -75,5 +65,15 @@ export class Document {
       return 0;
     }
   }
+
+  constructor(
+    public id: string,
+    public name: string,
+    public type: string,
+    public download_url: string,
+    public parent?: string,
+    public created_at?: string,
+    public updated_at?: string
+  ) {};
 
 }

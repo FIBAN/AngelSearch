@@ -4,10 +4,10 @@ import { Angel } from '../../angels/angel';
 import { AngelService } from '../../angels/angel.service';
 
 import 'rxjs/add/operator/switchMap';
-import {AngelAdminService} from "./angel-admin.service";
+import {AngelAdminService} from './angel-admin.service';
 
 @Component({
-  template: ` 
+  template: `
     <div class="row">
       <div class="col">
         <h4>Angels</h4>
@@ -18,8 +18,8 @@ import {AngelAdminService} from "./angel-admin.service";
     </div>
     <div class="row">
       <div class="col">
-        <admin-angel-list 
-          [angels]="angels" 
+        <admin-angel-list
+          [angels]="angels"
           [users]="users"
         ></admin-angel-list>
       </div>

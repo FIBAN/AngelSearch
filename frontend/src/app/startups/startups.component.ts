@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {StartupService} from "./startup.service";
-import {Startup} from "./startup";
+import {StartupService} from './startup.service';
+import {Startup} from './startup';
 
 @Component({
-  selector: 'startups',
   templateUrl: 'startups.component.html',
   styleUrls: ['startups.component.css']
 })

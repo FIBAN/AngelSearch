@@ -1,8 +1,8 @@
-import {Component, Input} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, Input} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'back-button',
+  selector: 'nban-back-button',
   template: `
     <div>
       <a class="btn btn-outline-secondary text-dark" (click)="navigateBack()"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</a>

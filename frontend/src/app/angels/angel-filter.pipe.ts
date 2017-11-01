@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Angel} from "./angel";
-import {AngelFilter} from "./angel-filter";
+import {Angel} from './angel';
+import {AngelFilter} from './angel-filter';
 
 @Pipe({name: 'angelFilter'})
 export class AngelFilterPipe implements PipeTransform {
@@ -14,7 +14,7 @@ export class AngelFilterPipe implements PipeTransform {
   }
 
   private filterByQuery(data: Angel[], query): Angel[] {
-    if(!query){
+    if (!query) {
       return data;
     } else {
       return data.filter((angel) =>
@@ -28,7 +28,7 @@ export class AngelFilterPipe implements PipeTransform {
   }
 
   private filterByCountry(data: Angel[], countries: string[]): Angel[] {
-    if(!countries || !countries.length) {
+    if (!countries || !countries.length) {
       return data;
     } else {
       countries = countries.map(c => c.toLowerCase());
@@ -37,7 +37,7 @@ export class AngelFilterPipe implements PipeTransform {
   }
 
   private filterByCity(data: Angel[], cities: string[]): Angel[] {
-    if(!cities || !cities.length) {
+    if (!cities || !cities.length) {
       return data;
     } else {
       cities = cities.map(c => c.toLowerCase());
@@ -46,7 +46,7 @@ export class AngelFilterPipe implements PipeTransform {
   }
 
   private filterByIndustry(data: Angel[], industries: string[]): Angel[] {
-    if(!industries || !industries.length) {
+    if (!industries || !industries.length) {
       return data;
     } else {
       industries = industries.map(c => c.toLowerCase());
@@ -55,8 +55,12 @@ export class AngelFilterPipe implements PipeTransform {
   }
 
   private strContains(str: string, query: string): boolean {
-    if(!str) return false;
-    if(!query) return true;
+    if (!str) {
+      return false;
+    }
+    if (!query) {
+      return true;
+    }
     const lq = query.toLowerCase();
     return str.toLowerCase().indexOf(lq) !== -1;
   }
@@ -64,14 +68,12 @@ export class AngelFilterPipe implements PipeTransform {
   private containsSome(haystack: string[], needles: string[]): boolean {
     haystack.sort();
     needles.sort();
-    let hi=0, ni=0;
+    let hi = 0, ni = 0;
 
-    while( hi < haystack.length && ni < needles.length )
-    {
-      if      (haystack[hi] < needles[ni] ){ hi++; }
-      else if (haystack[hi] > needles[ni] ){ ni++; }
-      else /* they're equal */
-      {
+    while ( hi < haystack.length && ni < needles.length ) {
+      if      (haystack[hi] < needles[ni] ) { hi++; }
+      else if (haystack[hi] > needles[ni] ) { ni++; }
+      else { // they're equal
         return true;
       }
     }

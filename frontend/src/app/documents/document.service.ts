@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
-import { environment} from "../../environments/environment"
+import { environment} from '../../environments/environment'
 
 import 'rxjs/add/operator/toPromise';
 
@@ -18,7 +18,7 @@ export class DocumentService {
     return this.authHttp
       .get(this.documentsUrl)
       .toPromise()
-      .then(response=>response.json() as Document[])
+      .then(response => response.json() as Document[])
       .catch(this.handleError);
   }
 
@@ -31,7 +31,7 @@ export class DocumentService {
     return this.authHttp
       .get(this.documentDetailsUrl(documentId))
       .toPromise()
-      .then(response=>response.json() as Document)
+      .then(response => response.json() as Document)
       .catch(this.handleError);
   }
 
@@ -39,7 +39,7 @@ export class DocumentService {
     return this.authHttp
       .put(this.documentDetailsUrl(document.id), document)
       .toPromise()
-      .then(response=>response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
 

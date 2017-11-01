@@ -1,13 +1,13 @@
 import { Routes, RouterModule} from '@angular/router';
 
 import { CallbackComponent } from './auth/callback.component';
-import { LandingComponent } from "./landing.component";
-import { InviteComponent } from "./auth/invite.component";
-import { RegisterComponent } from "./auth/register.component";
-import { RegistrationNeededComponent } from "./auth/registration-needed.component";
-import { ErrorComponent } from "./error.component";
-import { EmailVerificationMissingComponent } from "./auth/email-verification-missing.component";
-import {NgModule} from "@angular/core";
+import { LandingComponent } from './landing.component';
+import { InviteComponent } from './auth/invite.component';
+import { RegisterComponent } from './auth/register.component';
+import { RegistrationNeededComponent } from './auth/registration-needed.component';
+import { ErrorComponent } from './error.component';
+import { EmailVerificationMissingComponent } from './auth/email-verification-missing.component';
+import {NgModule} from '@angular/core';
 
 export const routes: Routes = [
   {

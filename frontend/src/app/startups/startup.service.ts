@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
-import { environment} from "../../environments/environment"
+import { environment} from '../../environments/environment'
 
 import 'rxjs/add/operator/toPromise';
 
@@ -18,7 +18,7 @@ export class StartupService {
     return this.authHttp
       .get(this.startupsUrl)
       .toPromise()
-      .then(response=>response.json() as Startup[])
+      .then(response => response.json() as Startup[])
       .catch(this.handleError);
   }
 
@@ -26,7 +26,7 @@ export class StartupService {
     return this.authHttp
       .get(this.startupDetailsUrl(startupId))
       .toPromise()
-      .then(response=>response.json() as Startup)
+      .then(response => response.json() as Startup)
       .catch(this.handleError);
   }
 
@@ -34,7 +34,7 @@ export class StartupService {
     return this.authHttp
       .put(this.startupDetailsUrl(startup.id), startup)
       .toPromise()
-      .then(response=>response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
 
