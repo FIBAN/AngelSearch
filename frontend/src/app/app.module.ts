@@ -20,13 +20,8 @@ import { StartupService } from './startups/startup.service';
 import { StartupModule } from './startups/startup.module';
 import { ProfileModule } from './profile/profile.module';
 import { AppRoutingModule } from './app-routing.module';
-import { CallbackComponent } from './auth/callback.component';
 import { LandingComponent } from './landing.component';
-import { InviteComponent } from './auth/invite.component';
-import { RegisterComponent } from './auth/register.component';
-import { RegistrationNeededComponent } from './auth/registration-needed.component';
 import { ErrorComponent } from './error.component';
-import { EmailVerificationMissingComponent } from './auth/email-verification-missing.component';
 import {DocumentModule} from './documents/document.module';
 import {AngelModule} from './angels/angel.module';
 import {SharedModule} from './shared/shared.module';
@@ -47,13 +42,8 @@ import {SharedModule} from './shared/shared.module';
   ],
   declarations: [
     AppComponent,
-    CallbackComponent,
     LandingComponent,
-    InviteComponent,
-    RegisterComponent,
-    RegistrationNeededComponent,
     ErrorComponent,
-    EmailVerificationMissingComponent
   ],
   providers: [
     AngelService,
