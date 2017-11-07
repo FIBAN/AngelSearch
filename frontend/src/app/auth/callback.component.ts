@@ -17,7 +17,7 @@ export class CallbackComponent {
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.handleAuth()
-      .then(redirectUrl => router.navigateByUrl(redirectUrl))
+      .then(redirectUrl => router.navigate([redirectUrl]))
       .catch(err => this.error = err);
   }
 }

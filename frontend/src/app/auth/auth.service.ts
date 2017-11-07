@@ -104,7 +104,6 @@ export class AuthService {
       const context = { hash: window.location.hash };
       this.auth0.parseHash((parseError, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
-          window.location.hash = '';
           this._getAuth0Profile(authResult)
             .then(() => this.refreshAuthStatus())
             .then(() => {
@@ -115,7 +114,7 @@ export class AuthService {
         } else if (parseError) {
           reject({context: {...context, result: authResult}, error: parseError});
         } else {
-          reject({context: {...context, result: authResult}, error: 'Unknown error'})
+          reject({context: {...context, result: authResult}, error: 'HandleAuth error'})
         }
       });
     });

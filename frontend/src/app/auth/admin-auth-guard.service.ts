@@ -16,7 +16,7 @@ export class AdminAuthGuard implements CanActivate {
           case AuthService.AUTH_STATUS.LOGGED_IN_ADMIN:
             return true;
           default:
-            this.router.navigate(['']);
+            this.router.navigate(['/']);
             return false;
         }
       });

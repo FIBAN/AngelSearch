@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
       .map(() => {
       switch (this.auth.authStatus$.getValue()) {
         case AuthService.AUTH_STATUS.LOGGED_OUT:
-          this.router.navigate(['']);
+          this.router.navigate(['/']);
           return false;
         case AuthService.AUTH_STATUS.NOT_REGISTERED:
           this.router.navigate(['sorry']);
