@@ -12,7 +12,7 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
         <input #newIndustry class="form-control mb-2 mr-sm-2 mb-sm-0"
                (keyup.enter)="addIndustry(newIndustry.value)" placeholder="Add an industry"
         >
-        <button class="btn btn-success" (click)="addIndustry(newIndustry.value)">Add</button>
+        <button class="btn btn-success" type="button" (click)="addIndustry(newIndustry.value)">Add</button>
       </li>
     </ul>
   `
