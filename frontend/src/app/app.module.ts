@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
-
+import * as Raven from 'raven-js';
+import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -26,6 +27,21 @@ import {DocumentModule} from './documents/document.module';
 import {AngelModule} from './angels/angel.module';
 import {SharedModule} from './shared/shared.module';
 
+Raven
+  .config('https://6b88f4df828249129e1a24eca585a7bb@sentry.io/244816', {
+    environment: (environment.production ? 'production' : 'development'),
+    whitelistUrls: [
+      /https?:\/\/business-angel-search\.herokuapp\.com/
+    ]
+  })
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    Raven.captureException(err);
+  }
+}
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -46,6 +62,7 @@ import {SharedModule} from './shared/shared.module';
     ErrorComponent,
   ],
   providers: [
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
     AngelService,
     AuthService,
     AngelAdminService,
