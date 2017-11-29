@@ -59,6 +59,17 @@ module.exports.getAngelById = async (angelId) => {
     else return angel;
 };
 
+module.exports.getAngelByEmail = async (email) => {
+    let angel;
+    try {
+        angel = await Angel.getByEmail(email);
+    } catch (err) {
+        throw new VError(err, 'failed to get angel');
+    }
+    if(!angel) throw angelNotFoundError(email);
+    else return angel;
+};
+
 module.exports.updateAngel = async (changes) => {
     let angel;
     try {

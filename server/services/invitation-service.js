@@ -65,7 +65,7 @@ module.exports.acceptInvitation = async (inviteId, auth0Id) => {
     }
 
     if(!invitation) throw invitationNotFoundError(inviteId);
-    if(invitation.status !== 'pending') throw invitationWrongStatusError(invitation.status, 'pending');
+    if(invitation.status !== 'pending') throw invitationWrongStatusError(invitation.status, 'pending'); //TODO: Make accepting invitation idempotent
 
     try {
         await Angel.linkAuth0Id(invitation.angel_id, auth0Id);

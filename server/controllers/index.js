@@ -18,6 +18,7 @@ router.use('/invitations', require('./invitations'));
 router.use('/startups', require('./startups'));
 router.use('/documents', require('./documents'));
 router.use('/admin', require('./admin'));
+router.use('/auth0', require('./auth0'));
 
 router.get('/me', auth.loggedInAngel, (req, res) => {
     res.json(req.angel);
