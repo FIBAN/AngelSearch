@@ -6,6 +6,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 import { AngelService } from '../angels/angel.service';
 import { Observable } from 'rxjs/Rx';
 import * as auth0 from 'auth0-js';
+import * as Raven from 'raven-js';
 
 
 @Injectable()
@@ -67,6 +68,7 @@ export class AuthService {
           return AuthService.AUTH_STATUS.NOT_REGISTERED;
         }
         console.error('angel error', err);
+        Raven.captureException(err);
         return AuthService.AUTH_STATUS.LOGGED_OUT
       });
     }

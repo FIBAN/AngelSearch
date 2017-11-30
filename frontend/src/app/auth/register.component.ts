@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {AngelService} from '../angels/angel.service';
 import {AuthService} from './auth.service';
+import * as Raven from 'raven-js';
 
 @Component({
   template: ``
@@ -24,7 +25,8 @@ export class RegisterComponent implements OnInit {
               .then(() => this.router.navigate(['/']))
               .catch((err) => {
                 console.error('Registration failed. Error:', err);
-                this.router.navigate(['/error'])
+                Raven.captureException(err);
+                this.router.navigate(['/error']);
               });
           }
           else {

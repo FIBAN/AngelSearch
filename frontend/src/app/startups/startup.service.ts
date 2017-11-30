@@ -5,6 +5,7 @@ import { environment} from '../../environments/environment'
 import 'rxjs/add/operator/toPromise';
 
 import { Startup } from './startup';
+import * as Raven from 'raven-js';
 
 @Injectable()
 export class StartupService {
@@ -57,6 +58,7 @@ export class StartupService {
   // Implement a method to handle errors if any
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
+    Raven.captureException(error);
     return Promise.reject(error.message || error);
   }
 }

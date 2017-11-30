@@ -5,6 +5,7 @@ import { Angel } from '../../angels/angel';
 import 'rxjs/add/operator/switchMap';
 import {AngelService} from '../../angels/angel.service';
 import { Utils } from '../../utils/parsers';
+import * as Raven from 'raven-js';
 
 @Component({
   templateUrl: 'add-multiple-angels.component.html',
@@ -111,6 +112,7 @@ export class AddMultipleAngelsComponent implements OnInit {
       })
       .catch((err) => {
         console.error(err);
+        Raven.captureException(err);
         this.error = `Error while saving angels to the database. Managed to save ${savedCount} out of ${this.angels.length} angels`;
         this.processing = false;
       })

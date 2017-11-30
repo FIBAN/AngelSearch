@@ -5,6 +5,7 @@ import { environment} from '../../environments/environment'
 import 'rxjs/add/operator/toPromise';
 
 import { Document } from './document';
+import * as Raven from 'raven-js';
 
 @Injectable()
 export class DocumentService {
@@ -62,6 +63,7 @@ export class DocumentService {
   // Implement a method to handle errors if any
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
+    Raven.captureException(error);
     return Promise.reject(error.message || error);
   }
 }

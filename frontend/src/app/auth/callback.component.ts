@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import {Router} from '@angular/router';
+import * as Raven from 'raven-js';
 
 @Component({
   template: `
@@ -17,10 +18,10 @@ export class CallbackComponent {
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.handleAuth()
-      .then(redirectUrl => router.navigate([redirectUrl]))
+      .then(redirectUrl => router.navigateByUrl(redirectUrl))
       .catch(err => {
         this.error = err;
-        throw new Error(err);
+        Raven.captureException(err);
       });
   }
 }
