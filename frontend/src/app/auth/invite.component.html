@@ -12,6 +12,23 @@
       <div *ngIf="invitation && invitation.status === 'pending'" class="card">
         <div class="card-body">
           <a href="#" class="btn btn-info" (click)="register(); false">Register</a>
+          <div *ngIf="notProductionEnvironment" style="background-color: #a5c3ff" class="mt-3 p-2 text-left">
+            <p class="small">
+              In local development environment the Auth0 can't access the server to accept the invitation. In order
+              to simulate the server behavior you can choose to either simulate successful registration or an unsuccesful one.
+              In both scenarios the Auth0 behaves as expected but the invitation won't be marked accepted on the server side as
+              the Auth0 doesn't have a way to contact the local development server.
+            </p>
+            <label>Registration outcome</label>
+            <label>
+              <input #registrationOverrideInput type="radio" name="registrationOverride" value="true" checked>
+              Simulated successful registration
+            </label>
+            <label>
+              <input #registrationOverrideInput type="radio" name="registrationOverride" value="false">
+              Simulated failed registration
+            </label>
+          </div>
         </div>
       </div>
       <div *ngIf="invitation && invitation.status === 'accepted'" class="card bg-light">

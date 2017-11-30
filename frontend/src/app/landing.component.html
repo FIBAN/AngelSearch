@@ -5,7 +5,14 @@
     <div class="card text-center ">
       <div class="card-body">
         <h2>Please login</h2>
-        <a href="#" *ngIf="!authService.authenticated" (click)="authService.login(); false" class="btn btn-primary" role="button">Log In</a>
+        <div *ngIf="notProductionEnvironment" style="background-color: #a5c3ff" class="mt-3">
+          <p class="small">In local development environment the Auth0 can't access the server to match new auth0 user to an existing
+            angel with email. To simulate a match an angel id can be provided here. Leaving this blank will simulate
+            a case where the auth0 users email doesn't match an existing angel.</p>
+          <label for="existingAngelId">Existing Angel Id</label>
+          <input #existingAngelId id="existingAngelId">
+        </div>
+        <a href="#" *ngIf="!authService.authenticated" (click)="logIn(); false" class="btn btn-primary" role="button">Log In</a>
       </div>
     </div>
   </div>

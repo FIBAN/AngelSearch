@@ -81,21 +81,30 @@ export class AuthService {
     return this._loadAuthStatus().then(s => this.authStatus$.next(s));
   }
 
-  login(redirectAfterLogin?: string, signup?: boolean) {
-    // Auth0 authorize request
-    // Note: nonce is automatically generated: https://auth0.com/docs/libraries/auth0js/v8#using-nonce
-    if (redirectAfterLogin) {
-      localStorage.setItem('redirectAfterLogin', redirectAfterLogin);
+  login(options?: {
+    redirectAfterLogin?: string,
+    invitationId?: string,
+    developmentLogInAngelIdOverride?: string,
+    developmentRegisterationAngelIdOverride?: string
+  }) {
+    options = options || {};
+    console.log(options);
+    if (options.redirectAfterLogin) {
+      localStorage.setItem('redirectAfterLogin', options.redirectAfterLogin);
     }
     else {
       localStorage.removeItem('redirectAfterLogin');
     }
+
     this.auth0.authorize({
       responseType: 'token id_token',
       redirectUri: AUTH_CONFIG.REDIRECT,
       audience: AUTH_CONFIG.AUDIENCE,
       scope: AUTH_CONFIG.SCOPE,
-      initialScreen: signup ? 'signUp' : 'login'
+      initialScreen: options.invitationId ? 'signUp' : 'login',
+      invitationId: options.invitationId || undefined,
+      testInvitationResponse: options.developmentRegisterationAngelIdOverride || undefined,
+      testAngelIdResponse: options.developmentLogInAngelIdOverride || undefined
     });
   }
 

@@ -29,7 +29,7 @@
             <a class="nav-link" *ngIf="authorized" routerLink="/profile" routerLinkActive="active">My Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="!authenticated && !hideLogin" href="#" (click)="authService.login(router.url); false">Log In</a>
+            <a class="nav-link" *ngIf="!authenticated && !hideLogin" href="#" (click)="authService.login({redirectAfterLogin: router.url}); false">Log In</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" *ngIf="authenticated" href="#" (click)="authService.logout(); false">Log Out</a>
