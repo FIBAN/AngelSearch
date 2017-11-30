@@ -64,8 +64,17 @@ module.exports.acceptInvitation = async (inviteId, auth0Id) => {
         throw new VError(err, 'failed to get invitation');
     }
 
-    if(!invitation) throw invitationNotFoundError(inviteId);
-    if(invitation.status !== 'pending') throw invitationWrongStatusError(invitation.status, 'pending'); //TODO: Make accepting invitation idempotent
+    if(!invitation) {
+        throw invitationNotFoundError(inviteId);
+    }
+
+    if(await isInvitationIsAcceptedWithSameAuth0Id(invitation, auth0Id)) {
+        return invitation;
+    }
+
+    if(invitation.status !== Invitation.INVITE_STATUS.PENDING) {
+        throw invitationWrongStatusError(invitation.status, Invitation.INVITE_STATUS.PENDING);
+    }
 
     try {
         await Angel.linkAuth0Id(invitation.angel_id, auth0Id);
@@ -80,3 +89,17 @@ module.exports.acceptInvitation = async (inviteId, auth0Id) => {
         }
     }
 };
+
+async function isInvitationIsAcceptedWithSameAuth0Id(invitation, auth0Id) {
+    if(invitation.status === Invitation.INVITE_STATUS.ACCEPTED) {
+        try {
+            const linkedAngel = await Angel.getByAuthId(auth0Id);
+            return linkedAngel && linkedAngel.id === invitation.angel_id;
+        } catch (err) {
+            throw new VError(err, 'failed to find existing account linking for accepted invitation');
+        }
+    }
+    else {
+        return false;
+    }
+}

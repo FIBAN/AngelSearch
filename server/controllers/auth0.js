@@ -23,12 +23,12 @@ router.post('/register', async (req, res, next) => {
         res.status(400).json({status: 400, message: err.message});
         return
     }
-   try {
-       const acceptedInvitation = await invitationService.acceptInvitation(req.body.invitation_id, req.body.auth0_id);
-       res.json(acceptedInvitation);
-   } catch (err) {
-        next(err);
-   }
+    try {
+        const acceptedInvitation = await invitationService.acceptInvitation(req.body.invitation_id, req.body.auth0_id);
+        res.json(acceptedInvitation);
+    } catch (err) {
+         next(err);
+    }
 });
 
 
