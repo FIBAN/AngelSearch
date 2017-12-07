@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const startupService = require('../services/startup-service');
 const validator = require('../helpers/validator');
 
-router.get('/', auth.loggedInAngel, async (req, res, next) => {
+router.get('/', auth.requireScopes(['read:startups']), async (req, res, next) => {
     try {
         res.json(await startupService.listAllStartups());
     } catch (err) {
@@ -13,7 +13,7 @@ router.get('/', auth.loggedInAngel, async (req, res, next) => {
     }
 });
 
-router.post('/', auth.loggedInAdmin, async (req, res, next) => {
+router.post('/', auth.requireScopes(['write:startups']), async (req, res, next) => {
     try {
         const body = req.body;
         validator.assertNonEmptyString(body.lead_angel_id, 'lead_angel_id');
@@ -42,7 +42,7 @@ router.post('/', auth.loggedInAdmin, async (req, res, next) => {
     }
 });
 
-router.get('/:startupId', auth.loggedInAngel, async (req, res, next) => {
+router.get('/:startupId', auth.requireScopes(['read:startups']), async (req, res, next) => {
     try {
         res.json(await startupService.getStartupById(req.params.startupId));
     } catch (err) {
@@ -50,7 +50,7 @@ router.get('/:startupId', auth.loggedInAngel, async (req, res, next) => {
     }
 });
 
-router.put('/:startupId', auth.loggedInAdmin, async (req, res, next) => {
+router.put('/:startupId', auth.requireScopes(['write:startups']), async (req, res, next) => {
     let changes = {};
     for (let key in req.body) {
         if(req.body.hasOwnProperty(key)){
@@ -66,7 +66,7 @@ router.put('/:startupId', auth.loggedInAdmin, async (req, res, next) => {
     }
 });
 
-router.delete('/:startupId', auth.loggedInAdmin, async (req, res, next) => {
+router.delete('/:startupId', auth.requireScopes(['write:startups']), async (req, res, next) => {
     try {
         await startupService.deleteStartup(req.params.startupId);
         res.json({status: 200, message: 'Deleted'});

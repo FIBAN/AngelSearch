@@ -10,7 +10,7 @@ const angelAccessDenied = function (res) {
     res.status(403).json({status: 403, message: "Forbidden"});
 };
 
-router.get('/', auth.loggedInAngel, async (req, res, next) => {
+router.get('/', auth.requireScopes(['read:angels']), async (req, res, next) => {
     try {
         res.json(await angelService.listAllAngels());
     } catch (err) {
@@ -19,7 +19,7 @@ router.get('/', auth.loggedInAngel, async (req, res, next) => {
 });
 
 
-router.post('/', auth.loggedInAdmin, async (req, res, next) => {
+router.post('/', auth.requireScopes(['write:angels']), async (req, res, next) => {
     try {
         const body = req.body;
         validator.assertNonEmptyString(body.email, 'email');
@@ -37,7 +37,7 @@ router.post('/', auth.loggedInAdmin, async (req, res, next) => {
     }
 });
 
-router.get('/:angelId', auth.loggedInAngel, async (req, res, next) => {
+router.get('/:angelId', auth.requireScopes(['read:angels']), async (req, res, next) => {
     try {
         res.json(await angelService.getAngelById(req.params.angelId));
     } catch (err) {
@@ -45,8 +45,8 @@ router.get('/:angelId', auth.loggedInAngel, async (req, res, next) => {
     }
 });
 
-router.put('/:angelId', auth.loggedInAngel, async (req, res, next) => {
-    if(req.angel.id !== req.params.angelId && req.user['https://angel-search/role'] !== 'admin') {
+router.put('/:angelId', auth.requireScopes(['read:angels']), async (req, res, next) => {
+    if(req.user['https://angel-search/angelId'] !== req.params.angelId && req.user['https://angel-search/role'] !== 'admin') {
         angelAccessDenied(res);
         return;
     }
@@ -66,7 +66,7 @@ router.put('/:angelId', auth.loggedInAngel, async (req, res, next) => {
     }
 });
 
-router.delete('/:angelId', auth.loggedInAdmin, async (req, res, next) => {
+router.delete('/:angelId', auth.requireScopes(['write:angels']), async (req, res, next) => {
     try {
         await angelService.deleteAngel(req.params.angelId);
         res.json({status: 200, message: 'Deleted'});
@@ -75,12 +75,7 @@ router.delete('/:angelId', auth.loggedInAdmin, async (req, res, next) => {
     }
 });
 
-router.get('/:angelId/invitations', auth.loggedInAngel, async (req, res, next) => {
-    if(req.angel.id !== req.params.angelId && req.user['https://angel-search/role'] !== 'admin') {
-        angelAccessDenied(res);
-        return;
-    }
-
+router.get('/:angelId/invitations', auth.requireScopes(['read:invitations']), async (req, res, next) => {
     try {
         await angelService.getAngelById(req.params.angelId);
         res.json(await invitationService.listAllInvitationsByAngelId(req.params.angelId));
@@ -89,7 +84,7 @@ router.get('/:angelId/invitations', auth.loggedInAngel, async (req, res, next) =
     }
 });
 
-router.post('/:angelId/invitations', auth.loggedInAdmin, async (req, res, next) => {
+router.post('/:angelId/invitations', auth.requireScopes(['write:invitations']), async (req, res, next) => {
     try {
         await angelService.getAngelById(req.params.angelId);
         res.status(201).json(await invitationService.createNewInvitation(req.params.angelId));

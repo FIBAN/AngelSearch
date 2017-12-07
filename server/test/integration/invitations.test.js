@@ -63,12 +63,14 @@ describe("/api/invitations Endpoints", function () {
                 });
         });
 
-        it('should return 400 if the invitation has been previously accepted or declined', function (done) {
+        it('should return 200 if trying to re-accept an accepted invitation with the same token', function (done) {
             request(app)
                 .post('/api/invitations/' + inviationId + '/accept')
                 .set('Authorization', 'Bearer ' + auth0Token)
                 .end(function(err, res) {
-                    expect(res.statusCode).to.equal(400);
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body.status).to.equal('accepted');
                     done();
                 });
         });

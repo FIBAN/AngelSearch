@@ -4,7 +4,7 @@ const router = express.Router();
 const invitationService = require('../services/invitation-service');
 const auth = require('../middleware/auth');
 
-router.get('/', auth.loggedInAdmin, async (req, res, next) => {
+router.get('/', auth.requireScopes(['read:invitations']), async (req, res, next) => {
     try {
         res.json(await invitationService.listAllInvitations());
     } catch (err) {

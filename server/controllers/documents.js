@@ -7,7 +7,7 @@ const validator = require('../helpers/validator');
 
 const SUPPORTED_DOCUMENT_TYPES = ['file', 'folder'];
 
-router.get('/', auth.loggedInAngel, async (req, res, next) => {
+router.get('/', auth.requireScopes(['read:documents']), async (req, res, next) => {
     try {
        res.json(await documentService.listAllDocuments());
     } catch (err) {
@@ -15,7 +15,7 @@ router.get('/', auth.loggedInAngel, async (req, res, next) => {
     }
 });
 
-router.post('/', auth.loggedInAdmin, async (req, res, next) => {
+router.post('/', auth.requireScopes(['write:documents']), async (req, res, next) => {
     try {
         const body = req.body;
         validator.assertNonEmptyString(body.name, 'name');
@@ -33,7 +33,7 @@ router.post('/', auth.loggedInAdmin, async (req, res, next) => {
     }
 });
 
-router.get('/:documentId', auth.loggedInAngel, async (req, res, next) => {
+router.get('/:documentId', auth.requireScopes(['read:documents']), async (req, res, next) => {
     try {
         res.json(await documentService.getDocumentById(req.params.documentId));
     } catch (err) {
@@ -41,7 +41,7 @@ router.get('/:documentId', auth.loggedInAngel, async (req, res, next) => {
     }
 });
 
-router.put('/:documentId', auth.loggedInAdmin, async (req, res, next) => {
+router.put('/:documentId', auth.requireScopes(['write:documents']), async (req, res, next) => {
     let changes = {};
     for (let key in req.body) {
         if(req.body.hasOwnProperty(key)){
@@ -57,7 +57,7 @@ router.put('/:documentId', auth.loggedInAdmin, async (req, res, next) => {
     }
 });
 
-router.delete('/:documentId', auth.loggedInAdmin, async (req, res, next) => {
+router.delete('/:documentId', auth.requireScopes(['write:documents']), async (req, res, next) => {
     try {
         await documentService.deleteDocument(req.params.documentId);
         res.json({status: 200, message: 'Deleted'});
@@ -66,7 +66,7 @@ router.delete('/:documentId', auth.loggedInAdmin, async (req, res, next) => {
     }
 });
 
-router.get('/:documentId/children', auth.loggedInAngel, async (req, res, next) => {
+router.get('/:documentId/children', auth.requireScopes(['read:documents']), async (req, res, next) => {
     try {
         res.json(await documentService.listAllDocumentsWithParent(req.params.documentId));
     } catch (err) {

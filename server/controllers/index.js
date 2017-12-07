@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const auth = require('../middleware/auth');
 const config = require('../config');
 const logger = require('../helpers/logger');
+const angelService = require('../services/angel-service');
 
 morgan.token('x-request-id', (req, res) => { return req.headers['x-request-id']});
 morgan.token('jwt-sub', (req, res) => { return req.user && req.user.sub});
@@ -20,8 +21,8 @@ router.use('/documents', require('./documents'));
 router.use('/admin', require('./admin'));
 router.use('/auth0', require('./auth0'));
 
-router.get('/me', auth.loggedInAngel, (req, res) => {
-    res.json(req.angel);
+router.get('/me', auth.requireScopes(['read:profile']), async (req, res) => {
+    res.json(await angelService.getAngelById(req.user['https://angel-search/angelId']));
 });
 
 router.use(function(req, res, next) {
