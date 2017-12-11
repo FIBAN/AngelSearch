@@ -24,7 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "1.0.0-beta.6",
     "@types/papaparse": "^4.1.31",
     "angular2-jwt": "^0.2.3",
-    "angulartics2": "^2.5.0",
+    "angulartics2": "^4.4.0",
     "auth0-js": "^8.12.0",
     "bootstrap": "4.0.0-beta.2",
     "core-js": "^2.5.2",

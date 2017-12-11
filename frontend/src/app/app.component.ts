@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 
 import { AuthService } from './auth/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
+import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
 
 @Component({
   selector: 'angel-search',
@@ -16,7 +17,8 @@ export class AppComponent {
 
   constructor(
               public authService: AuthService,
-              public router: Router
+              public router: Router,
+              angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
 
     router.events.subscribe((event) => {

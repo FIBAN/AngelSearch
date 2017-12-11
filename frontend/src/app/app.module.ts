@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import * as Raven from 'raven-js';
 import { environment } from '../environments/environment'
 
@@ -49,7 +50,7 @@ export class RavenErrorHandler implements ErrorHandler {
     HttpModule,
     AuthModule,
     NgbModule.forRoot(),
-    Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     SharedModule,
     StartupModule,
     ProfileModule,
