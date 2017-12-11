@@ -1,22 +1,10 @@
 "use strict";
 const auth0 = require('./auth0-management');
-const Auth0Users = require('../daos/auth0-users');
 
 const USERS_PER_PAGE = 100;
 
 module.exports.getUsers = function () {
-    return auth0.client().then(client => {
-        return Promise.all([
-            aggregateUsers(client, [], 0),
-            Auth0Users.all()
-        ]).then(([usersFromAuth0, usersFromDB]) => {
-            return usersFromAuth0.map(user => {
-                const dbMatch = usersFromDB.find(u => u.id === user.user_id);
-                user.angel_id = dbMatch && dbMatch.angel_id;
-                return user;
-            });
-        });
-    });
+    return auth0.client().then(client => aggregateUsers(client, [], 0));
 };
 
 function aggregateUsers(client, results, page) {

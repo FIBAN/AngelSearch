@@ -41,7 +41,7 @@ export class AngelListComponent implements OnInit {
 
   private findLastLogin(users, angelId): string {
     const accountLoginsSorted = users
-      .filter(u => u.angel_id === angelId)
+      .filter(u => (u.app_metadata && u.app_metadata.angelId) === angelId)
       .map(u => u.last_login)
       .sort()
       .reverse();
