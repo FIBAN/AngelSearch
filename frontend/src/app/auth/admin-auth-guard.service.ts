@@ -10,10 +10,11 @@ export class AdminAuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
-    return Observable.fromPromise(this.auth.initialized)
-      .map(() => {
-        switch (this.auth.authStatus$.getValue()) {
-          case AuthService.AUTH_STATUS.LOGGED_IN_ADMIN:
+    return this.auth.authStatus$
+      .filter(s => s !== AuthService.AUTH_STATUS.UNINITIALIZED)
+      .map(status => {
+        switch (status) {
+          case AuthService.AUTH_STATUS.LOGGED_IN:
             return true;
           default:
             this.router.navigate(['/']);

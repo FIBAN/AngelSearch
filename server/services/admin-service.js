@@ -36,3 +36,7 @@ function aggregateUsers(client, results, page) {
         }
     })
 }
+
+module.exports.resendVerificationEmail = async (auth0Id) => {
+    return auth0.client().then(client => client.sendEmailVerification({user_id: auth0Id}));
+};

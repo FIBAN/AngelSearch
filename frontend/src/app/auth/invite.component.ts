@@ -9,8 +9,7 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'angel-invite',
-  templateUrl: 'invite.component.html',
-  styleUrls: ['invite.component.css']
+  templateUrl: 'invite.component.html'
 })
 export class InviteComponent implements OnInit {
   @ViewChildren('registrationOverrideInput') registrationOverrideInput: QueryList<ElementRef>;
@@ -35,21 +34,17 @@ export class InviteComponent implements OnInit {
   }
 
   register(): void {
-    if (this.notProductionEnvironment &&
+    const loginParameters: any = {invitationId: this.invitation.id};
+
+    // logic to circumvent the inability for Auth0 to connect local development environment
+    if (
+      this.notProductionEnvironment &&
       this.registrationOverrideInput.find(e => e.nativeElement.checked && e.nativeElement.value === 'true')
     ) {
-      this.authService.login({
-        redirectAfterLogin: '/register?i=' + this.invitation.id,
-        invitationId: this.invitation.id,
-        developmentRegisterationAngelIdOverride: this.invitation.angel_id
-      });
+      loginParameters.developmentRegisterationAngelIdOverride = this.invitation.angel_id;
     }
-    else {
-      this.authService.login({
-        redirectAfterLogin: '/register?i=' + this.invitation.id,
-        invitationId: this.invitation.id
-      });
-    }
+
+    this.authService.login(loginParameters);
   }
 
 }

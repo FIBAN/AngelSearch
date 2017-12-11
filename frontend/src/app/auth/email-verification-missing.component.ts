@@ -2,39 +2,55 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
 import {AuthService} from './auth.service';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import * as Raven from 'raven-js';
 
 @Component({
   template: `
     <h3>Your email is not verified</h3>
-    <p>You should have received a verification request to your email.
-      It might possibly be in your spam folder.
-      A verified email address is required to use this service.</p>
+    <p>
+      You can verify your email by clicking a link in the verification email.
+      If you can't find the email remember to check also your spam folder. You can also resend the verification email by clicking the button below labeled "Resend Verification Email".
+    </p>
+    <p>
+      After verifying your email click the button below labeled "I Have Verified My Email"
+    </p>
+    <div *ngIf="showResendConfirmation" class="alert alert-info">Verification email sent!</div>
+    <div *ngIf="showResendError" class="alert alert-danger">Failed to send a verification email</div>
+    <a role="button" class="btn btn-info text-light" (click)="resendEmail()">Resend Verification Email</a>
+    <a role="button" class="btn btn-success text-light" (click)="checkIfEmailVerified()">I Have Verified My Email</a>
   `
 })
 export class EmailVerificationMissingComponent implements OnInit, OnDestroy {
 
-  checkEmailSub: Subscription;
+  showResendConfirmation: boolean;
+  showResendError: boolean;
 
-  constructor(private authService: AuthService,
-              private router: Router) {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit (): void {
-    const userLoggedIn$ = this.authService.authStatus$.filter(s => s === AuthService.AUTH_STATUS.LOGGED_IN);
-    this.checkEmailSub = Observable.timer(0, 5 * 1000)
-      .do(() => this.authService.refreshAuthStatus())
-      .takeUntil(userLoggedIn$)
-      .subscribe(
-        (next) => next,
-        (error) => error,
-        () => this.router.navigate(['/'])
-      );
   }
 
   ngOnDestroy (): void {
-    this.checkEmailSub.unsubscribe();
   }
+
+  resendEmail(): void {
+    console.log('resending email');
+    this.authService.resendVerificationEmail()
+      .then(() => {
+        this.showResendConfirmation = true;
+        setTimeout(() => this.showResendConfirmation = false, 20000);
+      })
+      .catch((err) => {
+        Raven.captureException(err);
+        this.showResendError = true;
+        setTimeout(() => this.showResendError = false, 20000);
+      });
+  }
+
+  checkIfEmailVerified(): void {
+    console.log('checking email');
+    this.authService.login({skipPrompt: true});
+  }
+
 }

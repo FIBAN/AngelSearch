@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth0-variables';
-import { tokenNotExpired } from 'angular2-jwt';
-import { AngelService } from '../angels/angel.service';
+import {AuthHttp, tokenNotExpired} from 'angular2-jwt';
 import { Observable } from 'rxjs/Rx';
 import * as auth0 from 'auth0-js';
+import * as jwt_decode from 'jwt-decode';
+import {Angel} from '../angels/angel';
+import {environment} from '../../environments/environment';
 import * as Raven from 'raven-js';
 
 
@@ -13,12 +14,14 @@ import * as Raven from 'raven-js';
 export class AuthService {
 
   static readonly AUTH_STATUS = {
+    UNINITIALIZED: 'uninitialized',
     LOGGED_OUT: 'logged_out',
     NOT_REGISTERED: 'not_registered',
     EMAIL_NOT_VERIFIED: 'email_not_verified',
-    LOGGED_IN: 'logged_in',
-    LOGGED_IN_ADMIN: 'logged_in_admin'
+    LOGGED_IN: 'logged_in'
   };
+
+  private resendVerifyEmailUrl = environment.backend + '/me/resend-email';
 
   // Create Auth0 web auth instance
   // @TODO: Update AUTH_CONFIG and remove .example extension in src/app/auth/auth0-variables.ts.example
@@ -27,76 +30,72 @@ export class AuthService {
     domain: AUTH_CONFIG.CLIENT_DOMAIN
   });
 
+  authStatus$ = new BehaviorSubject<string>(AuthService.AUTH_STATUS.UNINITIALIZED);
 
-  authStatus$ = new BehaviorSubject<string>(AuthService.AUTH_STATUS.LOGGED_OUT);
-
-  readonly initialized: Promise<boolean>;
-
-  constructor(private router: Router, private angelService: AngelService) {
+  constructor(private authHttp: AuthHttp) {
 
     // if the access token is expired log user out
-    Observable.timer(0, 5 * 1000)
+    Observable.timer(1000, 5 * 1000)
       .filter(() => !!localStorage.getItem('token'))
       .map(() => tokenNotExpired('token'))
       .filter(v => v === false)
       .subscribe(() => this.logout());
 
-    // load auth status
-    this.initialized = this._loadAuthStatus().then(s => this.authStatus$.next(s)).then(() => true);
+    this.refreshAuthStatus();
   }
 
-  private _loadAuthStatus(): Promise<string> {
-    if (!this.authenticated) {
-      return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_OUT);
+  get decodedAccessToken(): any {
+    try {
+      return jwt_decode(localStorage.getItem('token'));
+    } catch (err) {
+      return undefined;
     }
-    else if (this.isAdmin()) {
-      return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_IN_ADMIN);
+  }
+
+  accessTokenHasScope(scope: string): boolean {
+    const token = this.decodedAccessToken;
+    if (token) {
+      const scopes = this.decodedAccessToken.scope.split(' ').map(s => s.trim().toLowerCase());
+      return scopes.indexOf(scope.toLowerCase()) > -1;
     }
     else {
-      return this.angelService.getMyAngel().then(angel => {
-        if (!angel) {
-          return AuthService.AUTH_STATUS.NOT_REGISTERED;
-        }
-        else {
-          return AuthService.AUTH_STATUS.LOGGED_IN;
-        }
-      }).catch((err) => {
-        if (err.status === 403 && JSON.parse(err._body).email_verified === false) {
-          return AuthService.AUTH_STATUS.EMAIL_NOT_VERIFIED;
-        }
-        if (err.status === 403) {
-          return AuthService.AUTH_STATUS.NOT_REGISTERED;
-        }
-        console.error('angel error', err);
-        Raven.captureException(err);
-        return AuthService.AUTH_STATUS.LOGGED_OUT
-      });
+      return false;
     }
   }
 
-  isAdmin(): boolean {
-    const profile = localStorage.getItem('profile')  && JSON.parse(localStorage.getItem('profile'));
-    return profile && profile['https://angel-search/role'] === 'admin';
+  private _deduceAuthStatus(): Promise<string> {
+    if (!tokenNotExpired('token')) {
+      return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_OUT);
+    }
+    else if (! this.accessTokenHasScope('read:angels')) {
+      if (! this._userHasVerifiedTheirEmail()) {
+        return Promise.resolve(AuthService.AUTH_STATUS.EMAIL_NOT_VERIFIED);
+      }
+      else {
+        return Promise.resolve(AuthService.AUTH_STATUS.NOT_REGISTERED);
+      }
+    }
+    else {
+      return Promise.resolve(AuthService.AUTH_STATUS.LOGGED_IN);
+    }
+  }
+
+  private _userHasVerifiedTheirEmail(): boolean {
+    const profile = JSON.parse(localStorage.getItem('profile'));
+    return profile.email_verified;
   }
 
   refreshAuthStatus(): Promise<void> {
-    return this._loadAuthStatus().then(s => this.authStatus$.next(s));
+    return this._deduceAuthStatus().then(s => this.authStatus$.next(s));
   }
 
   login(options?: {
-    redirectAfterLogin?: string,
     invitationId?: string,
     developmentLogInAngelIdOverride?: string,
-    developmentRegisterationAngelIdOverride?: string
+    developmentRegisterationAngelIdOverride?: string,
+    skipPrompt?: boolean
   }) {
     options = options || {};
-    console.log(options);
-    if (options.redirectAfterLogin) {
-      localStorage.setItem('redirectAfterLogin', options.redirectAfterLogin);
-    }
-    else {
-      localStorage.removeItem('redirectAfterLogin');
-    }
 
     this.auth0.authorize({
       responseType: 'token id_token',
@@ -106,7 +105,8 @@ export class AuthService {
       initialScreen: options.invitationId ? 'signUp' : 'login',
       invitationId: options.invitationId || undefined,
       testInvitationResponse: options.developmentRegisterationAngelIdOverride || undefined,
-      testAngelIdResponse: options.developmentLogInAngelIdOverride || undefined
+      testAngelIdResponse: options.developmentLogInAngelIdOverride || undefined,
+      prompt: options.skipPrompt ? 'none' : undefined
     });
   }
 
@@ -117,10 +117,7 @@ export class AuthService {
         if (authResult && authResult.accessToken && authResult.idToken) {
           this._getAuth0Profile(authResult)
             .then(() => this.refreshAuthStatus())
-            .then(() => {
-              const savedRedirect = localStorage.getItem('redirectAfterLogin');
-              resolve(savedRedirect ? savedRedirect : '/angels');
-            })
+            .then(() => resolve('/angels'))
             .catch(err => reject({context: {...context, result: authResult}, error: err}));
         } else if (parseError) {
           reject({context: {...context, result: authResult}, error: parseError});
@@ -169,6 +166,20 @@ export class AuthService {
   get authenticated() {
     // Check if there's an unexpired access token
     return tokenNotExpired('token');
+  }
+
+  resendVerificationEmail() {
+    return this.authHttp
+      .get(this.resendVerifyEmailUrl)
+      .toPromise()
+      .then(response => response.json() as Angel[])
+      .catch(this.handleError);
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error);
+    Raven.captureException(error);
+    return Promise.reject(error.message || error);
   }
 
 }

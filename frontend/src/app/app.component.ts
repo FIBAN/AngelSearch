@@ -10,8 +10,6 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AppComponent {
   authenticated: boolean;
-  authorized: boolean;
-  isAdmin: boolean;
   hideLogin = false;
 
   isNavbarCollapsed = true;
@@ -27,10 +25,10 @@ export class AppComponent {
       }
     });
 
-    authService.authStatus$.subscribe(s => {
+    authService.authStatus$
+      .filter(s => s !== AuthService.AUTH_STATUS.UNINITIALIZED)
+      .subscribe(s => {
       this.authenticated = s !== AuthService.AUTH_STATUS.LOGGED_OUT;
-      this.authorized = s === AuthService.AUTH_STATUS.LOGGED_IN || s === AuthService.AUTH_STATUS.LOGGED_IN_ADMIN;
-      this.isAdmin = s === AuthService.AUTH_STATUS.LOGGED_IN_ADMIN;
     });
 
   }

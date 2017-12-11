@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 const config = require('../config');
 const logger = require('../helpers/logger');
 const angelService = require('../services/angel-service');
+const adminService = require('../services/admin-service');
 
 morgan.token('x-request-id', (req, res) => { return req.headers['x-request-id']});
 morgan.token('jwt-sub', (req, res) => { return req.user && req.user.sub});
@@ -21,8 +22,20 @@ router.use('/documents', require('./documents'));
 router.use('/admin', require('./admin'));
 router.use('/auth0', require('./auth0'));
 
-router.get('/me', auth.requireScopes(['read:profile']), async (req, res) => {
-    res.json(await angelService.getAngelById(req.user['https://angel-search/angelId']));
+router.get('/me', auth.requireScopes(['read:profile']), async (req, res, next) => {
+    try {
+        res.json(await angelService.getAngelById(req.user['https://angel-search/angelId']));
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/me/resend-email', auth.authenticated, async (req, res, next) => {
+    try {
+        res.json(await adminService.resendVerificationEmail(req.user.sub));
+    } catch (err) {
+        next(err);
+    }
 });
 
 router.use(function(req, res, next) {
