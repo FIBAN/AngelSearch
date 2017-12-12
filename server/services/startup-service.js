@@ -36,6 +36,7 @@ module.exports.getStartupById = async (startupId) => {
 
 module.exports.createStartup = async (startup) => {
     try {
+        startup.status = startup.status || 'active';
         return await Startup.create(startup);
     } catch (err) {
         switch (err.code) {

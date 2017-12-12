@@ -47,7 +47,8 @@ export class ManageStartupComponent implements OnInit {
           'round_size_and_open_tickets': startup.round_size_and_open_tickets,
           'valuation': startup.valuation,
           'committed_percentage': startup.committed_percentage,
-          'pitch_deck_link': startup.pitch_deck_link
+          'pitch_deck_link': startup.pitch_deck_link,
+          'status': startup.status
         })
       });
 

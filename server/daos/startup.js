@@ -27,8 +27,9 @@ module.exports.create = (startup) => {
         'round_size_and_open_tickets, ' +
         'valuation, ' +
         'committed_percentage, ' +
-        'pitch_deck_link' +
-        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) ' +
+        'pitch_deck_link, ' +
+        'status' +
+        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) ' +
         'RETURNING *',
         [
             util.randomUUID(),
@@ -45,7 +46,8 @@ module.exports.create = (startup) => {
             startup.round_size_and_open_tickets,
             startup.valuation,
             startup.committed_percentage,
-            startup.pitch_deck_link
+            startup.pitch_deck_link,
+            startup.status
         ]
     ).then(res => res.rows[0]);
 };
@@ -133,6 +135,12 @@ module.exports.update = (startup) => {
         if(queryParams.length) query += ", ";
         queryParams.push(startup.pitch_deck_link);
         query += " pitch_deck_link = $" + queryParams.length;
+    }
+
+    if(startup.status) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(startup.status);
+        query += " status = $" + queryParams.length;
     }
 
     if(!queryParams.length) {

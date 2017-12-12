@@ -15,7 +15,7 @@ export class StartupsComponent implements OnInit {
 
   ngOnInit(): void {
     this.startupService.getStartups().then((startups) => {
-      this.startups = startups;
+      this.startups = startups.filter(s => s.status === 'active');
     })
   }
 

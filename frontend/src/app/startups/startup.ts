@@ -16,6 +16,7 @@ export class Startup {
     public valuation: string,
     public committed_percentage: string,
     public pitch_deck_link: string,
+    public status: string = 'active',
     public created_at?: string,
     public updated_at?: string
   ) {};

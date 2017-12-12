@@ -44,7 +44,8 @@ export class AddStartupComponent implements OnInit {
       'round_size_and_open_tickets': '',
       'valuation': '',
       'committed_percentage': '',
-      'pitch_deck_link': ''
+      'pitch_deck_link': '',
+      'status': 'active'
     })
   }
 

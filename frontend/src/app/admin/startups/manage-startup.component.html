@@ -111,6 +111,15 @@
           <td>Pitch Deck Link</td>
           <td><input class="form-control" formControlName="pitch_deck_link"></td>
         </tr>
+
+        <!-- Status -->
+        <tr>
+          <td>Status</td>
+          <td><select class="form-control" formControlName="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive (hidden from users)</option>
+          </select></td>
+        </tr>
         </tbody>
       </table>
       <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
