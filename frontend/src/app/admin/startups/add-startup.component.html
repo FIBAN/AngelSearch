@@ -70,6 +70,22 @@
   </div>
 
   <div class="form-group">
+    <label for="current_revenue_or_committed_customers">Current Revenue (or Committed Customers)</label>
+    <input type="text" class="form-control" id="current_revenue_or_committed_customers" formControlName="current_revenue_or_committed_customers">
+  </div>
+
+  <div class="form-group">
+    <label for="commitment_deadline">Commitment Deadline</label>
+    <div class="input-group">
+      <input id="commitment_deadline" class="form-control" placeholder="yyyy-mm-dd" formControlName="commitment_deadline"
+             ngbDatepicker #d="ngbDatepicker">
+      <button class="input-group-addon" (click)="d.toggle()" type="button">
+        <i class="fa fa-calendar" aria-hidden="true" style="cursor: pointer;"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="pitch_deck_link">Pitch Deck Link</label>
     <input type="text" class="form-control" id="pitch_deck_link" required formControlName="pitch_deck_link">
   </div>

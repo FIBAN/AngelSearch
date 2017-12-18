@@ -45,14 +45,29 @@ export class AddStartupComponent implements OnInit {
       'valuation': '',
       'committed_percentage': '',
       'pitch_deck_link': '',
+      'current_revenue_or_committed_customers': '',
+      'commitment_deadline': undefined,
       'status': 'active'
     })
   }
 
   submit(): void {
     const startup = this.startupForm.getRawValue() as Startup;
+    startup.commitment_deadline = this.datepickerModelToDate(startup.commitment_deadline);
     this.startupService.createStartup(startup)
       .then(() => this.router.navigate(['..'], {relativeTo: this.route}));
+  }
+
+  private datepickerModelToDate(model): Date {
+    if (model) {
+      const d = new Date();
+      d.setUTCFullYear(model.year, model.month - 1, model.day);
+      d.setUTCHours(0, 0, 0, 0);
+      return d;
+    }
+    else {
+      return model;
+    }
   }
 
 }

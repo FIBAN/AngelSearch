@@ -17,8 +17,10 @@ export class Startup {
     public committed_percentage: string,
     public pitch_deck_link: string,
     public status: string = 'active',
+    public current_revenue_or_committed_customers?: string,
+    public commitment_deadline?: Date,
     public created_at?: string,
-    public updated_at?: string
+    public updated_at?: string,
   ) {};
 
 }

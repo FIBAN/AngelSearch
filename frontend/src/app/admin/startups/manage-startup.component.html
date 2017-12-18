@@ -102,8 +102,28 @@
 
         <!-- Already committed -->
         <tr>
-          <td>Already committed (%)</td>
+          <td>Already Committed (%)</td>
           <td><input class="form-control" formControlName="committed_percentage"></td>
+        </tr>
+
+        <!-- Current Revenue (or Committed Customers) -->
+        <tr>
+          <td>Current Revenue (or Committed Customers)</td>
+          <td><input class="form-control" formControlName="current_revenue_or_committed_customers"></td>
+        </tr>
+
+        <!-- Commitment Deadline -->
+        <tr>
+          <td>Commitment Deadline</td>
+          <td>
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" formControlName="commitment_deadline"
+                     ngbDatepicker #d="ngbDatepicker">
+              <button class="input-group-addon" (click)="d.toggle()" type="button">
+                <i class="fa fa-calendar" aria-hidden="true" style="cursor: pointer;"></i>
+              </button>
+            </div>
+          </td>
         </tr>
 
         <!-- Pitch Deck Link -->

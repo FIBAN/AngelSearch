@@ -19,7 +19,7 @@ export class StartupService {
     return this.authHttp
       .get(this.startupsUrl)
       .toPromise()
-      .then(response => response.json() as Startup[])
+      .then(response => response.json().map(this.convertCommitmentDeadlineIntoDate) as Startup[])
       .catch(this.handleError);
   }
 
@@ -27,7 +27,7 @@ export class StartupService {
     return this.authHttp
       .get(this.startupDetailsUrl(startupId))
       .toPromise()
-      .then(response => response.json() as Startup)
+      .then(response => this.convertCommitmentDeadlineIntoDate(response.json()) as Startup)
       .catch(this.handleError);
   }
 
@@ -35,7 +35,7 @@ export class StartupService {
     return this.authHttp
       .put(this.startupDetailsUrl(startup.id), startup)
       .toPromise()
-      .then(response => response.json())
+      .then(response => this.convertCommitmentDeadlineIntoDate(response.json()) as Startup)
       .catch(this.handleError);
   }
 
@@ -43,7 +43,7 @@ export class StartupService {
     return this.authHttp
       .post(this.startupsUrl, startup)
       .toPromise()
-      .then(response => response.json())
+      .then(response => this.convertCommitmentDeadlineIntoDate(response.json()) as Startup)
       .catch(this.handleError)
   }
 
@@ -60,5 +60,14 @@ export class StartupService {
     console.error('An error occurred', error);
     Raven.captureException(error);
     return Promise.reject(error.message || error);
+  }
+
+  private convertCommitmentDeadlineIntoDate(startup: any): any {
+    if (startup.commitment_deadline) {
+      try {
+        startup.commitment_deadline = new Date(startup.commitment_deadline);
+      } catch (err) {}
+    }
+    return startup;
   }
 }

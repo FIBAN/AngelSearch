@@ -54,8 +54,16 @@
             <td>{{startup.valuation}}</td>
           </tr>
           <tr>
+            <td>Current Revenue (or Committed Customers)</td>
+            <td>{{startup.current_revenue_or_committed_customers}}</td>
+          </tr>
+          <tr>
             <td>Already committed (%)</td>
             <td>{{startup.committed_percentage}}</td>
+          </tr>
+          <tr>
+            <td>Commitment Deadline</td>
+            <td>{{startup.commitment_deadline | date:'mediumDate'}}</td>
           </tr>
           <tr>
             <td>Pitch Deck</td>

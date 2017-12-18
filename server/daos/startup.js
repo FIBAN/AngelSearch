@@ -28,8 +28,10 @@ module.exports.create = (startup) => {
         'valuation, ' +
         'committed_percentage, ' +
         'pitch_deck_link, ' +
-        'status' +
-        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) ' +
+        'status, ' +
+        'current_revenue_or_committed_customers, ' +
+        'commitment_deadline' +
+        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) ' +
         'RETURNING *',
         [
             util.randomUUID(),
@@ -47,7 +49,9 @@ module.exports.create = (startup) => {
             startup.valuation,
             startup.committed_percentage,
             startup.pitch_deck_link,
-            startup.status
+            startup.status,
+            startup.current_revenue_or_committed_customers,
+            startup.commitment_deadline
         ]
     ).then(res => res.rows[0]);
 };
@@ -141,6 +145,18 @@ module.exports.update = (startup) => {
         if(queryParams.length) query += ", ";
         queryParams.push(startup.status);
         query += " status = $" + queryParams.length;
+    }
+
+    if(startup.current_revenue_or_committed_customers) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(startup.current_revenue_or_committed_customers);
+        query += " current_revenue_or_committed_customers = $" + queryParams.length;
+    }
+
+    if(startup.commitment_deadline) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(startup.commitment_deadline);
+        query += " commitment_deadline = $" + queryParams.length;
     }
 
     if(!queryParams.length) {

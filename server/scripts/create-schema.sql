@@ -58,7 +58,9 @@ create table startups (
     pitch_deck_link text not null,
     created_at timestamp with time zone default now(),
     updated_at timestamp with time zone default now(),
-    status text not null default 'active'
+    status text not null default 'active',
+    current_revenue_or_committed_customers text null,
+    commitment_deadline timestamp with time zone null
 );
 
 create table documents (
