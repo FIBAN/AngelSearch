@@ -2,7 +2,7 @@
 
 module.exports = {
     env: 'development',
-    db: 'postgresql://hanzki@localhost:5432/angel_search',
+    db: process.env.DATABASE_URL,
     port: process.env.PORT || 3001,
     auth0: {
         clientId: process.env.AUTH0_CLIENTID || throwMissingConfigError('auth0.clientId'),
