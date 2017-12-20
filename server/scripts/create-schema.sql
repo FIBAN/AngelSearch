@@ -22,7 +22,8 @@ create table angels (
     investment_level integer,
     industries text[] not null default '{}',
     created_at timestamp with time zone default now(),
-    updated_at timestamp with time zone default now()
+    updated_at timestamp with time zone default now(),
+    is_hidden boolean default false
 );
 
 create table invitations (

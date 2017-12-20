@@ -95,6 +95,15 @@
             <td>Bio</td>
             <td><textarea class="form-control" formControlName="bio"></textarea></td>
           </tr>
+
+          <!-- Is Hidden -->
+          <tr>
+            <td>Hidden</td>
+            <td><select class="form-control" formControlName="is_hidden">
+              <option value="true">True (don't show to other angels)</option>
+              <option value="false">False</option>
+            </select></td>
+          </tr>
         </tbody>
       </table>
       <p *ngIf="message">{{message}}</p>

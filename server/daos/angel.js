@@ -39,8 +39,9 @@ module.exports.create = (angel) => {
         'linkedin, ' +
         'investment_level, ' +
         'industries, ' +
-        'bio' +
-        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) ' +
+        'bio, ' +
+        'is_hidden' +
+        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) ' +
         'RETURNING *',
         [
             util.randomUUID(),
@@ -54,7 +55,8 @@ module.exports.create = (angel) => {
             angel.linkedin,
             angel.investment_level,
             angel.industries,
-            angel.bio
+            angel.bio,
+            angel.is_hidden
         ]
     ).then(res => res.rows[0]);
 };
@@ -115,6 +117,11 @@ module.exports.update = (angel) => {
         if(queryParams.length) query += ", ";
         queryParams.push(angel.industries);
         query += " industries = $" + queryParams.length;
+    }
+    if(angel.is_hidden) {
+        if(queryParams.length) query += ", ";
+        queryParams.push(angel.is_hidden);
+        query += " is_hidden = $" + queryParams.length;
     }
 
     if(!queryParams.length) {

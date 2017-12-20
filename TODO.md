@@ -1,27 +1,14 @@
-# To Do
-* ~~LinkedIn links attached to angel profiles (accessable from the angel list)~~
-* ~~"Investment bio" a category choice of own investment activity eg. 0-5000, 5000-10000, 10000-50000~~
-* ~~Nicer font eg. Helvetica or something~~
-* ~~angel network visible in the profile view~~ 
-* ~~names presented in first name - last name~~
-* ~~More intuitive way to input industries. Support for comma separated list~~
-* ~~Support for batch insert of angels from excel~~
-* ~~Investments -> investment count (1, 2-5, 6-10, 10+)~~
+# Future improvements
+## Admin
+* Make it easier to export a list of invites after adding a batch of angels
+* Add ability to delete angels permanently
+* Add ability to hide angels from public viewing
+* Display list of Auth0 user to angel linking in the admin view (also unlinked Auth0 users)
 
+## Angel list
+* Enable searching with full name (currently first_name and last_name can't be queried at the same time)
+* Show photos of the angels on the angel list and in the angel details
+* Add pagination to the angel list
 
-* ~~Improve displaying of long industry names~~
-* ~~Fix location sorting (null cities)~~
-* ~~Open LinkedIn links in a new window/tab~~ 
-
-
-* ~~Remove possible query parameters from the linkedin id when parsing a link~~
-
-
-* ~~Show users a list of documents available for download~~
-* ~~Tools for admins to manage these documents~~
-
-
-* ~~Show users a list of startups cases~~
-* ~~Tools for admins to manage startup cases~~
-
-* ~~Accepting invitation with account that matches the email of the angel fails because the auth0 linking is tried to do twice~~
+## Data
+* make investment level encoding to be more intuitive (currently 0 = 1 investment, 1 = 2-5 investments, etc.)

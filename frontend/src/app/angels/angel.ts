@@ -20,6 +20,7 @@ export class Angel {
     public network?: string,
     public linkedin?: string,
     public investment_level?: number,
+    public is_hidden?: boolean,
     public created_at?: string,
     public updated_at?: string
   ) {};

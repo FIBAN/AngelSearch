@@ -37,7 +37,7 @@ export class AngelsComponent implements OnInit {
 
     this.angelService.getAngels()
       .then(angels => {
-        this.angels = angels;
+        this.angels = angels.filter(a => ! a.is_hidden);
         this.countries = angels.map(a => a.country)
           .filter((v, i, a) => v && a.indexOf(v) === i) // discard null values and duplicates
           .sort();

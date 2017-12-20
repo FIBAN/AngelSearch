@@ -43,7 +43,8 @@ export class ManageAngelComponent implements OnInit {
       network: a.network,
       linkedin: a.linkedin,
       bio: a.bio,
-      investment_level: a.investment_level
+      investment_level: a.investment_level,
+      is_hidden: String(a.is_hidden)
     });
 
     this.industries = a.industries && a.industries.slice(0) || [];
@@ -82,6 +83,7 @@ export class ManageAngelComponent implements OnInit {
   saveChanges(): void {
       const formData = this.angelForm.getRawValue();
       formData.linkedin = Utils.parseLinkedInId(formData.linkedin);
+      formData.is_hidden = formData.is_hidden === 'true';
       for (const k in formData) {
         if (formData.hasOwnProperty(k)) {
           this.angel[k] = formData[k];
