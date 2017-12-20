@@ -26,6 +26,9 @@ module.exports.create = (angel) => {
     if(!angel.industries) {
         angel.industries = [];
     }
+    if(angel.is_hidden !== true) {
+        angel.is_hidden = false;
+    }
     return db.query(
         'INSERT INTO angels (' +
         'id, ' +
