@@ -2,7 +2,6 @@
 ## Admin
 * Make it easier to export a list of invites after adding a batch of angels
 * Add ability to delete angels permanently
-* Add ability to hide angels from public viewing
 * Display list of Auth0 user to angel linking in the admin view (also unlinked Auth0 users)
 
 ## Angel list
