@@ -2,7 +2,7 @@
 
 The purpose of this application is to help members of the angel network to find other members.
 
-## Architecture
+## Overview
 
 ### System Context
 
@@ -59,7 +59,26 @@ Front-end can be started in the development mode with the `npm start` command. T
 
 ### Production Deployment
 
-TBA
+In production the Angel Search is currently hosted on Heroku. The production update is done automatically through a CI/CD 
+pipeline using CircleCI. Only commits to the `prod` branch are deployed to the production. The CircleCI configuration
+can be found in the `.circleci` directory.
+
+The architecture of the system is same as in local development except in production the front-end files are served from
+the same server as the backend api. This is however something that could and propably should be separated in the future
+as the scale of the system grows.
+
+#### Pushing an update into the production
+
+When updating the production following checklist should be followed:
+
+1. Check in the local environment that the system behaves as expected
+2. Push changes to `master` branch and check that the build process completes without errors on CircleCI
+3. Connect to the production database (run: `heroku pg:psql`) and apply any new changes to the database schema (remember
+   to keep the production database schema up to date with `server/scripts/create-shcema.sql`)
+4. Push changes to `prod` branch and check that the deployment completes without errors on CircleCI
+5. Log into the production environment of Angel Search and verify that the changes work as expected
+
+
 
 
 

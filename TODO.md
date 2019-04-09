@@ -11,3 +11,6 @@
 
 ## Data
 * make investment level encoding to be more intuitive (currently 0 = 1 investment, 1 = 2-5 investments, etc.)
+
+## CI/CD
+* Make CircleCI run automated tests before deployment
